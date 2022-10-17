@@ -41,15 +41,15 @@ class PetController {
   public function AddPet($petname, $size, $pet_type, $breed) {
     //Utils::checkAdminSession();    
     $pet = new Pet();   
-      if ($pet) {            
-          $pet = new Pet();
-          $pet->setPetname($petname);
-          $pet->setSize($size);
-          $pet->setPet_type($pet_type);
-          $pet->setBreed($breed);
-          $this->petDAO->addPet($pet);
-          $this->OwnerListView();       
-      }
+    if ($pet) {            
+      $pet = new Pet();
+      $pet->setPetname($petname);
+      $pet->setSize($size);
+      $pet->setPet_type($pet_type);
+      $pet->setBreed($breed);
+      $this->petDAO->addPet($pet);
+      $this->OwnerListView();       
+    }
   }
 
 }

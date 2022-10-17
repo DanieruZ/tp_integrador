@@ -32,11 +32,6 @@ class UserController {
     require_once(VIEWS_PATH . "keeper-list.php");
   }
 
-  public function getUserByEmail($email){
-    $user = $this->UserDAO->getUserByEmail($email);
-    return $user;
-  }
-
 }
 
 ?>
