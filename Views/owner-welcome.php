@@ -5,8 +5,8 @@ namespace Views;
 require_once "Config\Autoload.php";
 require_once "owner-nav.php";
 
-$userList = $_SESSION['owner'];
-[$owner] = $userList;
+$ownerList = $_SESSION['owner'];
+[$owner] = $ownerList;
 
 ?>
 
@@ -21,8 +21,8 @@ $userList = $_SESSION['owner'];
         <li class="list-group-item">First Name: <?php echo $owner->getFirstname(); ?></li>
         <li class="list-group-item">Last Name: <?php echo $owner->getLastname(); ?></li>
         <li class="list-group-item">DNI: <?php echo $owner->getDni(); ?></li>
+        <li class="list-group-item">Email: <?php echo $owner->getEmail(); ?></li>
         <li class="list-group-item">Gender: <?php echo $owner->getGender(); ?></li>
-        <li class="list-group-item">Email: <?php echo $user->getEmail(); ?></li>
       </ul>
     </div>
   </div>

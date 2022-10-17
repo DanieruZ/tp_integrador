@@ -5,8 +5,8 @@ namespace Views;
 require_once "Config\Autoload.php";
 require_once "keeper-nav.php";
 
-$userList = $_SESSION['keeper'];
-[$keeper, $user, $rol] = $userList;
+$keeperList = $_SESSION['keeper'];
+[$keeper] = $keeperList;
 
 ?>
 
@@ -21,8 +21,8 @@ $userList = $_SESSION['keeper'];
         <li class="list-group-item">First Name: <?php echo $keeper->getFirstname(); ?></li>
         <li class="list-group-item">Last Name: <?php echo $keeper->getLastname(); ?></li>
         <li class="list-group-item">DNI: <?php echo $keeper->getDni(); ?></li>
+        <li class="list-group-item">Email: <?php echo $keeper->getEmail(); ?></li>
         <li class="list-group-item">Gender: <?php echo $keeper->getGender(); ?></li>
-        <li class="list-group-item">Email: <?php echo $user->getEmail(); ?></li>
       </ul>
     </div>
   </div>
