@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-use DAO\UserDAO as UserDAO;
 use Models\Person as Person;
+use DAO\UserDAO as UserDAO;
 
 class LoginController {
 
@@ -12,32 +12,28 @@ class LoginController {
   public function __construct() {
     $this->userDAO = new UserDAO();
   }
-
-  public function getUserByEmail($email){
-    $user = $this->UserDAO->getUserByEmail($email);
-    return $user;
-  }
-
   
-  public function login(Person $user) {
-   $user = $this->getUserByEmail($email);
-   $user; 
-   print_r($user);
+  public function login($email) {
+    $user = $this->userDAO->getUserByEmail($email); 
+    [$u] = $user;
+    $rolId = $u->getRolId();  
 
-   /* if($userList->getRolId() == 'admin') {
-      $_SESSION['admin'] = $userList;
-      require_once(VIEWS_PATH . "admin-welcome.php");
-    }*/
+    if($user) {
+      if($rolId == 1) {
+        $_SESSION['admin'] = $user;
+        require_once(VIEWS_PATH . "admin-welcome.php");
+      }
 
-    /*if($user->getRolId() == 'owner') {
-      $_SESSION['owner'] = $user;
-      require_once(VIEWS_PATH . "owner-welcome.php");
-    }*/
+      if($rolId == 2) {
+        $_SESSION['owner'] = $user;
+        require_once(VIEWS_PATH . "owner-welcome.php");
+      }
 
-    /*if($person->getRol() == 'keeper') {
-      $_SESSION['keeper'] = $userList;
-      require_once(VIEWS_PATH . "keeper-welcome.php");
-    }*/
+      if($rolId == 3) {
+        $_SESSION['keeper'] = $user;
+        require_once(VIEWS_PATH . "keeper-welcome.php");
+      }
+    }
   }
 
   public function logout() {
