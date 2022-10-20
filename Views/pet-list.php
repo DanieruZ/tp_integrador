@@ -6,8 +6,8 @@ require_once "Config\Autoload.php";
 
 use DAO\PetDAO as PetDAO;
 
-$repo = new PetDAO;
-$petList = $repo->getAllPet();
+$petDAO = new PetDAO;
+$petList = $petDAO->getAllPet();
 
 ?>
 
@@ -33,7 +33,7 @@ $petList = $repo->getAllPet();
 				  <td><?php echo $pet->getPetname(); ?></td>
 					<td><?php echo $pet->getSize(); ?></td>
 					<td><?php echo $pet->getPet_type(); ?></td>
-					<td><?php echo $pet->getBreed(); ?></td>	
+					<td><?php echo $pet->getBreed(); ?></td>
 				</tr>
 			</tbody>
 <?php 
