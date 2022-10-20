@@ -31,6 +31,12 @@ class KeeperController {
     require_once(VIEWS_PATH . "keeper-list.php");
   }
 
+  public function OwnerListView() {
+    //Utils::checkOwnerSession();
+    require_once(VIEWS_PATH . "owner-nav.php");
+    require_once(VIEWS_PATH . "keeper-list.php");
+  }
+
   public function AdminListView() {
     //Utils::checkAdminSession();
     require_once(VIEWS_PATH . "admin-nav.php");
