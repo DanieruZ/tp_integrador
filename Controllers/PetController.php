@@ -4,6 +4,7 @@ namespace Controllers;
 
 use DAO\PetDAO as PetDAO;
 use Models\Pet as Pet;
+use Models\Person as Person;
 use Utils\Utils as Utils;
 
 class PetController {
@@ -12,12 +13,6 @@ class PetController {
   
   public function __construct() {
     $this->petDAO = new PetDAO();
-  }
-
-  public function AddView() {
-    //Utils::checkOwnerSession();
-    require_once(VIEWS_PATH . "owner-nav.php");
-    require_once(VIEWS_PATH . "pet-add.php");
   }
 
   public function OwnerAddView() {
@@ -29,7 +24,7 @@ class PetController {
   public function OwnerListView() {
     //Utils::checkOwnerSession();
     require_once(VIEWS_PATH . "owner-nav.php");
-    require_once(VIEWS_PATH . "pet-list.php");
+    require_once(VIEWS_PATH . "pet-owner-list.php");
   }
 
   public function AdminListView() {
@@ -41,14 +36,26 @@ class PetController {
   public function AddPet($petname, $size, $pet_type, $breed) {
     //Utils::checkAdminSession();    
     $pet = new Pet();   
-    if ($pet) {            
+   
+    if ($pet) {
       $pet = new Pet();
       $pet->setPetname($petname);
       $pet->setSize($size);
       $pet->setPet_type($pet_type);
       $pet->setBreed($breed);
       $this->petDAO->addPet($pet);
-      $this->OwnerListView();       
+
+      $user = $_SESSION['owner'];
+      [$person] = $user;
+      $personId = $person->getPersonId();
+
+      $lastId = $this->petDAO->getPetLastId();
+      [$pet] = $lastId;
+      $petId = $pet[0];
+
+      $this->petDAO->addPetOwner($personId, $petId);
+      $this->OwnerListView();    
+        
     }
   }
 
