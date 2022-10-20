@@ -34,7 +34,7 @@ class PetController {
   }
 
   public function AddPet($petname, $size, $pet_type, $breed) {
-    //Utils::checkAdminSession();    
+    //Utils::checkOwnerSession();    
     $pet = new Pet();   
    
     if ($pet) {
