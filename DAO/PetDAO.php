@@ -14,12 +14,12 @@ class PetDAO implements IPetDAO {
   public function addPet(Pet $pet) {
     try {
       $query = "INSERT INTO pet (petname, size, pet_type, breed)
-                VALUES (:petname, :size, :pet_type, :breed);";
+                VALUES (:petname, :size, :pet_type, :breed)";
                 
       $parameters['petname'] = $pet->getPetname();
       $parameters['size'] = $pet->getSize();
       $parameters['pet_type'] = $pet->getPet_type();
-      $parameters['breed'] = $pet->getBreed();
+      $parameters['breed'] = $pet->getBreed();   
 
       $this->connection = Connection::GetInstance();
       return $this->connection->executeNonQuery($query, $parameters);
@@ -59,6 +59,8 @@ class PetDAO implements IPetDAO {
       }
   }
 
+
+
   public function getAllPet() {
     try {
       $petList = array();
@@ -77,6 +79,7 @@ class PetDAO implements IPetDAO {
         $pet->setBreed($value['breed']);
         
         array_push($petList, $pet);
+
       }
       
       return $petList;

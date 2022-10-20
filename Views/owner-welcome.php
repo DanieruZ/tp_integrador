@@ -23,6 +23,7 @@ $ownerList = $_SESSION['owner'];
         <li class="list-group-item">DNI: <?php echo $owner->getDni(); ?></li>
         <li class="list-group-item">Email: <?php echo $owner->getEmail(); ?></li>
         <li class="list-group-item">Gender: <?php echo $owner->getGender(); ?></li>
+        <li class="list-group-item">USERID: <?php echo $owner->getRolId(); ?></li>
       </ul>
     </div>
   </div>

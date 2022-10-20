@@ -74,6 +74,28 @@ class UserDAO implements IUserDAO {
       }
   }
 
+  public function addPerson(Person $person) {
+    try {
+      $query = "INSERT INTO person (firstname, lastname, dni, email, gender, isActive, rolId) 
+                VALUES (:firstname, :lastname, :dni, :email,  :gender, :isActive, :rolId)";
+      
+      $parameters['firstname'] = $person->getFirstname();
+      $parameters['lastname'] = $person->getLastname();
+      $parameters['dni'] = $person->getDni();
+      $parameters['email'] = $person->getEmail();
+      // $parameters['pass'] = $person->getPass();
+      $parameters['gender'] = $person->getGender();
+      $parameters['isActive'] = $person->getIsActive();
+      $parameters['rolId'] = $person->getRolId();   
+
+      $this->connection = Connection::GetInstance();
+      return $this->connection->executeNonQuery($query, $parameters);
+
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
 }
 
 ?>  

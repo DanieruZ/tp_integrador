@@ -22,7 +22,7 @@ $keeperList = $_SESSION['keeper'];
         <li class="list-group-item">Last Name: <?php echo $keeper->getLastname(); ?></li>
         <li class="list-group-item">DNI: <?php echo $keeper->getDni(); ?></li>
         <li class="list-group-item">Email: <?php echo $keeper->getEmail(); ?></li>
-        <li class="list-group-item">Gender: <?php echo $keeper->getGender(); ?></li>
+        <li class="list-group-item">Gender: <?php echo $keeper->getGender(); ?></li>        
       </ul>
     </div>
   </div>

@@ -13,14 +13,14 @@ class KeeperDAO implements IKeeperDAO {
 
   public function addKeeper(Person $person) {
     try {
-      $query = "INSERT INTO person (firstname, lastname, dni, email, pass, gender, isActive, rolId) 
-                VALUES (:firstname, :lastname, :dni, :email, :pass, :gender, :isActive, :rolId)";
+      $query = "INSERT INTO person (firstname, lastname, dni, email, gender, isActive, rolId) 
+                VALUES (:firstname, :lastname, :dni, :email,  :gender, :isActive, :rolId)";
       
       $parameters['firstname'] = $person->getFirstname();
       $parameters['lastname'] = $person->getLastname();
       $parameters['dni'] = $person->getDni();
       $parameters['email'] = $person->getEmail();
-      $parameters['pass'] = $person->getPass();
+      // $parameters['pass'] = $person->getPass();
       $parameters['gender'] = $person->getGender();
       $parameters['isActive'] = $person->getIsActive();
       $parameters['rolId'] = $person->getRolId();   

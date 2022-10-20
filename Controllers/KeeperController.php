@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use DAO\KeeperDAO as KeeperDAO;
+use Models\Person as Person;
 use Utils\Utils as Utils;
 
 class KeeperController {
@@ -43,6 +44,21 @@ class KeeperController {
     require_once(VIEWS_PATH . "keeper-list.php");
   }
 
-}
+  public function AddKeeper($firstname, $lastname, $dni,$email,$gender) {
+    //Utils::checkAdminSession();    
+    $person = new Person();   
+    if ($person) {            
+      $person = new Person();
+      $person->setFirstname($firstname);
+      $person->setLastname($lastname);
+      $person->setDni($dni);
+      $person->setEmail($email);
+      $person->setGender($gender);
+      $person->setIsActive(1);
+      $person->setRolId(3);   
+      $this->keeperDAO->addKeeper($person);
+      $this->ListView();       
+    }
+  }
 
-?>
+}

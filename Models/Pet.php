@@ -114,7 +114,6 @@ class Pet {
 
     return $this;
   }
-
 }
 
 ?>
