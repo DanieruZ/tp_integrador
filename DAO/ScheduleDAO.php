@@ -28,6 +28,32 @@ class ScheduleDAO implements IScheduleDAO {
       }
   }
 
+  public function getSchedule() {
+    try {
+      $scheduleList = array();
+
+      $query = "SELECT * FROM agenda;";
+
+      $this->connection = Connection::GetInstance();
+      $allSchedule = $this->connection->Execute($query);
+
+      foreach ($allSchedule as $value) {
+        $schedule = new Schedule();
+        $schedule->setScheduleId($value['scheduleId']);
+        $schedule->setStartDate($value['startDate']);
+        $schedule->setEndDate($value['endDate']);
+       
+
+        array_push($scheduleList, $schedule);
+      }
+      
+      return $scheduleList;
+
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
 
 }
 
