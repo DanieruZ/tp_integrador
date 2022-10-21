@@ -3,10 +3,7 @@
 namespace Views;
 
 require_once "Config\Autoload.php";
-require_once "keeper-nav.php";
-
-$keeperList = $_SESSION['keeper'];
-[$keeper] = $keeperList;
+require_once "owner-nav.php";
 
 ?>
 
@@ -14,9 +11,10 @@ $keeperList = $_SESSION['keeper'];
 <section class="mb-5">
   <div class="container-fluid">		
 		<div class="container-sm mx-auto" style="width:400px">
-      <h3>My Profile</h3>
+      <h3>Available Dates</h3>
     </div>
-		<div class="container-sm mx-auto shadow" style="width:400px">                
+		<div class="container-sm mx-auto shadow" style="width:400px">     
+      <h3>Keeper's Info</h3>         
 		  <ul class="list-group">                       
         <li class="list-group-item">First Name: <?php echo $keeper->getFirstname(); ?></li>
         <li class="list-group-item">Last Name: <?php echo $keeper->getLastname(); ?></li>

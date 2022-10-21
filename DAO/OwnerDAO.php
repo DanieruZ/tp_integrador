@@ -14,8 +14,8 @@ class OwnerDAO implements IOwnerDAO {
 
   public function addOwner(Person $person) {
     try {
-      $query = "INSERT INTO person (firstname, lastname, dni, email,  gender, isActive, rolId) 
-                VALUES (:firstname, :lastname, :dni, :email,  :gender, :isActive, :rolId)";
+      $query = "INSERT INTO person (firstname, lastname, dni, email, gender, isActive, rolId) 
+                VALUES (:firstname, :lastname, :dni, :email, :gender, :isActive, :rolId)";
       
       $parameters['firstname'] = $person->getFirstname();
       $parameters['lastname'] = $person->getLastname();
@@ -51,7 +51,6 @@ class OwnerDAO implements IOwnerDAO {
         $person->setLastname($value['lastname']);
         $person->setDni($value['dni']);
         $person->setEmail($value['email']);
-        $person->setPass($value['pass']);
         $person->setGender($value['gender']);
         $person->setIsActive($value['isActive']);
         $person->setRolId($value['rolId']);
@@ -83,7 +82,6 @@ class OwnerDAO implements IOwnerDAO {
         $person->setLastname($value['lastname']);
         $person->setDni($value['dni']);
         $person->setEmail($value['email']);
-        $person->setPass($value['pass']);
         $person->setGender($value['gender']);
         $person->setIsActive($value['isActive']);
         $person->setRolId($value['rolId']);

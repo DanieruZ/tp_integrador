@@ -14,7 +14,7 @@ $adminList = $_SESSION['admin'];
 <section class="mb-5">
   <div class="container-fluid">		
 		<div class="container-sm mx-auto" style="width:400px">
-      <h3>MIS DATOS ADMIN</h3>
+      <h3>My Profile</h3>
     </div>
 	  <div class="container-sm mx-auto shadow" style="width:400px">                
 		  <ul class="list-group">                       

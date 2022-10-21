@@ -20,16 +20,16 @@ class KeeperController {
     require_once(VIEWS_PATH . "keeper-welcome.php");
   }
 
-  public function AddView() {
+  public function ScheduleView() {
     //Utils::checkKeeperSession();
     require_once(VIEWS_PATH . "keeper-nav.php");
-    require_once(VIEWS_PATH . "keeper-add.php");
+    require_once(VIEWS_PATH . "keeper-schedule.php");
   }
 
-  public function ListView() {
-    //Utils::checkKeeperSession();
-    require_once(VIEWS_PATH . "keeper-nav.php");
-    require_once(VIEWS_PATH . "keeper-list.php");
+  public function OwnerScheduleView() {
+    //Utils::checkOwnerSession();
+    require_once(VIEWS_PATH . "owner-nav.php");
+    require_once(VIEWS_PATH . "keeper-owner-schedule.php");
   }
 
   public function OwnerListView() {
@@ -44,21 +44,26 @@ class KeeperController {
     require_once(VIEWS_PATH . "keeper-list.php");
   }
 
-  public function AddKeeper($firstname, $lastname, $dni,$email,$gender) {
-    //Utils::checkAdminSession();    
-    $person = new Person();   
+  public function fecha ($fechaInicio,$fechaFin ) {
+    //Utils::checkKeeperSession();  
+    $person = new Person();  
+
     if ($person) {            
       $person = new Person();
-      $person->setFirstname($firstname);
-      $person->setLastname($lastname);
-      $person->setDni($dni);
-      $person->setEmail($email);
-      $person->setGender($gender);
-      $person->setIsActive(1);
-      $person->setRolId(3);   
+      $person->setIsActive(1); 
+      
+      $user = $_SESSION['keeper'];
+      [$person] = $user;     
+
       $this->keeperDAO->addKeeper($person);
-      $this->ListView();       
+      $this->ScheduleView();       
     }
-  }
+    print_r($fechaInicio );
+    echo("<br>");
+    print_r($fechaFin );
+   
+   }
 
 }
+
+?>

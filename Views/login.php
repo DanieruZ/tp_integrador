@@ -8,8 +8,8 @@
       <label for="email">Email</label>
       <input type="email" id="email" name="email" class="form-control form-control-lg" placeholder="Ingresar email">
     </div>
-    <button class="btn btn-dark btn-block btn-lg" type="submit">Iniciar Sesión</button>
-    <a href="<?php echo FRONT_ROOT ?>User/RegisterView">Registrarse</a> 
+    <button class="btn btn-dark btn-block btn-lg" type="submit">Sign In</button>
+    <a href="<?php echo FRONT_ROOT ?>User/RegisterView">Register</a> 
   </form>
 </div>
 </main>
