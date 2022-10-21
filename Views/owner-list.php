@@ -18,7 +18,6 @@ $personList = $ownerDAO->getAllOwner();
 
 		  <table class="table bg-light">
 			  <thead class="bg-dark text-white">
-				   <th>ID</th>
 				   <th>First Name</th>
 				   <th>Last Name</th>
 				   <th>DNI</th>
@@ -31,7 +30,6 @@ $personList = $ownerDAO->getAllOwner();
 ?>
 			  <tbody>	  				
 				  <tr>
-					  <td><?php echo $person->getPersonId(); ?></td>
 					 	<td><?php echo $person->getFirstname(); ?></td>
 						<td><?php echo $person->getLastname(); ?></td>
 						<td><?php echo $person->getDni(); ?></td>

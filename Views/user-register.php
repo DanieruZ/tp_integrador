@@ -1,8 +1,8 @@
 <main class="py-5">
 	<section class="mb-5">
 		<div class="container">
-			<form action="<?php echo FRONT_ROOT ?>Owner/AddOwner" method="POST" class="bg-light p-5">
-				<h2 class="mb-4 p-1 bg-dark text-white">Add Owner</h2>
+			<form action="<?php echo FRONT_ROOT ?>User/AddUser" method="POST" class="bg-light p-5">
+				<h2 class="mb-4 p-1 bg-dark text-white">Register</h2>
 				<div class="col-lg-4">
 					<div class="form-group">
 						<label for="firstname">Firstname</label>
@@ -38,7 +38,17 @@
 						<label for="other">other</label><br>
 					</div>
 				</div>
+                <div class="col-lg-4">
+					<p>Register Option</p>
+					<div class="form-group">
+						<input type="radio" name="rolId" id="2" value="2" required>
+						<label for="Owner">Owner</label><br>
+						<input type="radio" name="rolId" id="3" value="3">
+						<label for="Keeper">Keeper</label><br>						
+					</div>
+				</div>
 				<button type="submit" class="btn btn-outline-primary ml-auto d-block float-left">Add</button>
+				<a class="float-right" href="<?php echo FRONT_ROOT ?>User/logout">Back to main</a>
 			</form>
 		</div>
 	</section>

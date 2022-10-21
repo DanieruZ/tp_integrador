@@ -27,7 +27,6 @@ class UserDAO implements IUserDAO {
         $user->setLastname($value['lastname']);
         $user->setDni($value['dni']);
         $user->setEmail($value['email']);
-        $user->setPass($value['pass']);
         $user->setGender($value['gender']);
         $user->setIsActive($value['isActive']);
         $user->setRolId($value['rolId']);
@@ -59,7 +58,6 @@ class UserDAO implements IUserDAO {
         $user->setLastname($value['lastname']);
         $user->setDni($value['dni']);
         $user->setEmail($value['email']);
-        $user->setPass($value['pass']);
         $user->setGender($value['gender']);
         $user->setIsActive($value['isActive']);
         $user->setRolId($value['rolId']);
@@ -74,19 +72,18 @@ class UserDAO implements IUserDAO {
       }
   }
 
-  public function addPerson(Person $person) {
+  public function addUser(Person $user) {
     try {
       $query = "INSERT INTO person (firstname, lastname, dni, email, gender, isActive, rolId) 
                 VALUES (:firstname, :lastname, :dni, :email,  :gender, :isActive, :rolId)";
       
-      $parameters['firstname'] = $person->getFirstname();
-      $parameters['lastname'] = $person->getLastname();
-      $parameters['dni'] = $person->getDni();
-      $parameters['email'] = $person->getEmail();
-      // $parameters['pass'] = $person->getPass();
-      $parameters['gender'] = $person->getGender();
-      $parameters['isActive'] = $person->getIsActive();
-      $parameters['rolId'] = $person->getRolId();   
+      $parameters['firstname'] = $user->getFirstname();
+      $parameters['lastname'] = $user->getLastname();
+      $parameters['dni'] = $user->getDni();
+      $parameters['email'] = $user->getEmail();
+      $parameters['gender'] = $user->getGender();
+      $parameters['isActive'] = $user->getIsActive();
+      $parameters['rolId'] = $user->getRolId();   
 
       $this->connection = Connection::GetInstance();
       return $this->connection->executeNonQuery($query, $parameters);
