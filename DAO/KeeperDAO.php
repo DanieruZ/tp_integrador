@@ -5,6 +5,7 @@ namespace DAO;
 use Models\Person as Person;
 use DAO\IKeeperDAO as IKeeperDAO;
 use DAO\Connection as Connection;
+use Models\Schedule;
 
 class KeeperDAO implements IKeeperDAO {
 
@@ -14,13 +15,12 @@ class KeeperDAO implements IKeeperDAO {
   public function addKeeper(Person $person) {
     try {
       $query = "INSERT INTO person (firstname, lastname, dni, email, gender, isActive, rolId) 
-                VALUES (:firstname, :lastname, :dni, :email,  :gender, :isActive, :rolId)";
+                VALUES (:firstname, :lastname, :dni, :email, :gender, :isActive, :rolId)";
       
       $parameters['firstname'] = $person->getFirstname();
       $parameters['lastname'] = $person->getLastname();
       $parameters['dni'] = $person->getDni();
       $parameters['email'] = $person->getEmail();
-      // $parameters['pass'] = $person->getPass();
       $parameters['gender'] = $person->getGender();
       $parameters['isActive'] = $person->getIsActive();
       $parameters['rolId'] = $person->getRolId();   
@@ -52,7 +52,6 @@ class KeeperDAO implements IKeeperDAO {
         $person->setLastname($value['lastname']);
         $person->setDni($value['dni']);
         $person->setEmail($value['email']);
-        $person->setPass($value['pass']);
         $person->setGender($value['gender']);
         $person->setIsActive($value['isActive']);
         $person->setRolId($value['rolId']);
@@ -61,6 +60,34 @@ class KeeperDAO implements IKeeperDAO {
       }
 
       return $keeperList;
+
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
+  public function getScheduleById($personId) {
+    try {
+      $scheduleList = array();
+
+      $query = "SELECT * FROM agenda a
+                INNER JOIN person p ON p.scheduleId = a.scheduleId
+                WHERE p.personId = '$personId';";
+
+      $this->connection = Connection::GetInstance();
+      $allSchedule = $this->connection->Execute($query);
+
+      foreach ($allSchedule as $value) {
+        $schedule = new Schedule();
+        $schedule->setScheduleId($value['scheduleId']);
+        $schedule->setStartDate($value['startDate']);
+        $schedule->setEndDate($value['endDate']);
+        
+
+        array_push($scheduleList, $schedule);
+      }
+
+      return $scheduleList;
 
     } catch (\PDOException $ex) {
         throw $ex;

@@ -18,13 +18,11 @@ $personList = $ownerDAO->getAllOwner();
 
 		  <table class="table bg-light">
 			  <thead class="bg-dark text-white">
-				   <th>ID</th>
 				   <th>First Name</th>
 				   <th>Last Name</th>
 				   <th>DNI</th>
 					 <th>Email</th>
 				   <th>Gender</th>
-				 
 			  </thead>
 <?php
   if(isset($personList)) {
@@ -32,13 +30,11 @@ $personList = $ownerDAO->getAllOwner();
 ?>
 			  <tbody>	  				
 				  <tr>
-					  <td><?php echo $person->getPersonId(); ?></td>
 					 	<td><?php echo $person->getFirstname(); ?></td>
 						<td><?php echo $person->getLastname(); ?></td>
 						<td><?php echo $person->getDni(); ?></td>
 						<td><?php echo $person->getEmail(); ?></td>	
-						<td><?php echo $person->getGender(); ?></td>
-						
+						<td><?php echo $person->getGender(); ?></td>	
 					</tr>
 				</tbody>
 <?php 
