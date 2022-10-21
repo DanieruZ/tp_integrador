@@ -24,6 +24,7 @@ $personList = $ownerDAO->getAllOwner();
 				   <th>DNI</th>
 					 <th>Email</th>
 				   <th>Gender</th>
+				 
 			  </thead>
 <?php
   if(isset($personList)) {
@@ -36,7 +37,8 @@ $personList = $ownerDAO->getAllOwner();
 						<td><?php echo $person->getLastname(); ?></td>
 						<td><?php echo $person->getDni(); ?></td>
 						<td><?php echo $person->getEmail(); ?></td>	
-						<td><?php echo $person->getGender(); ?></td>	
+						<td><?php echo $person->getGender(); ?></td>
+						
 					</tr>
 				</tbody>
 <?php 

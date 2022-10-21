@@ -44,6 +44,32 @@ class KeeperController {
     require_once(VIEWS_PATH . "keeper-list.php");
   }
 
+  public function keeperShedule() {
+    //Utils::checkKeeperSession();
+    require_once(VIEWS_PATH . "keeper-nav.php");
+    require_once(VIEWS_PATH . "keeper-schedule.php");
+  }
+  public function fecha ($fechaInicio,$fechaFin ) {
+    //Utils::checkAdminSession();  
+    $person = new Person();   
+    if ($person) {            
+      $person = new Person();
+      $person->setIsActive(1); 
+      
+      $user = $_SESSION['keeper'];
+      [$person] = $user;     
+
+      $this->keeperDAO->addKeeper($person);
+      $this->ListView();       
+    }
+     print_r($fechaInicio );
+     echo("<br>");
+     print_r($fechaFin );
+    
+    }
+  
+  
+
   public function AddKeeper($firstname, $lastname, $dni,$email,$gender) {
     //Utils::checkAdminSession();    
     $person = new Person();   

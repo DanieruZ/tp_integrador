@@ -22,6 +22,8 @@ $personList = $keeperDAO->getAllKeeper();
 				<th>DNI</th>
 				<th>Email</th>
 				<th>Gender</th>
+				<th>Schedule</th>
+				<th>Agenda</th>
 			</thead>
 <?php
   if(isset($personList)) {
@@ -34,6 +36,7 @@ $personList = $keeperDAO->getAllKeeper();
 					<td><?php echo $person->getDni(); ?></td>
 					<td><?php echo $person->getEmail(); ?></td>
 					<td><?php echo $person->getGender(); ?></td>
+					<td><?php echo $person->getScheduleId(); ?></td>
 				</tr>
 			</tbody>
 <?php 

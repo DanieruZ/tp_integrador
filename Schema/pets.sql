@@ -7,6 +7,13 @@ CREATE TABLE IF NOT EXISTS rol (
   PRIMARY KEY (rolId)
 )Engine=InnoDB;
 
+CREATE TABLE IF NOT EXISTS agenda (
+  scheduleId INT NOT NULL AUTO_INCREMENT,
+  fechaInicio date,
+  fechaFin date,  
+  PRIMARY KEY (scheduleId)
+  )Engine=InnoDB;
+
 CREATE TABLE IF NOT EXISTS person (
   personId INT NOT NULL AUTO_INCREMENT,
   firstname VARCHAR(50) NOT NULL,
@@ -17,8 +24,10 @@ CREATE TABLE IF NOT EXISTS person (
   gender ENUM('female', 'male', 'other') NOT NULL,
   isActive BOOLEAN NOT NULL,
   rolId INT NOT NULL,
+  scheduleId int NULL,
   PRIMARY KEY (personId),
   FOREIGN KEY (rolId) REFERENCES rol (rolId),
+  FOREIGN KEY (scheduleId) REFERENCES agenda (scheduleId),
   UNIQUE (dni, email) 
 )Engine=InnoDB;
 
@@ -41,6 +50,8 @@ CREATE TABLE IF NOT EXISTS pet_owner (
     UNIQUE (personId, petId)
 )Engine=InnoDB;
 
+
+
 INSERT INTO rol
 VALUES (1, 'admin'),
        (2, 'owner'),
@@ -50,7 +61,7 @@ INSERT INTO person
 VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', '123', 'male', 1, 2),
        (2, 'ana', 'sanchez', '28542336', 'ana@gmail.com', '123', 'female', 1, 2),
        (3, 'pedro', 'perez', '41528996', 'pedro@gmail.com', '123', 'male', 1, 2),
-       (4, 'carlos', 'garcia', '18968896', 'carlos@gmail.com', '123', 'male', 1, 3),
+       (4, 'carlos', 'garcia', '18968896', 'carlos@gmail.com', '123', 'male', 1, 3,1),
        (5, 'susana', 'jerez', '39688964', 'susana@gmail.com', '123', 'female', 0, 3),
 	     (6, 'maria', 'rodriguez', '28542996', 'maria@gmail.com', '123', 'female', 1, 3),
        (7, 'marcela', 'dominguez', '48538996', 'marcela@gmail.com', '123', 'female', 1, 3),
@@ -86,3 +97,6 @@ VALUES (1, 10, 2),
        (8, 12, 1),     
        (9, 1, 5),     
        (10, 3, 9);
+
+       INSERT INTO agenda
+VALUES (1, '2022-10-20', '2022-10-25')
