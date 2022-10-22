@@ -14,7 +14,10 @@ $keeperDAO = new KeeperDAO();
 $keeperId = $keeper->getPersonId();
 
 $scheduleList = $keeperDAO->getScheduleById($keeperId);
+
+if($scheduleList){
 [$schedule] = $scheduleList;
+
 ?>
 
 <main class="py-5">
@@ -32,7 +35,11 @@ $scheduleList = $keeperDAO->getScheduleById($keeperId);
   </div>
   <div class="content">
   </header>
-
+  <?php
+ } else {
+    echo "<h2 style>No tiene una Agenda</h2>";
+ }
+ ?>
 <form action="<?php echo FRONT_ROOT ?>Keeper/fecha" method="POST" class="p-5">
 
   <div class="container-sm mx-auto shadow" style="width:400px">
