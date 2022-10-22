@@ -9,11 +9,9 @@ class Person {
   private $lastname;
   private $dni;
   private $email;
-  private $pass;
   private $gender;
   private $isActive;
   private $rolId;
-  
 
   public function __construct() {}
 
@@ -114,26 +112,6 @@ class Person {
   public function setEmail($email)
   {
     $this->email = $email;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of pass
-   */ 
-  public function getPass()
-  {
-    return $this->pass;
-  }
-
-  /**
-   * Set the value of pass
-   *
-   * @return  self
-   */ 
-  public function setPass($pass)
-  {
-    $this->pass = $pass;
 
     return $this;
   }

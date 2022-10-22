@@ -21,21 +21,17 @@ class ScheduleController
     require_once(VIEWS_PATH . "keeper-schedule.php");
   }
 
-  
-  public function AddSchedule($keeperId, $startDate, $endDate) {    
-    $schedule = new Schedule();   
+  public function AddSchedule($startDate, $endDate) {    
+    $schedule = new Schedule();
     if ($schedule) {
       $schedule = new Schedule();
       $schedule->setStartDate($startDate);
-      $schedule->setEndDate($endDate);
+      $schedule->setEndDate($endDate);   
+      $schedule->setState(1);  
 
-      // $user = $_SESSION['keeper'];
-      // [$person] = $user;
-      // $personId = $person->getPersonId();
+      $this->scheduleDAO->addSchedule($schedule);
       
-      $this->scheduleDAO->addSchedule($keeperId,$schedule);
       $this->ScheduleView();  
-      
     }
   }
 

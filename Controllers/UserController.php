@@ -21,14 +21,16 @@ class UserController
 
   public function AddUser($firstname, $lastname, $dni, $email, $gender,$rolId) {    
     $user = new Person();
+
     if ($user) {
       $user = new Person();
       $user->setFirstname($firstname);
       $user->setLastname($lastname);
       $user->setDni($dni);
       $user->setEmail($email);
-      $user->setGender($gender); 
-      $user = $rolId == 2 ? $user->setIsActive(1) : $user->setIsActive(0); //setea en inactivo al keeper cuando se registra hasta que tenga una agenda     
+      $user->setGender($gender);
+      $user = $rolId == 2 ? $user->setIsActive(1) : $user->setIsActive(0); //setea en inactivo al keeper cuando se registra hasta que tenga una agenda
+      $user->setIsActive(1);
       $user->setRolId($rolId);
       $this->userDAO->addUser($user);
       header('location: ../index.php');

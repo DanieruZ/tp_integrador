@@ -7,7 +7,9 @@ class Schedule {
   private $scheduleId;
   private $startDate;
   private $endDate;
+  private $state;
   private $personId;
+  
 
   public function __construct() {}
 
@@ -71,6 +73,26 @@ class Schedule {
 
     return $this;
   }
+  
+  /**
+   * Get the value of state
+   */ 
+  public function getState()
+  {
+    return $this->state;
+  }
+
+  /**
+   * Set the value of state
+   *
+   * @return  self
+   */ 
+  public function setState($state)
+  {
+    $this->state = $state;
+
+    return $this;
+  }
 
   /**
    * Get the value of personId
@@ -91,6 +113,8 @@ class Schedule {
 
     return $this;
   }
+
+  
 }
 
 ?>

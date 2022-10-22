@@ -40,7 +40,8 @@ class KeeperDAO implements IKeeperDAO {
 
       $query = "SELECT * FROM person p
                 INNER JOIN rol r ON r.rolId = p.rolId
-                WHERE r.rol = 'keeper' AND p.isActive = 1;";
+                INNER JOIN agenda a ON a.personId = p.personId 
+                WHERE r.rol = 'keeper' AND p.isActive = 1 AND a.state = 1;";
 
       $this->connection = Connection::GetInstance();
       $allKeeper = $this->connection->Execute($query);
@@ -55,7 +56,6 @@ class KeeperDAO implements IKeeperDAO {
         $person->setGender($value['gender']);
         $person->setIsActive($value['isActive']);
         $person->setRolId($value['rolId']);
-        $person->setScheduleId($value['scheduleId']);
 
         array_push($keeperList, $person);
       }
@@ -67,33 +67,7 @@ class KeeperDAO implements IKeeperDAO {
       }
   }
 
-  public function getScheduleById($personId) {
-    try {
-      $scheduleList = array();
 
-      $query = "SELECT * FROM agenda a
-                INNER JOIN person p ON p.scheduleId = a.scheduleId
-                WHERE p.personId = '$personId';";
-
-      $this->connection = Connection::GetInstance();
-      $allSchedule = $this->connection->Execute($query);
-
-      foreach ($allSchedule as $value) {
-        $schedule = new Schedule();
-        $schedule->setScheduleId($value['scheduleId']);
-        $schedule->setStartDate($value['startDate']);
-        $schedule->setEndDate($value['endDate']);
-        
-
-        array_push($scheduleList, $schedule);
-      }
-
-      return $scheduleList;
-
-    } catch (\PDOException $ex) {
-        throw $ex;
-      }
-  }
 
 }
 

@@ -6,13 +6,13 @@ require_once "Config\Autoload.php";
 
 use DAO\KeeperDAO as KeeperDAO;
 use DAO\ScheduleDAO as ScheduleDAO;
+use Models\Schedule;
 
 $keeperDAO = new KeeperDAO;
 $personList = $keeperDAO->getAllKeeper();
 
 $scheduleDAO = new ScheduleDAO();
 $scheduleList = $scheduleDAO->getSchedule();
-
 
 ?>
 
@@ -37,7 +37,7 @@ $scheduleList = $scheduleDAO->getSchedule();
     foreach ($personList as $person) {		
 		if(isset($scheduleList)) {	
 			foreach ($scheduleList as $schedule) {	
-				if($schedule->getScheduleId() == $person->getScheduleId()) {  
+				if($schedule->getPersonId() == $person->getPersonId()) {  
 				 
 			
 ?>
