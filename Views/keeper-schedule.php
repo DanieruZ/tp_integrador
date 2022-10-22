@@ -7,13 +7,14 @@ use DAO\KeeperDAO;
 require_once "Config\Autoload.php";
 require_once "keeper-nav.php";
 
+
 $keeperList = $_SESSION['keeper'];
 [$keeper] = $keeperList;
 
 $keeperDAO = new KeeperDAO();
 $keeperId = $keeper->getPersonId();
-
 $scheduleList = $keeperDAO->getScheduleById($keeperId);
+
 if($scheduleList){
 [$schedule] = $scheduleList;
 
@@ -42,15 +43,18 @@ if($scheduleList){
  ?>
 
 <form action="<?php echo FRONT_ROOT ?>Schedule/AddSchedule" method="POST" class="p-5">
-
+<?php print_r($keeperId);?>
   <div class="container-sm mx-auto shadow" style="width:400px">
   <div class="form-group ">
+  <input type="hidden" value= <?php echo($keeperId);?> name="keeperId">
+    </div>
+  <div class="form-group ">
       <label for="startDate">Start Date:</label>
-      <input type="date" id="startDate" name="startDate" class="form-control form-control-lg w-50" placeholder="Ingresar email">
+      <input type="date" id="startDate" name="startDate" class="form-control form-control-lg w-50" >
     </div>
     <div class="form-group">
       <label for="endDate">End Date:</label>
-      <input type="date" id="endDate" name="endDate" class="form-control form-control-lg w-50" placeholder="Ingresar email">
+      <input type="date" id="endDate" name="endDate" class="form-control form-control-lg w-50" >
     </div>
    <button class="btn btn-dark" type="submit">Register</button>
 </div>

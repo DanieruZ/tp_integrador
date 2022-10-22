@@ -7,13 +7,6 @@ CREATE TABLE IF NOT EXISTS rol (
   PRIMARY KEY (rolId)
 )Engine=InnoDB;
 
-CREATE TABLE IF NOT EXISTS agenda (
-  scheduleId INT NOT NULL AUTO_INCREMENT,
-  startDate DATE NOT NULL,
-  endDate DATE NOT NULL,
-  PRIMARY KEY (scheduleId)
-)Engine=InnoDB;
-
 CREATE TABLE IF NOT EXISTS person (
   personId INT NOT NULL AUTO_INCREMENT,
   firstname VARCHAR(50) NOT NULL,
@@ -23,11 +16,18 @@ CREATE TABLE IF NOT EXISTS person (
   gender ENUM('female', 'male', 'other') NOT NULL,
   isActive BOOLEAN NOT NULL DEFAULT 0,
   rolId INT NOT NULL,
-  scheduleId INT DEFAULT NULL,
-  PRIMARY KEY (personId),
-  FOREIGN KEY (scheduleId) REFERENCES agenda (scheduleId),
-  FOREIGN KEY (rolId) REFERENCES rol (rolId),
+  PRIMARY KEY (personId),  
+  FOREIGN KEY (rolId) REFERENCES rol (rolId),  
   UNIQUE (dni, email) 
+)Engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS agenda (
+  scheduleId INT NOT NULL AUTO_INCREMENT,
+  startDate DATE NOT NULL,
+  endDate DATE NOT NULL,
+  personId INT,
+  PRIMARY KEY (scheduleId),
+  FOREIGN KEY (personId) REFERENCES person (personId)
 )Engine=InnoDB;
 
 CREATE TABLE IF NOT EXISTS pet (
@@ -52,24 +52,24 @@ CREATE TABLE IF NOT EXISTS pet_owner (
 INSERT INTO rol
 VALUES (1, 'admin'),
        (2, 'owner'),
-       (3, 'keeper');
-       
-INSERT INTO agenda
-VALUES (1, '2022-10-01', '2022-11-30'),
-       (2, '2022-10-01', '2022-11-30'),
-       (3, '2022-10-01', '2022-11-30');      
-       
+       (3, 'keeper');     
+
+      
 INSERT INTO person
-VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 0, 2, null),
-       (2, 'ana', 'sanchez', '28542336', 'ana@gmail.com', 'female', 0, 2, null),
-       (3, 'pedro', 'perez', '41528996', 'pedro@gmail.com', 'male', 0, 2, null),
-       (4, 'carlos', 'garcia', '18968896', 'carlos@gmail.com', 'male', 1, 3, 3),
-       (5, 'susana', 'jerez', '39688964', 'susana@gmail.com', 'female', 0, 2, null),
-	   (6, 'maria', 'rodriguez', '28542996', 'maria@gmail.com', 'female', 1, 3, 1),
-       (7, 'marcela', 'dominguez', '48538996', 'marcela@gmail.com', 'female', 0, 2, null),
-       (8, 'martin', 'menendez', '19968896', 'martin@gmail.com', 'male', 0, 2, null),
-       (9, 'cristian', 'huerta', '39634484', 'cristian@gmail.com', 'male', 1, 2, 2),
-       (10, 'daniel', 'zeta', '77777777', 'daniel@gmail.com', 'male', 0, 1, null);
+VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 0, 2),
+       (2, 'ana', 'sanchez', '28542336', 'ana@gmail.com', 'female', 0, 2),
+       (3, 'pedro', 'perez', '41528996', 'pedro@gmail.com', 'male', 0, 2),
+       (4, 'carlos', 'garcia', '18968896', 'carlos@gmail.com', 'male', 1, 3),
+       (5, 'susana', 'jerez', '39688964', 'susana@gmail.com', 'female', 0, 2),
+	   (6, 'maria', 'rodriguez', '28542996', 'maria@gmail.com', 'female', 1, 3 ),
+       (7, 'marcela', 'dominguez', '48538996', 'marcela@gmail.com', 'female', 0, 2),
+       (8, 'martin', 'menendez', '19968896', 'martin@gmail.com', 'male', 0, 2),
+       (9, 'cristian', 'huerta', '39634484', 'cristian@gmail.com', 'male', 1, 2),
+       (10, 'daniel', 'zeta', '77777777', 'daniel@gmail.com', 'male', 0, 1);
+       
+       INSERT INTO agenda
+VALUES (1, '2022-10-06', '2022-10-30',4),
+       (2, '2022-10-21', '2022-11-5',6);
               
 INSERT INTO pet
 VALUES (1, 'sasha', 'large', 'dog', 'golden retriever'),
@@ -94,3 +94,4 @@ VALUES (1, 5, 2),
        (8, 2, 1),     
        (9, 7, 5),     
        (10, 3, 9);
+

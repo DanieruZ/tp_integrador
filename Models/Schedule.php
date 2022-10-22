@@ -7,6 +7,7 @@ class Schedule {
   private $scheduleId;
   private $startDate;
   private $endDate;
+  private $personId;
 
   public function __construct() {}
 
@@ -67,6 +68,26 @@ class Schedule {
   public function setEndDate($endDate)
   {
     $this->endDate = $endDate;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of personId
+   */ 
+  public function getPersonId()
+  {
+    return $this->personId;
+  }
+
+  /**
+   * Set the value of personId
+   *
+   * @return  self
+   */ 
+  public function setPersonId($personId)
+  {
+    $this->personId = $personId;
 
     return $this;
   }

@@ -5,14 +5,12 @@ namespace Views;
 require_once "Config\Autoload.php";
 
 use DAO\OwnerDAO as OwnerDAO;
-use DAO\ScheduleDAO as ScheduleDAO;
+
 
 
 $ownerDAO = new OwnerDAO();
 $personList = $ownerDAO->getAllOwner();
 
-$scheduleDAO = new ScheduleDAO();
-$scheduleList = $scheduleDAO->getSchedule();
 
 ?>
 
@@ -28,13 +26,12 @@ $scheduleList = $scheduleDAO->getSchedule();
 					<th>DNI</th>
 					<th>Email</th>
 					<th>Gender</th>
-					<th>inicio</th>
+					
 				</thead>
 				<?php
 				if (isset($personList)) {
 					foreach ($personList as $person) {
-						if (isset($scheduleList)) {
-							foreach ($scheduleList as $schedule) {
+						
 				?>
 						<tbody>
 							<tr>
@@ -43,14 +40,13 @@ $scheduleList = $scheduleDAO->getSchedule();
 								<td><?php echo $person->getDni(); ?></td>
 								<td><?php echo $person->getEmail(); ?></td>
 								<td><?php echo $person->getGender(); ?></td>
-								<td><?php echo $schedule->getStartDate(); ?></td>
+								
 							</tr>
 						</tbody>
 				<?php
 					}
 				}
-			}
-		}
+		
 				?>
 			</table>
 		</div>

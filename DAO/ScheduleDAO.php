@@ -13,12 +13,13 @@ class ScheduleDAO implements IScheduleDAO {
 
   public function addSchedule($personId,Schedule $schedule) {
     try {
-      $query = "INSERT INTO agenda (personId, startDate, endDate) 
-                VALUES (:personId, :startDate, :endDate)";
-      
+      $query = "INSERT INTO agenda (pstartDate, endDate) 
+                VALUES ( :startDate, :endDate)";
+      print_r($schedule);     
       $parameters['startDate'] = $schedule->getStartDate();
       $parameters['endDate'] = $schedule->getEndDate();
-      $parameters['scheduleId'] = $personId;
+      $parameters['personId'] = $schedule->setPersonId($personId);
+      
       
       $this->connection = Connection::GetInstance();
       return $this->connection->executeNonQuery($query, $parameters);
