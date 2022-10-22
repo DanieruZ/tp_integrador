@@ -7,6 +7,9 @@ interface IUserDAO {
   function AddUser(Person $person);
 	function getAllUser();
 	function getUserByEmail($email);
+	function deleteKeeper();
+	function activeKeeper();
+	
 	
 }
 

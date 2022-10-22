@@ -39,7 +39,7 @@ class ScheduleDAO implements IScheduleDAO
       $scheduleList = array();
 
       $query = "SELECT * FROM agenda
-                WHERE personId IS NOT NULL;";
+                WHERE personId IS NOT NULL AND state = 1;";
 
       $this->connection = Connection::GetInstance();
       $allSchedule = $this->connection->Execute($query);
@@ -71,10 +71,12 @@ class ScheduleDAO implements IScheduleDAO
       $user = $_SESSION['keeper'];
       [$person] = $user;
       $personId = $person->getPersonId();
+      
 
       $query = "SELECT * FROM agenda a
                 INNER JOIN person p ON p.personId = a.personId
-                WHERE p.personId = '$personId';";
+                WHERE p.personId = '$personId' AND (SELECT MAX(a.scheduleId) FROM agenda) 
+                order by a.scheduleId  desc;";
 
       $this->connection = Connection::GetInstance();
       $allSchedule = $this->connection->Execute($query);
@@ -95,4 +97,34 @@ class ScheduleDAO implements IScheduleDAO
       throw $ex;
     }
   }
+
+  public function deleteSchedule()
+  {
+    try {
+      $scheduleList = array();
+      $user = $_SESSION['keeper'];
+      [$person] = $user;
+      $personId = $person->getPersonId();
+
+      $query = "UPDATE agenda
+                SET state = 0 
+                WHERE personId = '$personId' ;";
+
+      $this->connection = Connection::GetInstance();
+      $allSchedule = $this->connection->Execute($query);
+
+      foreach ($allSchedule as $value) {
+        $schedule = new Schedule();
+        $schedule->setState($value['state']);
+
+        array_push($scheduleList, $schedule);
+      }
+
+      return $scheduleList;
+    } catch (\PDOException $ex) {
+      throw $ex;
+    }
+  }
+
+
 }

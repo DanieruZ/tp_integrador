@@ -3,7 +3,9 @@
 namespace Controllers;
 
 use DAO\ScheduleDAO as ScheduleDAO;
+use DAO\UserDAO as UserDAO;
 use Models\Schedule as Schedule;
+use Models\Person as Person;
 use Utils\Utils as Utils;
 
 class ScheduleController
@@ -13,6 +15,8 @@ class ScheduleController
 
   public function __construct() {
     $this->scheduleDAO = new ScheduleDAO();
+    $this->UserDAO = new UserDAO();
+
   }
 
   public function ScheduleView() {
@@ -23,22 +27,45 @@ class ScheduleController
 
   public function AddSchedule($startDate, $endDate) {    
     $schedule = new Schedule();
-    if ($schedule) {
+    $person = new Person();
+    if ($schedule && $person) {
       $schedule = new Schedule();
       $schedule->setStartDate($startDate);
       $schedule->setEndDate($endDate);   
       $schedule->setState(1);  
+      $person->setIsActive(1);
 
       $this->scheduleDAO->addSchedule($schedule);
+      $this->UserDAO->activeKeeper($person);
+      $this->ScheduleView();  
+    }
+  }
+
+  public function DeleteSchedule() {    
+    $schedule = new Schedule();
+    $person = new Person();
+    if ($schedule && $person) {
+      $schedule = new Schedule();  
+      $person = new Person();    
+      $schedule->setState(0);
+      $person->setIsActive(0);
+
+      $this->scheduleDAO->deleteSchedule($schedule);
+      $this->UserDAO->deleteKeeper($person);
+
+
       
       $this->ScheduleView();  
     }
   }
 
+
   public function logout() {
     session_destroy();
     header('location: ../index.php');
   }
+
+
 
 }
 

@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS agenda (
   scheduleId INT NOT NULL AUTO_INCREMENT,
   startDate DATE NOT NULL,
   endDate DATE NOT NULL,
+  state BOOLEAN DEFAULT 0,
   personId INT,
   PRIMARY KEY (scheduleId),
   FOREIGN KEY (personId) REFERENCES person (personId)
@@ -68,8 +69,8 @@ VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 0, 2),
        (10, 'daniel', 'zeta', '77777777', 'daniel@gmail.com', 'male', 0, 1);
        
        INSERT INTO agenda
-VALUES (1, '2022-10-06', '2022-10-30',4),
-       (2, '2022-10-21', '2022-11-5',6);
+VALUES (1, '2022-10-06', '2022-10-30',1,4),
+       (2, '2022-10-21', '2022-11-5',0,6);
               
 INSERT INTO pet
 VALUES (1, 'sasha', 'large', 'dog', 'golden retriever'),
