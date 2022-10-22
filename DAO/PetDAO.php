@@ -3,6 +3,7 @@
 namespace DAO;
 
 use Models\Pet as Pet;
+use Models\Person as Person;
 use DAO\IPetDAO as IPetDAO;
 use DAO\Connection as Connection;
 
@@ -43,14 +44,22 @@ class PetDAO implements IPetDAO {
       }
   }
 
-  public function addPetOwner($personId, $petId) {
+  public function addPetOwner() {
     try {
+      $user = $_SESSION['owner'];
+      [$person] = $user;      
+      $personId = $person->getPersonId();
+
+      $lastId = $this->getPetLastId();
+      [$pet] = $lastId;
+      $petId = $pet[0];
+
       $query = "INSERT INTO pet_owner (personId, petId)
                 VALUES (:personId, :petId);";
-                
+               
+      $parameters['personId'] = $personId;          
       $parameters['petId'] = $petId;
-      $parameters['personId'] = $personId;  
-
+       
       $this->connection = Connection::GetInstance();
       return $this->connection->executeNonQuery($query, $parameters);
 
@@ -58,8 +67,6 @@ class PetDAO implements IPetDAO {
         throw $ex;
       }
   }
-
-
 
   public function getAllPet() {
     try {

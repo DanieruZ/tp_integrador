@@ -25,6 +25,7 @@ $petList = $petDAO->getMyPet($personId);
 				<th>Size</th>
 				<th>Pet type</th>
 				<th>Breed</th>
+				<th></th>
       </thead>
 <?php
   if(isset($petList)) {
@@ -36,6 +37,18 @@ $petList = $petDAO->getMyPet($personId);
 					<td><?php echo $pet->getSize(); ?></td>
 					<td><?php echo $pet->getPet_type(); ?></td>
 					<td><?php echo $pet->getBreed(); ?></td>
+					<td>
+						<button type="submit" name="btnUpdate" class="btn btn-outline-primary">
+          		<a href="<?php if (isset($petList)) {
+              	echo FRONT_ROOT . "Pet/UpdatePet/" . $pet->getPetId();
+            	}; ?>">Update</a></button>
+
+						<button type="submit" name="btnRemove" class="btn btn-outline-danger">
+          		<a href="<?php if (isset($petList)) {
+              	echo FRONT_ROOT . "Pet/DeletePet/" . $pet->getPetId();
+            	}; ?>">Delete</a></button>
+					</td>
+				</tr>
 				</tr>
 			</tbody>
 <?php 
