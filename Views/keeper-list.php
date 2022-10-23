@@ -23,10 +23,7 @@ $scheduleList = $scheduleDAO->getSchedule();
 		<table class="table bg-light">
 		  <thead class="bg-dark text-white">
 				<th>First Name</th>
-				<th>Last Name</th>
-				<th>DNI</th>
-				<th>Email</th>
-				<th>Gender</th>				
+				<th>Last Name</th>					
 				<th>Date Start</th>
 				<th>End Start</th>
 				<th>Select Keeper</th>
@@ -44,12 +41,12 @@ $scheduleList = $scheduleDAO->getSchedule();
 			<tbody>	  				
 				<tr>
 					<td><?php echo $person->getFirstname(); ?></td>
-					<td><?php echo $person->getLastname(); ?></td>
-					<td><?php echo $person->getDni(); ?></td>
-					<td><?php echo $person->getEmail(); ?></td>
-					<td><?php echo $person->getGender(); ?></td>					
+					<td><?php echo $person->getLastname(); ?></td>												
 					<td><?php echo $schedule->getStartDate(); ?></td>
 					<td><?php echo $schedule->getEndDate(); ?></td>
+					<td><button><a href="<?php if (isset($schedule)) {
+                            echo FRONT_ROOT . "Keeper/infoKeeper/" . $person->getPersonId() ;
+                          }; ?>">View Info</a></button></td>
 					
 				</tr>
 			</tbody>

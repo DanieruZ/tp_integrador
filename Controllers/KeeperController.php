@@ -44,25 +44,11 @@ class KeeperController {
     require_once(VIEWS_PATH . "keeper-list.php");
   }
 
-  public function fecha ($fechaInicio,$fechaFin ) {
-    //Utils::checkKeeperSession();  
-    $person = new Person();  
-
-    if ($person) {            
-      $person = new Person();
-      $person->setIsActive(1); 
-      
-      $user = $_SESSION['keeper'];
-      [$person] = $user;     
-
-      $this->keeperDAO->addKeeper($person);
-      $this->ScheduleView();       
-    }
-    print_r($fechaInicio );
-    echo("<br>");
-    print_r($fechaFin );
-   
-   }
+  public function infoKeeper ($personId) {
+    //Utils::checkKeeperSession();        
+    require_once(VIEWS_PATH . "owner-nav.php");
+    require_once(VIEWS_PATH . "keeper-list-info.php");      
+    }   
 
 }
 
