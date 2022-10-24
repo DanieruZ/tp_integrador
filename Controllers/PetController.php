@@ -20,6 +20,12 @@ class PetController {
     require_once(VIEWS_PATH . "pet-add.php");
   }
 
+  public function OwnerProfileView($petId) {
+    //Utils::checkOwnerSession();
+    require_once(VIEWS_PATH . "owner-nav.php");
+    require_once(VIEWS_PATH . "pet-profile.php");
+  }
+
   public function OwnerListView() {
     //Utils::checkOwnerSession();
     require_once(VIEWS_PATH . "owner-nav.php");

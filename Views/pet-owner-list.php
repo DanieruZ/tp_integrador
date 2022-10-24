@@ -38,12 +38,17 @@ $petList = $petDAO->getMyPet($personId);
 					<td><?php echo $pet->getPet_type(); ?></td>
 					<td><?php echo $pet->getBreed(); ?></td>
 					<td>
-						<button type="submit" name="btnUpdate" class="btn btn-outline-warning">
+					<button type="submit" name="btnProfile" class="btn btn-sm btn-outline-info">
+          		<a href="<?php if (isset($petList)) {
+              	echo FRONT_ROOT . "Pet/OwnerProfileView/" . $pet->getPetId();
+            	}; ?>">Profile</a>
+						</button>
+						<button type="submit" name="btnUpdate" class="btn btn-sm btn-outline-warning">
           		<a href="<?php if (isset($petList)) {
               	echo FRONT_ROOT . "Pet/UpdatePet/" . $pet->getPetId();
             	}; ?>">Update</a>
 						</button>
-						<button type="submit" name="btnRemove" class="btn btn-outline-danger">
+						<button type="submit" name="btnRemove" class="btn btn-sm btn-outline-danger">
           		<a href="<?php if (isset($petList)) {
               	echo FRONT_ROOT . "Pet/DeletePet/" . $pet->getPetId();
             	}; ?>">Delete</a>
