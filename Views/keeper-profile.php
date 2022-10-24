@@ -26,7 +26,8 @@ $keeperInfo = $keeperDAO->getKeeperById($personId);
         <li class="list-group-item">Email: <?php echo $keeper->getEmail(); ?></li>
         <li class="list-group-item">Gender: <?php echo $keeper->getGender(); ?></li>
       </ul>
-    </div>
+     <a class="float-right m-3" href="<?php echo FRONT_ROOT ?>Keeper/OwnerListView">Go back</a> 
+    </div>    
   </div>
 </section>
 </main>

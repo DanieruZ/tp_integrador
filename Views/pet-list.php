@@ -39,7 +39,6 @@ $petList = $petDAO->getAllPet();
               	echo FRONT_ROOT . "Pet/UpdatePet/" . $pet->getPetId();
             	}; ?>">Update</a>
 						</button>
-
 						<button type="submit" name="btnRemove" class="btn btn-outline-danger">
           		<a href="<?php if (isset($petList)) {
               	echo FRONT_ROOT . "Pet/DeletePet/" . $pet->getPetId();
