@@ -12,10 +12,8 @@ class Person {
   private $gender;
   private $isActive;
   private $rolId;
-  private $scheduleId;
 
   public function __construct() {}
-
 
   /**
    * Get the value of personId
@@ -177,25 +175,6 @@ class Person {
     return $this;
   }
 
-  /**
-   * Get the value of scheduleId
-   */ 
-  public function getScheduleId()
-  {
-    return $this->scheduleId;
-  }
-
-  /**
-   * Set the value of scheduleId
-   *
-   * @return  self
-   */ 
-  public function setScheduleId($scheduleId)
-  {
-    $this->scheduleId = $scheduleId;
-
-    return $this;
-  }
 }
 
 ?>
