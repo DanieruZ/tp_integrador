@@ -126,6 +126,95 @@ class PetDAO implements IPetDAO {
       }
   }
 
+  public function deletePetById($petId) {
+    try {
+      $query = "DELETE FROM pet WHERE petId = :petId;";
+
+      $parameters['petId'] = $petId;
+
+      $this->connection = Connection::GetInstance();
+      return $this->connection->executeNonQuery($query, $parameters);
+
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
+  public function getPetById($petId) {
+    try {
+      $petList = array();    
+
+      $query = "SELECT * FROM pet
+                WHERE petId = '$petId';";
+
+      $this->connection = Connection::GetInstance();
+      $allPet = $this->connection->Execute($query);
+
+      foreach ($allPet as $value) {
+        $pet = new Pet();
+        $pet->setPetId($value['petId']);
+        $pet->setPetname($value['petname']);
+        $pet->setSize($value['size']);
+        $pet->setPet_type($value['pet_type']);
+        $pet->setBreed($value['breed']);
+        
+        array_push($petList, $pet);
+      }
+
+      return $petList;
+
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
+  /*public function updatePet($petId, $petname, $size, $pet_type, $breed) {
+    try {
+      $query = "UPDATE pet 
+                SET petname = '$petname', 
+                    size = '$size', 
+                    pet_type = '$pet_type',
+                    breed = '$breed'
+                WHERE petId = '$petId';";
+
+      $pet = new Pet();
+      $parameters['petId'] = $pet->getPetId();
+      $parameters['petname'] = $pet->getPetname();
+      $parameters['size'] = $pet->getSize();
+      $parameters['pet_type'] = $pet->getPet_type();
+      $parameters['breed'] = $pet->getBreed(); 
+
+      $this->connection = Connection::GetInstance();
+      return $this->connection->executeNonQuery($query, $parameters);
+
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }*/
+
+  public function updatePet(Pet $pet) {
+    try {
+      $query = "UPDATE pet 
+                SET petname = :petname, 
+                    size = :size, 
+                    pet_type = :pet_type,
+                    breed = :breed,
+                WHERE petId = :petId';";
+
+      $parameters['petId'] = $pet->getPetId();
+      $parameters['petname'] = $pet->getPetname();
+      $parameters['size'] = $pet->getSize();
+      $parameters['pet_type'] = $pet->getPet_type();
+      $parameters['breed'] = $pet->getBreed(); 
+
+      $this->connection = Connection::GetInstance();
+      return $this->connection->executeNonQuery($query, $parameters);
+
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
 }
 
 ?>

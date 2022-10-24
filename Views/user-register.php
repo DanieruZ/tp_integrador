@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<button type="submit" class="btn btn-outline-primary ml-auto d-block float-left">Add</button>
-				<a class="float-right" href="<?php echo FRONT_ROOT ?>User/logout">Back to main</a>
+				<a class="float-right" href="<?php echo FRONT_ROOT ?>User/logout">Go back</a>
 			</form>
 		</div>
 	</section>
