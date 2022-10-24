@@ -45,7 +45,7 @@ if(isset($personList)) {
 					<td><?php echo $schedule->getStartDate(); ?></td>
 					<td><?php echo $schedule->getEndDate(); ?></td>
 					<td>
-						<button type="submit" name="btnProfile" class="btn btn-outline-info">
+						<button type="submit" name="btnProfile" class="btn btn-sm btn-outline-info">
           		<a href="<?php if (isset($schedule)) {
               	echo FRONT_ROOT . "Keeper/keeperProfile/" . $person->getPersonId();
             	}; ?>">Profile</a>
