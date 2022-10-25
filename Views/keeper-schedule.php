@@ -8,12 +8,16 @@ use DAO\ScheduleDAO;
 require_once "Config\Autoload.php";
 require_once "keeper-nav.php";
 
-$scheduleDAO = new ScheduleDAO();
-$scheduleList = $scheduleDAO->getScheduleById();
+$user = $_SESSION['keeper'];
+[$person] = $user;
+$personId = $person->getPersonId();
 
+$scheduleDAO = new ScheduleDAO();
+$scheduleList = $scheduleDAO->getScheduleById($personId);
 
 if ($scheduleList) {
   [$schedule] = $scheduleList;
+
   if ($schedule->getState() == 1) {
 
 ?>
@@ -28,40 +32,71 @@ if ($scheduleList) {
             <ul class="list-group">
               <li class="list-group-item">Start Date: <?php echo $schedule->getStartDate(); ?></li>
               <li class="list-group-item">End Date: <?php echo $schedule->getEndDate(); ?></li>
-              <li <button type="submit" name="btnRemove" class="btn btn-outline-danger">
-                <a href="<?php if (isset($schedule)) {
-                            echo FRONT_ROOT . "Schedule/DeleteSchedule";
-                          }; ?>">Delete Schedule</a></button>
-              </li>
             </ul>
+          </div>
+          <div class="d-flex justify-content-center mb-3">
+            <button type="submit" name="btnRemove" class="btn btn-outline-danger w-25 m-5">
+              <a href="<?php if (isset($schedule)) {
+                          echo FRONT_ROOT . "Schedule/DeleteSchedule";
+                        }; ?>">Delete Schedule</a>
+            </button>
           </div>
         </div>
       </section>
 
     <?php
-
   }
 }
+
 if (!$scheduleList || $schedule->getState() == 0) {
 
-
     ?>
+
     <section class="mb-5">
       <form action="<?php echo FRONT_ROOT ?>Schedule/AddSchedule" method="POST" class="p-5">
-
         <div class="container-sm mx-auto shadow" style="width:400px">
           <div class="form-group ">
             <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate" name="startDate" class="form-control form-control-lg w-50" placeholder="Ingresar email">
+            <input type="date" id="startDate" name="startDate" min="<?php echo  $fcha = date("Y-m-d"); ?>" class="form-control form-control-lg w-50">
           </div>
-          <div class="form-group">
+
+          <div class="form-group" style="width:400px">
             <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" name="endDate" class="form-control form-control-lg w-50" placeholder="Ingresar email">
+            <input type="date" id="endDate" name="endDate" min="<?php echo  $fcha = date("Y-m-d"); ?>" class="form-control form-control-lg w-50">
           </div>
+
+          <div class="form-group">
+            <label for="cost">Cost for a day:</label>
+            <input type="input" id="cost" name="cost" placeholder="enter the price" class="form-control form-control-lg w-50">
+          </div>      
+
+          <div class="form-group" style="width:400px">
+            <label for="size">Size of Dog:</label>
+            <select name="size">
+              <option name="size" id="small" value="small" required selected>Small </option>
+              <option name="size" id="medium" value="medium">Medium </option>
+              <option name="size" id="large" value="large">Large </option>
+              <option name="size" id="x-large" value="x-large">X-Large </option>
+            </select>
+          </div>
+
+          <div class="form-group" style="width:400px">
+            <label for="pet_type">Pet Type</label>
+            <select name="pet_type">
+              <option name="pet_type" id="dog" value="dog" required selected>Dog </option>
+              <option name="pet_type" id="cat" value="cat">Cat </option>
+              <option name="pet_type" id="bird" value="bird">Bird </option>
+            </select>
+          </div>
+
+
+
+
+
+
           <button class="btn btn-dark" type="submit">Register</button>
         </div>
       </form>
-      </div>
     </section>
 
   <?php
@@ -70,38 +105,3 @@ if (!$scheduleList || $schedule->getState() == 0) {
     </main>
 
     <?php include('footer.php') ?>
-
-    <?php
-    /*
-<main class="d-flex align-items-center justify-content-center height-100" >
-<div class="content">
-  <header class="text-center">
-    <h2>Schedule</h2>
-  </header>
-
-<form action="<?php echo FRONT_ROOT ?>Keeper/fecha" method="POST" class="p-5">
-
-  <p>Start date: <input type="date" name="fechaInicio"></p>
-  <p>End date: <input type="date" name="fechaFin">
-   <input type="submit" value="Enviar datos"></p>
-
-</form>
-
-</div>
-</main>*/
-    ?>
-
-    <?php
-
-    date_default_timezone_set("America/Buenos_Aires");
-    #Domingo 0, Lunes 1... Sábado 6
-
-    $dia_actual = intval(date("w")); #Convertir siempre a entero para evitar errores
-    // print_r($dia_actual);
-    if ($dia_actual != 6 && $dia_actual != 0) {
-      # Aquí la acción que se realice en el horario permitido
-      //echo "Bienvenido, visitante";
-    } else {
-      # Mostrar un aviso
-      //echo "No se permiten visitantes en este día";
-    }

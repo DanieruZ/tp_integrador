@@ -15,7 +15,6 @@ class Person {
 
   public function __construct() {}
 
-
   /**
    * Get the value of personId
    */ 
@@ -175,7 +174,7 @@ class Person {
 
     return $this;
   }
- 
+
 }
 
 ?>

@@ -11,6 +11,8 @@ interface IPetDAO {
 	function addPetOwner();
 	function getAllPet();
 	function getMyPet($personId);
+	function deletePetById($petId);
+	function getPetById($petId);
 	
 }
 

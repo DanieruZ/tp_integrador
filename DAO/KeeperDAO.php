@@ -33,15 +33,14 @@ class KeeperDAO implements IKeeperDAO {
       }
   }
 
-//* Lista todos los keepers activos.
+  //* Lista todos los keepers activos.
   public function getAllKeeper() {
     try {
       $keeperList = array();
 
       $query = "SELECT * FROM person p
                 INNER JOIN rol r ON r.rolId = p.rolId
-                INNER JOIN agenda a ON a.personId = p.personId 
-                WHERE r.rol = 'keeper' AND p.isActive = 1 AND a.state = 1;";
+                WHERE r.rol = 'keeper' AND p.isActive = 1;";
 
       $this->connection = Connection::GetInstance();
       $allKeeper = $this->connection->Execute($query);
@@ -67,8 +66,7 @@ class KeeperDAO implements IKeeperDAO {
       }
   }
 
-  //* Lista todos los keepers activos.
-  public function getKeeperById($personId) {
+   public function getKeeperById($personId) {
     try {
       $keeperList = array();    
 
@@ -90,7 +88,9 @@ class KeeperDAO implements IKeeperDAO {
         $person->setGender($value['gender']);
         $person->setIsActive($value['isActive']);
         $person->setRolId($value['rolId']);
+        
 
+       
         array_push($keeperList, $person);
       }
 
@@ -101,7 +101,65 @@ class KeeperDAO implements IKeeperDAO {
       }
   }
 
+    //* Activa el estado de un Keeper
+    public function deleteKeeper() {
+      try {
+        $personList = array();
 
+        $user = $_SESSION['keeper'];
+        [$person] = $user;
+        $personId = $person->getPersonId();
+  
+        $query = "UPDATE person
+                  SET isActive = 0 
+                  WHERE personId = '$personId';";
+  
+        $this->connection = Connection::GetInstance();
+        $allPerson = $this->connection->Execute($query);
+  
+        foreach ($allPerson as $value) {
+          $person = new Person();
+          $person->setIsActive($value['isActive']);
+  
+          array_push($personList, $person);
+        }
+  
+        return $personList;
+
+      } catch (\PDOException $ex) {
+          throw $ex;
+        }
+    }
+  
+    //* Activa el estado de un Keeper sin agenda o agenda eliminada.
+    public function activeKeeper() {
+      try {
+        $personList = array();
+
+        $user = $_SESSION['keeper'];
+        [$person] = $user;
+        $personId = $person->getPersonId();
+  
+        $query = "UPDATE person
+                  SET isActive = 1 
+                  WHERE personId = '$personId';";
+  
+        $this->connection = Connection::GetInstance();
+        $allPerson = $this->connection->Execute($query);
+  
+        foreach ($allPerson as $value) {
+          $person = new Person();
+          $person->setIsActive($value['isActive']);
+  
+          array_push($personList, $person);
+        }
+  
+        return $personList;
+
+      } catch (\PDOException $ex) {
+          throw $ex;
+        }
+    }
 
 }
 

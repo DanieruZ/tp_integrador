@@ -41,6 +41,7 @@ class OwnerController {
   public function AddOwner($firstname, $lastname, $dni,$email,$gender) {
     //Utils::checkAdminSession();    
     $person = new Person();   
+    
     if ($person) {            
       $person = new Person();
       $person->setFirstname($firstname);

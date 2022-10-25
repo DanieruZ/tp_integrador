@@ -9,6 +9,9 @@ class Schedule {
   private $endDate;
   private $state;
   private $personId;
+  private $size;
+  private $pet_type;
+  private $cost;
   
 
   public function __construct() {}
@@ -73,7 +76,7 @@ class Schedule {
 
     return $this;
   }
-  
+
   /**
    * Get the value of state
    */ 
@@ -112,9 +115,69 @@ class Schedule {
     $this->personId = $personId;
 
     return $this;
+  } 
+
+  /**
+   * Get the value of size
+   */ 
+  public function getSize()
+  {
+    return $this->size;
   }
 
-  
+  /**
+   * Set the value of size
+   *
+   * @return  self
+   */ 
+  public function setSize($size)
+  {
+    $this->size = $size;
+
+    return $this;
+  }
+
+
+
+  /**
+   * Get the value of pet_type
+   */ 
+  public function getPet_type()
+  {
+    return $this->pet_type;
+  }
+
+  /**
+   * Set the value of pet_type
+   *
+   * @return  self
+   */ 
+  public function setPet_type($pet_type)
+  {
+    $this->pet_type = $pet_type;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of cost
+   */ 
+  public function getCost()
+  {
+    return $this->cost;
+  }
+
+  /**
+   * Set the value of cost
+   *
+   * @return  self
+   */ 
+  public function setCost($cost)
+  {
+    $this->cost = $cost;
+
+    return $this;
+  }
 }
 
 ?>

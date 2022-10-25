@@ -71,8 +71,7 @@ class UserDAO implements IUserDAO {
         throw $ex;
       }
   }
-  
- // --------------Utilizamos este metodo para agregar un usuario que puede ser de tipo Administrador, Owner o Keeper...
+
   public function addUser(Person $user) {
     try {
       $query = "INSERT INTO person (firstname, lastname, dni, email, gender, isActive, rolId) 
@@ -92,65 +91,6 @@ class UserDAO implements IUserDAO {
     } catch (\PDOException $ex) {
         throw $ex;
       }
-  }
-
-  // --------------Utilizamos este metodo para setear en 0 es decir desactivar un keeper...
-  public function deleteKeeper()
-  {
-    try {
-      $personList = array();
-      $user = $_SESSION['keeper'];
-      [$person] = $user;
-      $personId = $person->getPersonId();
-
-      $query = "UPDATE person
-                SET isActive = 0 
-                WHERE personId = '$personId' ;";
-
-      $this->connection = Connection::GetInstance();
-      $allPerson = $this->connection->Execute($query);
-
-      foreach ($allPerson as $value) {
-        $person = new Person();
-        $person->setIsActive($value['isActive']);
-
-        array_push($personList, $person);
-      }
-
-      return $personList;
-    } catch (\PDOException $ex) {
-      throw $ex;
-    }
-  }
-
-  //-------------------------Utilizamos este metodo para activar un keeper por el motivo que no tenga una agenda pendiente 
-  //-------------------------o que se haya desactivado de forma personal
-  public function activeKeeper()
-  {
-    try {
-      $personList = array();
-      $user = $_SESSION['keeper'];
-      [$person] = $user;
-      $personId = $person->getPersonId();
-
-      $query = "UPDATE person
-                SET isActive = 1 
-                WHERE personId = '$personId' ;";
-
-      $this->connection = Connection::GetInstance();
-      $allPerson = $this->connection->Execute($query);
-
-      foreach ($allPerson as $value) {
-        $person = new Person();
-        $person->setIsActive($value['isActive']);
-
-        array_push($personList, $person);
-      }
-
-      return $personList;
-    } catch (\PDOException $ex) {
-      throw $ex;
-    }
   }
 
 }

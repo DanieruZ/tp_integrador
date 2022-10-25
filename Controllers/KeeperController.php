@@ -44,11 +44,11 @@ class KeeperController {
     require_once(VIEWS_PATH . "keeper-list.php");
   }
 
-  public function infoKeeper ($personId) {
+  public function keeperProfile ($personId) {
     //Utils::checkKeeperSession();        
     require_once(VIEWS_PATH . "owner-nav.php");
-    require_once(VIEWS_PATH . "keeper-list-info.php");      
-    }   
+    require_once(VIEWS_PATH . "keeper-profile.php");      
+  }
 
 }
 
