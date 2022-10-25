@@ -6,33 +6,39 @@ use Models\Schedule;
 use DAO\IScheduleDAO as IScheduleDAO;
 use DAO\Connection as Connection;
 
-class ScheduleDAO implements IScheduleDAO {
+class ScheduleDAO implements IScheduleDAO
+{
 
   private $connection;
 
-  public function addSchedule(Schedule $schedule) {
+  public function addSchedule(Schedule $schedule)
+  {
     try {
       $user = $_SESSION['keeper'];
       [$person] = $user;
 
-      $query = "INSERT INTO agenda ( startDate, endDate, state, personId ) 
-                VALUES (:startDate, :endDate, :state, :personId)";
+      $query = "INSERT INTO agenda ( startDate, endDate, state, personId, size, pet_type, cost ) 
+                VALUES (:startDate, :endDate, :state, :personId, :size, :pet_type, :cost)";
 
       $parameters['startDate'] = $schedule->getStartDate();
       $parameters['endDate'] = $schedule->getEndDate();
       $parameters['state'] = $schedule->getState();
       $parameters['personId'] = $person->getPersonId();
+      $parameters['size'] = $schedule->getSize();
+      $parameters['pet_type'] = $schedule->getPet_type();
+      $parameters['cost'] = $schedule->getCost();
 
       $this->connection = Connection::GetInstance();
       return $this->connection->executeNonQuery($query, $parameters);
-      
     } catch (\PDOException $ex) {
-        throw $ex;
-      }
+      throw $ex;
+    }
   }
 
-  public function getSchedule() {
+  public function getSchedule()
+  {
     try {
+     
       $scheduleList = array();
 
       $query = "SELECT * FROM agenda
@@ -49,25 +55,26 @@ class ScheduleDAO implements IScheduleDAO {
         $schedule->setEndDate($value['endDate']);
         $schedule->setState($value['state']);
         $schedule->setPersonId($value['personId']);
+        $schedule->setSize($value['size']);
+        $schedule->setPet_type($value['pet_type']);
+        $schedule->setCost($value['cost']);
 
         array_push($scheduleList, $schedule);
       }
 
       return $scheduleList;
-
     } catch (\PDOException $ex) {
-        throw $ex;
-      }
+      throw $ex;
+    }
   }
 
-  public function getScheduleById() {
-    try {
+  public function getScheduleById($personId)
+  {
+    try {       
+
+
       $scheduleList = array();
 
-      $user = $_SESSION['keeper'];
-      [$person] = $user;
-      $personId = $person->getPersonId();
-      
       $query = "SELECT * FROM agenda a
                 INNER JOIN person p ON p.personId = a.personId
                 WHERE p.personId = '$personId' 
@@ -83,18 +90,21 @@ class ScheduleDAO implements IScheduleDAO {
         $schedule->setStartDate($value['startDate']);
         $schedule->setState($value['state']);
         $schedule->setEndDate($value['endDate']);
+        $schedule->setSize($value['size']);
+        $schedule->setPet_type($value['pet_type']);
+        $schedule->setCost($value['cost']);
 
         array_push($scheduleList, $schedule);
       }
 
       return $scheduleList;
-
     } catch (\PDOException $ex) {
-        throw $ex;
-      }
+      throw $ex;
+    }
   }
 
-  public function deleteSchedule() {
+  public function deleteSchedule()
+  {
     try {
       $scheduleList = array();
 
@@ -117,12 +127,8 @@ class ScheduleDAO implements IScheduleDAO {
       }
 
       return $scheduleList;
-
     } catch (\PDOException $ex) {
-        throw $ex;
-      }
+      throw $ex;
+    }
   }
-
 }
-
-?>

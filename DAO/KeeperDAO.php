@@ -88,7 +88,9 @@ class KeeperDAO implements IKeeperDAO {
         $person->setGender($value['gender']);
         $person->setIsActive($value['isActive']);
         $person->setRolId($value['rolId']);
+        
 
+       
         array_push($keeperList, $person);
       }
 

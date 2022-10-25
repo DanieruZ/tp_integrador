@@ -23,9 +23,10 @@ class ScheduleController {
     require_once(VIEWS_PATH . "keeper-schedule.php");
   }
 
-  public function AddSchedule($startDate, $endDate) {    
+  public function AddSchedule($startDate, $endDate,$size, $pet_type,$cost) {    
     $schedule = new Schedule();
-    $person = new Person();
+    $person = new Person();    
+  
 
     if ($schedule && $person) {
       $schedule = new Schedule();
@@ -33,6 +34,9 @@ class ScheduleController {
       $schedule->setEndDate($endDate);   
       $schedule->setState(1);  
       $person->setIsActive(1);
+      $schedule->setSize($size);
+      $schedule->setPet_type($pet_type);
+      $schedule->setCost($cost);
 
       $this->scheduleDAO->addSchedule($schedule);
       $this->keeperDAO->activeKeeper($person);
