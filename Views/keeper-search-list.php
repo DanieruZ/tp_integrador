@@ -8,13 +8,12 @@ use DAO\KeeperDAO as KeeperDAO;
 use DAO\ScheduleDAO as ScheduleDAO;
 use Models\Schedule;
 
+$startDate = $_POST['startDate'];
+$endDate = $_POST['endDate'];
+
 $keeperDAO = new KeeperDAO;
-$personList = $keeperDAO->getAllKeeper();
-/*
-echo "<pre>";
-print_r($personList);
-echo "</pre>";
-*/
+$personList = $keeperDAO->getKeeperByAvailableDate($startDate, $endDate);
+
 $scheduleDAO = new ScheduleDAO();
 $scheduleList = $scheduleDAO->getSchedule();
 

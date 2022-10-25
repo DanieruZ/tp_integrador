@@ -131,4 +131,7 @@ class ScheduleDAO implements IScheduleDAO
       throw $ex;
     }
   }
+
 }
+
+?>
