@@ -161,6 +161,42 @@ class KeeperDAO implements IKeeperDAO {
         }
     }
 
+    public function getKeeperByAvailableDate($startDate, $endDate) {
+      try {
+        $keeperList = array();
+  
+        $query = "SELECT * FROM person p
+                  INNER JOIN rol r ON r.rolId = p.rolId
+                  INNER JOIN agenda a ON a.personId = p.personId
+                  WHERE r.rol = 'keeper' 
+                  AND p.isActive = 1
+                  AND a.startDate = '$startDate'
+                  AND a.endDate = '$endDate';";
+  
+        $this->connection = Connection::GetInstance();
+        $allKeeper = $this->connection->Execute($query);
+  
+        foreach ($allKeeper as $value) {
+          $person = new Person();
+          $person->setPersonId($value['personId']);
+          $person->setFirstname($value['firstname']);
+          $person->setLastname($value['lastname']);
+          $person->setDni($value['dni']);
+          $person->setEmail($value['email']);
+          $person->setGender($value['gender']);
+          $person->setIsActive($value['isActive']);
+          $person->setRolId($value['rolId']);
+  
+          array_push($keeperList, $person);
+        }
+  
+        return $keeperList;
+  
+      } catch (\PDOException $ex) {
+          throw $ex;
+        }
+    }
+
 }
 
 ?>

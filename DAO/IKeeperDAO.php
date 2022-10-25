@@ -8,6 +8,7 @@ interface IKeeperDAO {
 
 	function addKeeper(Person $person);
 	function getAllKeeper();
+	function getKeeperByAvailableDate($startDate, $endDate);
 	
 }
 

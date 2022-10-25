@@ -38,16 +38,28 @@ class KeeperController {
     require_once(VIEWS_PATH . "keeper-list.php");
   }
 
+  public function OwnerSearchListView() {
+    //Utils::checkOwnerSession();
+    require_once(VIEWS_PATH . "owner-nav.php");
+    require_once(VIEWS_PATH . "keeper-search-list.php");
+  }
+
   public function AdminListView() {
     //Utils::checkAdminSession();
     require_once(VIEWS_PATH . "admin-nav.php");
     require_once(VIEWS_PATH . "keeper-list.php");
   }
 
-  public function keeperProfile ($personId) {
+  public function Profile ($personId) {
     //Utils::checkKeeperSession();        
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "keeper-profile.php");      
+  }
+
+  public function GetKeeperByAvailableDate($startDate, $endDate) {
+    //Utils::checkOwnerSession();
+    $this->keeperDAO->getKeeperByAvailableDate($startDate, $endDate);
+    $this->OwnerSearchListView();
   }
 
 }
