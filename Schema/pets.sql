@@ -27,6 +27,9 @@ CREATE TABLE IF NOT EXISTS agenda (
   endDate DATE NOT NULL,
   state BOOLEAN DEFAULT 0,
   personId INT,
+  size varchar(30),
+  pet_type varchar(30),
+  cost float,  
   PRIMARY KEY (scheduleId),
   FOREIGN KEY (personId) REFERENCES person (personId)
 )Engine=InnoDB;
@@ -69,8 +72,8 @@ VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 0, 2),
        (10, 'daniel', 'zeta', '77777777', 'daniel@gmail.com', 'male', 0, 1);
        
        INSERT INTO agenda
-VALUES (1, '2022-10-06', '2022-10-30',1,4),
-       (2, '2022-10-21', '2022-11-5',0,6);
+VALUES (1, '2022-10-06', '2022-10-30',1,4,'small','dog',700),
+       (2, '2022-10-21', '2022-11-5',0,6,null,'cat',600);
               
 INSERT INTO pet
 VALUES (1, 'sasha', 'large', 'dog', 'golden retriever'),
