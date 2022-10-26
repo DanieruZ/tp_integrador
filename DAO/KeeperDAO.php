@@ -170,8 +170,9 @@ class KeeperDAO implements IKeeperDAO {
                   INNER JOIN agenda a ON a.personId = p.personId
                   WHERE r.rol = 'keeper' 
                   AND p.isActive = 1
-                  AND a.startDate = '$startDate'
-                  AND a.endDate = '$endDate';";
+                  AND a.startDate BETWEEN '$startDate' AND '$endDate'
+                  AND a.endDate BETWEEN '$startDate' AND '$endDate'
+                  GROUP BY p.personId;";
   
         $this->connection = Connection::GetInstance();
         $allKeeper = $this->connection->Execute($query);
