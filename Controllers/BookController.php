@@ -26,6 +26,15 @@ class BookController {
     require_once(VIEWS_PATH . "keeper-book.php");
   }
 
+  public function OwnerReserve($personId,$startDate,$endDate) {
+    //Utils::checkOwnerSession();      
+  
+    require_once(VIEWS_PATH . "owner-nav.php");
+    require_once(VIEWS_PATH . "owner-book-detail.php");
+  }
+
+
+
 }
 
 ?>
