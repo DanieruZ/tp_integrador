@@ -6,7 +6,16 @@ require_once "Config\Autoload.php";
 
 use DAO\KeeperDAO as KeeperDAO;
 use DAO\ScheduleDAO as ScheduleDAO;
+use DAO\PetDAO as PetDAO;
 use DateTime;
+
+$user = $_SESSION['owner'];
+[$person] = $user;
+$ownerId = $person->getPersonId();
+$petDAO = new PetDAO;
+$petList = $petDAO->getMyPet($ownerId);
+[$pet] = $petList;
+
 
 $startDate = $_POST['startDate'];
 $endDate = $_POST['endDate'];
@@ -49,28 +58,41 @@ $dias =1 + $diff->days;
     </div>
   </section>
 
+  <section class="mb-5">
+  <div class="container-fluid">
+    <div class="container-sm mx-auto" style="width:400px">
+      <h3>Pet Profile</h3>
+    </div>
+    <div class="container-sm mx-auto shadow" style="width:400px">
+      <ul class="list-group">
+        <li class="list-group-item">Petname: <?php echo $pet->getPetname(); ?></li>
+        <li class="list-group-item">Size: <?php echo $pet->getSize(); ?></li>
+        <li class="list-group-item">Pet Type: <?php echo $pet->getPet_type(); ?></li>
+        <li class="list-group-item">Breed: <?php echo $pet->getBreed(); ?></li>
+      </ul>
+    </div>    
+  </div>
+</section>
+
   <section class="mb-6">
     <div class="container-fluid">
       <div class="container-sm mx-auto" style="width:400px">
         <h3>Schedule Selected</h3>
       </div>
       <div class="container-sm mx-auto shadow" style="width:400px">
+      <form action="<?php echo FRONT_ROOT ?>Book/AddBook" method="POST" class="container-sm mx-auto shadow" style="width:400px">
         <ul class="list-group">
+          <li class="list-group-item" for="startDate">Start Date: <input type="date" id="startDate" name="startDate" value="<?php echo $startDate; ?>" class="form-control form-control-lg w-50" readonly> </li>
+          <li class="list-group-item" for="endDate">End Date: <input type="date" id="endDate" name="endDate" value="<?php echo $endDate; ?>" class="form-control form-control-lg w-50" readonly> </li>
           <li class="list-group-item">Start Date: <?php echo $startDate; ?> </li>
           <li class="list-group-item">End Date: <?php echo $endDate; ?> </li>
           <li class="list-group-item">Cost x<?php echo $dias ?> dias  : $<?php echo $schedule->getCost() * $dias ?></li>
           <li class="list-group-item">Size Que cuida: <?php echo $schedule->getSize(); ?></li>
           <li class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
         </ul>
-        <div class="container-sm mx-auto shadow">
-         
-          <button type="submit" name="btnProfile" class="btn btn-sm btn-outline-info">
-            <a href="<?php if (isset($schedule)) {
-                        echo FRONT_ROOT . "Book/OwnerConfirm/" . $keeper->getPersonId();
-                      }; ?>">Confirm</a>
-          </button>
-          <a class="float-right m-3" href="<?php echo FRONT_ROOT ?>Keeper/OwnerListView">Cancel</a>
-        </div>
+        <button type="submit" class="btn btn-sm m-2 btn-outline-dark ml-auto d-block float-left">Confirm</button>
+      </form>
+          <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Keeper/OwnerListView">Cancel</a>
 
       </div>
     </div>

@@ -1,1 +1,45 @@
-<h1>Owner Bookings</h1>
+<?php
+
+namespace Views;
+
+require_once "Config\Autoload.php";
+
+use DAO\BookDAO as BookDAO;
+
+$bookDAO = new BookDAO();
+$bookList = $bookDAO->getAllBook();
+
+?>
+
+<main class="py-5">
+  <section class="mb-5">
+	  <div class="container-fluid">
+		  <h2 class="mb-4">My Bookings</h2>
+
+		  <table class="table bg-light">
+			  <thead class="bg-dark text-white">
+				   <th>Start Date</th>
+				   <th>End Date</th>
+           <th>State</th>
+			  </thead>
+<?php
+  if(isset($bookList)) {
+    foreach ($bookList as $book) {
+?>
+			  <tbody>	  				
+				  <tr>
+					 	<td><?php echo $book->getStartDate(); ?></td>
+						<td><?php echo $book->getEndDate(); ?></td>
+						<td><?php echo $book->getState(); ?></td>	
+					</tr>
+				</tbody>
+<?php 
+  }
+ }
+?>
+		  </table>
+	  </div>
+  </section>
+</main>
+
+<?php include('footer.php') ?>
