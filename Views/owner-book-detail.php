@@ -6,7 +6,16 @@ require_once "Config\Autoload.php";
 
 use DAO\KeeperDAO as KeeperDAO;
 use DAO\ScheduleDAO as ScheduleDAO;
+use DAO\PetDAO as PetDAO;
 use DateTime;
+
+$user = $_SESSION['owner'];
+[$person] = $user;
+$ownerId = $person->getPersonId();
+$petDAO = new PetDAO;
+$petList = $petDAO->getMyPet($ownerId);
+[$pet] = $petList;
+
 
 $startDate = $_POST['startDate'];
 $endDate = $_POST['endDate'];
@@ -49,6 +58,22 @@ $dias =1 + $diff->days;
     </div>
   </section>
 
+  <section class="mb-5">
+    <div class="container-fluid">
+      <div class="container-sm mx-auto" style="width:400px">
+        <h3>Pet Profile</h3>
+      </div>
+      <div class="container" style="width:400px">
+        <ul class="list-group">
+          <li><?php echo $pet->getPetname(); ?></li>
+					<li><?php echo $pet->getSize(); ?></li>
+					<li><?php echo $pet->getPet_type(); ?></li>
+					<li><?php echo $pet->getBreed(); ?></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <section class="mb-6">
     <div class="container-fluid">
       <div class="container-sm mx-auto" style="width:400px">
@@ -62,8 +87,7 @@ $dias =1 + $diff->days;
           <li class="list-group-item">Size Que cuida: <?php echo $schedule->getSize(); ?></li>
           <li class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
         </ul>
-        <div class="container-sm mx-auto shadow">
-         
+        <div class="container-sm mx-auto shadow">         
           <button type="submit" name="btnProfile" class="btn btn-sm btn-outline-info">
             <a href="<?php if (isset($schedule)) {
                         echo FRONT_ROOT . "Book/OwnerConfirm/" . $keeper->getPersonId();

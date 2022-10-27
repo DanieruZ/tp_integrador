@@ -11,13 +11,11 @@ $keeperDAO = new KeeperDAO;
 $keeperInfo = $keeperDAO->getKeeperById($personId);
 [$keeper] = $keeperInfo;
 
-print_r($keeper->getPersonId());
-
 $scheduleDAO = new ScheduleDAO;
 $scheduleInfo = $scheduleDAO->getScheduleById($personId);
 [$schedule] = $scheduleInfo;
 
-print_r($schedule->getStartDate());
+
 
 
 ?>
