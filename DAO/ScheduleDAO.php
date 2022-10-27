@@ -101,7 +101,8 @@ class ScheduleDAO implements IScheduleDAO
     } catch (\PDOException $ex) {
       throw $ex;
     }
-  }
+  }  
+
 
   public function deleteSchedule()
   {

@@ -88,12 +88,6 @@ if (!$scheduleList || $schedule->getState() == 0) {
               <option name="pet_type" id="bird" value="bird">Bird </option>
             </select>
           </div>
-
-
-
-
-
-
           <button class="btn btn-dark" type="submit">Register</button>
         </div>
       </form>

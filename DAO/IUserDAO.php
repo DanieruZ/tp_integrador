@@ -9,5 +9,4 @@ interface IUserDAO {
 	function getUserByEmail($email);
 	
 }
-
 ?>
