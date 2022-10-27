@@ -26,14 +26,27 @@ class BookController {
     require_once(VIEWS_PATH . "keeper-book.php");
   }
 
-  public function OwnerReserve($personId,$startDate,$endDate) {
+  public function OwnerReserve($personId, $startDate, $endDate) {
     //Utils::checkOwnerSession();      
-  
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "owner-book-detail.php");
   }
 
+  public function AddBook($startDate, $endDate) {
+    //Utils::checkOwnerSession();    
+    $book = new Book();   
 
+    if ($book) {            
+      $book = new Book();
+      $book->setStartDate($startDate);
+      $book->setEndDate($endDate);
+      $book->setState(1);
+
+      $this->bookDAO->addBook($book);
+      //$this->bookDAO->addPerson_book();
+      $this->OwnerView();       
+    }
+  }
 
 }
 
