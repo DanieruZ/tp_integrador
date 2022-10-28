@@ -9,6 +9,11 @@ use DAO\BookDAO as BookDAO;
 $bookDAO = new BookDAO();
 $bookList = $bookDAO->getAllBook();
 
+//$petId = $_POST['petId'];
+
+echo "<pre>";
+print_r($bookList);
+echo "</pre>";
 ?>
 
 <main class="py-5">
@@ -21,6 +26,7 @@ $bookList = $bookDAO->getAllBook();
 				   <th>Start Date</th>
 				   <th>End Date</th>
            <th>State</th>
+					 <th>Pet ID</th>
 			  </thead>
 <?php
   if(isset($bookList)) {
@@ -30,7 +36,8 @@ $bookList = $bookDAO->getAllBook();
 				  <tr>
 					 	<td><?php echo $book->getStartDate(); ?></td>
 						<td><?php echo $book->getEndDate(); ?></td>
-						<td><?php echo $book->getState(); ?></td>	
+						<td><?php echo $book->getState(); ?></td>
+						<td><?php echo $book->getPetId(); ?></td>
 					</tr>
 				</tbody>
 <?php 

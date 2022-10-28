@@ -12,6 +12,7 @@ use DateTime;
 $user = $_SESSION['owner'];
 [$person] = $user;
 $ownerId = $person->getPersonId();
+
 $petDAO = new PetDAO;
 $petList = $petDAO->getMyPet($ownerId);
 [$pet] = $petList;
@@ -58,20 +59,27 @@ $dias =1 + $diff->days;
     </div>
   </section>
 
-  <section class="mb-5">
-  <div class="container-fluid">
-    <div class="container-sm mx-auto" style="width:400px">
-      <h3>Pet Profile</h3>
-    </div>
-    <div class="container-sm mx-auto shadow" style="width:400px">
-      <ul class="list-group">
-        <li class="list-group-item">Petname: <?php echo $pet->getPetname(); ?></li>
-        <li class="list-group-item">Size: <?php echo $pet->getSize(); ?></li>
-        <li class="list-group-item">Pet Type: <?php echo $pet->getPet_type(); ?></li>
-        <li class="list-group-item">Breed: <?php echo $pet->getBreed(); ?></li>
-      </ul>
-    </div>    
+<section class="mb-5">
+<div class="container-fluid">
+  <div class="container-sm mx-auto" style="width:400px">
+    <h3>Select Your Pet</h3>
   </div>
+
+  <form action="<?php echo FRONT_ROOT ?>Book/AddBook" method="POST" class="container-sm mx-auto shadow" style="width:400px">
+    <div class="form-group">
+    <select name="petId" name="petname" required class="form-control form-control-ml">
+      <option style="color:grey" hidden selected>pet</option>
+      <?php
+
+      if (isset($petList)) {
+        foreach ($petList as $pet) {
+          echo "<option value=" . $pet->getPetId() . ">" . $pet->getPetname() . "</option>";
+        } 
+      }
+      ?>
+   </select>
+  </div>
+</div>
 </section>
 
   <section class="mb-6">
@@ -80,13 +88,14 @@ $dias =1 + $diff->days;
         <h3>Schedule Selected</h3>
       </div>
       <div class="container-sm mx-auto shadow" style="width:400px">
-      <form action="<?php echo FRONT_ROOT ?>Book/AddBook" method="POST" class="container-sm mx-auto shadow" style="width:400px">
+      
         <ul class="list-group">
+        <input type="hidden" id="keeperId" name="keeperId" value="<?php echo $keeper->getPersonId(); ?>">
           <li class="list-group-item" for="startDate">Start Date: <input type="date" id="startDate" name="startDate" value="<?php echo $startDate; ?>" class="form-control form-control-lg w-50" readonly> </li>
           <li class="list-group-item" for="endDate">End Date: <input type="date" id="endDate" name="endDate" value="<?php echo $endDate; ?>" class="form-control form-control-lg w-50" readonly> </li>
           <li class="list-group-item">Start Date: <?php echo $startDate; ?> </li>
           <li class="list-group-item">End Date: <?php echo $endDate; ?> </li>
-          <li class="list-group-item">Cost x<?php echo $dias ?> dias  : $<?php echo $schedule->getCost() * $dias ?></li>
+          <li class="list-group-item">Cost x <?php echo $dias ?> dias  : $<?php echo $schedule->getCost() * $dias ?></li>
           <li class="list-group-item">Size Que cuida: <?php echo $schedule->getSize(); ?></li>
           <li class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
         </ul>

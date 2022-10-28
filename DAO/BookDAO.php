@@ -14,12 +14,13 @@ class BookDAO implements IBookDAO {
   public function addBook(Book $book) {
     try {
 
-      $query = "INSERT INTO book (startDate, endDate, state) 
-                VALUES (:startDate, :endDate, :state)";
+      $query = "INSERT INTO book (startDate, endDate, state, petId) 
+                VALUES (:startDate, :endDate, :state, :petId)";
 
       $parameters['startDate'] = $book->getStartDate();
       $parameters['endDate'] = $book->getEndDate();
       $parameters['state'] = $book->getState();
+      $parameters['petId'] = $book->getPetId();
 
       $this->connection = Connection::GetInstance();
       return $this->connection->executeNonQuery($query, $parameters);
@@ -46,6 +47,7 @@ class BookDAO implements IBookDAO {
         $book->setStartDate($value['startDate']);
         $book->setEndDate($value['endDate']);
         $book->setState($value['state']);
+        $book->setPetId($value['petId']);
 
         array_push($bookList, $book);
       }
@@ -75,11 +77,53 @@ class BookDAO implements IBookDAO {
         $book->setStartDate($value['startDate']);
         $book->setEndDate($value['endDate']);
         $book->setState($value['state']);
+        $book->setPetId($value['petId']);
 
         array_push($bookList, $book);
       }
 
       return $bookList;
+
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
+  //* Trae el ultimo id de reservas.
+  public function getBookLastId() {
+    try {
+      $query = "SELECT MAX(bookId) FROM book;"; 
+
+      $this->connection = Connection::GetInstance();
+      $bookId = $this->connection->Execute($query);
+      
+      return $bookId;
+
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
+  //* Agrega los ids en la tabla de muchos a muchos.
+  public function addPersonBook($keeperId) {
+    try {
+      $user = $_SESSION['owner'];
+      [$person] = $user;      
+      $ownerId = $person->getPersonId();
+
+      $lastId = $this->getBookLastId();
+      [$book] = $lastId;
+      $bookId = $book[0];
+
+      $query = "INSERT INTO person_book (ownerId, keeperId, bookId)
+                VALUES (:ownerId, :keeperId, :bookId);";
+               
+      $parameters['ownerId'] = $ownerId;          
+      $parameters['keeperId'] = $keeperId;
+      $parameters['bookId'] = $bookId;
+       
+      $this->connection = Connection::GetInstance();
+      return $this->connection->executeNonQuery($query, $parameters);
 
     } catch (\PDOException $ex) {
         throw $ex;
