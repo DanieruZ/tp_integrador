@@ -8,6 +8,7 @@ class Book {
   private $startDate;
   private $endDate;
   private $state;
+  private $petId;
 
   public function __construct() {}
 
@@ -92,6 +93,26 @@ class Book {
     return $this;
   }
   
+
+  /**
+   * Get the value of petId
+   */ 
+  public function getPetId()
+  {
+    return $this->petId;
+  }
+
+  /**
+   * Set the value of petId
+   *
+   * @return  self
+   */ 
+  public function setPetId($petId)
+  {
+    $this->petId = $petId;
+
+    return $this;
+  }
 }
 
 ?>

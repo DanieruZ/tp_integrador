@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS person (
   dni VARCHAR(10) NOT NULL,
   email VARCHAR(50) NOT NULL,
   gender ENUM('female', 'male', 'other') NOT NULL,
-  isActive BOOLEAN NOT NULL DEFAULT 0,
+  isActive BOOLEAN NOT NULL DEFAULT '0',
   rolId INT NOT NULL,
   PRIMARY KEY (personId),  
   FOREIGN KEY (rolId) REFERENCES rol (rolId),  
@@ -25,10 +25,10 @@ CREATE TABLE IF NOT EXISTS agenda (
   scheduleId INT NOT NULL AUTO_INCREMENT,
   startDate DATE NOT NULL,
   endDate DATE NOT NULL,
-  state BOOLEAN DEFAULT 0,
+  state BOOLEAN DEFAULT '0',
   personId INT,
-  size varchar(30),
-  pet_type varchar(30),
+  size VARCHAR(50),
+  pet_type VARCHAR(50),
   cost float,  
   PRIMARY KEY (scheduleId),
   FOREIGN KEY (personId) REFERENCES person (personId)
@@ -48,21 +48,21 @@ CREATE TABLE IF NOT EXISTS book (
   startDate DATE NOT NULL,
   endDate DATE NOT NULL,
   state BOOLEAN DEFAULT '0',
-  PRIMARY KEY (bookId)
+  petId INT,
+  PRIMARY KEY (bookId),
+  FOREIGN KEY (petId) REFERENCES pet (petId) ON DELETE SET NULL
 )Engine=InnoDB;
 
 CREATE TABLE IF NOT EXISTS person_book (
   person_bookId INT NOT NULL AUTO_INCREMENT,
   ownerId INT,
-  petId INT,
   keeperId INT,
   bookId INT,
   PRIMARY KEY (person_bookId),
   FOREIGN KEY (ownerId) REFERENCES person (personId) ON DELETE SET NULL,
-  FOREIGN KEY (petId) REFERENCES pet (petId) ON DELETE SET NULL,
   FOREIGN KEY (keeperId) REFERENCES person (personId) ON DELETE SET NULL,
   FOREIGN KEY (bookId) REFERENCES book (bookId) ON DELETE SET NULL,
-  UNIQUE (ownerId, petId, keeperId, bookId)
+  UNIQUE (ownerId, keeperId, bookId)
 )Engine=InnoDB;
 
 CREATE TABLE IF NOT EXISTS pet_owner (
@@ -86,10 +86,10 @@ VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 0, 2),
        (3, 'pedro', 'perez', '41528996', 'pedro@gmail.com', 'male', 0, 2),
        (4, 'carlos', 'garcia', '18968896', 'carlos@gmail.com', 'male', 1, 3),
        (5, 'susana', 'jerez', '39688964', 'susana@gmail.com', 'female', 0, 2),
-	   (6, 'maria', 'rodriguez', '28542996', 'maria@gmail.com', 'female', 1, 3 ),
+	   (6, 'maria', 'rodriguez', '28542996', 'maria@gmail.com', 'female', 1, 3),
        (7, 'marcela', 'dominguez', '48538996', 'marcela@gmail.com', 'female', 0, 2),
        (8, 'martin', 'menendez', '19968896', 'martin@gmail.com', 'male', 0, 2),
-       (9, 'cristian', 'huerta', '39634484', 'cristian@gmail.com', 'male', 1, 2),
+       (9, 'cristian', 'huerta', '39634484', 'cristian@gmail.com', 'male', 0, 2),
        (10, 'daniel', 'zeta', '77777777', 'daniel@gmail.com', 'male', 0, 1);
        
 INSERT INTO agenda
@@ -109,11 +109,12 @@ VALUES (1, 'sasha', 'large', 'dog', 'golden retriever'),
        (10, 'lucky', 'medium', 'dog', 'siberian');      
        
 INSERT INTO book
-VALUES (1, '2022-10-26', '2022-10-30', 1);
+VALUES (1, '2022-10-28', '2022-10-31', 1, 4),
+	   (2, '2022-11-11', '2022-11-21', 1, 8);
 
 INSERT INTO person_book
-VALUES (1, 2, 4, 4, 1);
-
+VALUES (1, 2, 4, 1),
+	   (2, 5, 6, 2);
 INSERT INTO pet_owner
 VALUES (1, 5, 2),
        (2, 5, 6),     

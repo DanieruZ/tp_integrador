@@ -9,6 +9,8 @@ interface IBookDAO {
 	function addBook(Book $book);
 	function getAllBook();
   function getActiveBook();
+	function getBookLastId();
+	function addPersonBook($keeperId);
 	
 }
 
