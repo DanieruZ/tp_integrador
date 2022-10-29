@@ -8,7 +8,7 @@ class Book {
   private $startDate;
   private $endDate;
   private $state;
-  private $petId;
+ 
 
   public function __construct() {}
 

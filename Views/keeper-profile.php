@@ -25,7 +25,15 @@ $scheduleInfo = $scheduleDAO->getScheduleById($personId);
 
 $petDAO = new PetDAO;
 $petList = $petDAO->getMyPet($ownerId);
+if (!empty($petList)){  
 [$pet] = $petList;
+}
+
+
+if(isset($petId)){  
+$petInfo = $petDAO->getPetById($petId);
+[$petinformation] = $petInfo;
+}
 
 ?>
 
@@ -46,6 +54,9 @@ $petList = $petDAO->getMyPet($ownerId);
       foreach ($petList as $pet) {
         ?>  <option value="  <?php echo $pet->getPetId() ?> "> <?php echo $pet->getPetName() ?> </option>" ; <?php
       } 
+    }
+    else{
+      echo "no hay mascotas que mostrar";
     }
     ?>
      <input type="hidden" id="personId" name="personId" value="<?php echo $keeper->getPersonId(); ?>">
@@ -75,7 +86,6 @@ $petList = $petDAO->getMyPet($ownerId);
     </div>
   </section>
 
-
   
 <section class="mb-6">
       <div class="container-fluid">
@@ -93,12 +103,19 @@ $petList = $petDAO->getMyPet($ownerId);
               <li name="pet_type" class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
             </ul> 
             <input type="hidden" id="petId" name="petId" value="<?php echo $petId ?>">
+            <?php if(isset($petinformation ) )
+              if($petinformation->getPet_type() ===  $schedule->getPet_type()){               
+                ?> 
             <button type="submit" class="btn btn-sm m-2 btn-outline-dark ml-auto d-block float-left">Reserve</button>
+            
           </form>
         </div>
       </div>
       <div class="container-sm mx-auto" style="width:400px">
-        
+      <?php
+          }else{
+            echo "The Keeper is not available for this pet.";
+          } ?> 
         <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Keeper/OwnerListView">Go back</a>
       </div>
 </section>
