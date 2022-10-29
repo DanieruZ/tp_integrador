@@ -7,15 +7,18 @@ require_once "Config\Autoload.php";
 use DAO\KeeperDAO as KeeperDAO;
 use DAO\ScheduleDAO as ScheduleDAO;
 use DAO\petDAO as PetDAO;
+use DAO\bookDAO as BookDAO;
 use DateTime;
 
+$user = $_SESSION['owner'];
+[$person] = $user;
 
 
-$petDAO = new PetDAO;
-$petInfo = $petDAO->getPetById($petId);
-[$pet] = $petInfo;
+$bookDAO = new BookDAO;
+$reserveInfo = $bookDAO->getOwnerBook($person->getPersonId());
+[$reserve] = $reserveInfo;
 
-
+print_r($reserve);
 
 
 $keeperDAO = new KeeperDAO;

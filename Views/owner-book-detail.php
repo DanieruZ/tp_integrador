@@ -92,6 +92,7 @@ $dias = 1 + $diff->days;
             <li class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
             <input type="hidden" id="state" name="endDate" value="<?php echo $endDate ?>">
           </ul>
+          <input type="hidden" id="petId" name="petId" value="<?php echo $petId ?>">
           <button type="submit" class="btn btn-sm m-2 btn-outline-dark ml-auto d-block float-left">Confirm</button>
 
         </div>
