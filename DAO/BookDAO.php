@@ -105,7 +105,7 @@ class BookDAO implements IBookDAO {
   }
 
   //* Agrega los ids en la tabla de muchos a muchos.
-  public function addPersonBook($keeperId) {
+  public function addPersonBook($keeperId,$petId) {
     try {
       $user = $_SESSION['owner'];
       [$person] = $user;      
@@ -115,10 +115,11 @@ class BookDAO implements IBookDAO {
       [$book] = $lastId;
       $bookId = $book[0];
 
-      $query = "INSERT INTO person_book (ownerId, keeperId, bookId)
-                VALUES (:ownerId, :keeperId, :bookId);";
+      $query = "INSERT INTO person_book (ownerId,petId, keeperId, bookId)
+                VALUES (:ownerId, :petId, :keeperId, :bookId);";
                
-      $parameters['ownerId'] = $ownerId;          
+      $parameters['ownerId'] = $ownerId; 
+      $parameters['petId'] = $petId;         
       $parameters['keeperId'] = $keeperId;
       $parameters['bookId'] = $bookId;
        

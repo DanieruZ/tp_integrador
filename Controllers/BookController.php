@@ -38,10 +38,10 @@ class BookController {
     require_once(VIEWS_PATH . "owner-reserve-info.php");
   }
 
-  public function AddBook($startDate, $endDate, $keeperId) {
+  public function AddBook($startDate, $endDate, $keeperId,$petId) {
     //Utils::checkOwnerSession();  
       $book = new Book();   
-
+   
     if ($book) {            
       $book = new Book();
       $book->setStartDate($startDate);
@@ -50,7 +50,7 @@ class BookController {
     
 
       $this->bookDAO->addBook($book);
-      $this->bookDAO->addPersonBook($keeperId);
+      $this->bookDAO->addPersonBook($keeperId,$petId);
       $this->OwnerView();       
     }
   }
