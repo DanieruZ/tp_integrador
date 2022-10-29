@@ -13,6 +13,7 @@ interface IPetDAO {
 	function getMyPet($personId);
 	function deletePetById($petId);
 	function getPetById($petId);
+	function getPetType();
 	
 }
 

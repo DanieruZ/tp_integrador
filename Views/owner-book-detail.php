@@ -6,16 +6,14 @@ require_once "Config\Autoload.php";
 
 use DAO\KeeperDAO as KeeperDAO;
 use DAO\ScheduleDAO as ScheduleDAO;
-use DAO\PetDAO as PetDAO;
+use DAO\petDAO as PetDAO;
 use DateTime;
 
-$user = $_SESSION['owner'];
-[$person] = $user;
-$ownerId = $person->getPersonId();
+
 
 $petDAO = new PetDAO;
-$petList = $petDAO->getMyPet($ownerId);
-[$pet] = $petList;
+$petInfo = $petDAO->getPetById($petId);
+[$pet] = $petInfo;
 
 
 $startDate = $_POST['startDate'];
@@ -31,11 +29,8 @@ $scheduleInfo = $scheduleDAO->getScheduleById($personId);
 
 
 $fecha1= new DateTime( $startDate); 
-
 $fecha2= new DateTime( $endDate); 
-
 $diff = $fecha1->diff($fecha2);
-
 $dias =1 + $diff->days;
 
 
@@ -59,28 +54,24 @@ $dias =1 + $diff->days;
     </div>
   </section>
 
-<section class="mb-5">
-<div class="container-fluid">
-  <div class="container-sm mx-auto" style="width:400px">
-    <h3>Select Your Pet</h3>
-  </div>
 
-  <form action="<?php echo FRONT_ROOT ?>Book/AddBook" method="POST" class="container-sm mx-auto shadow" style="width:400px">
-    <div class="form-group">
-    <select name="petId" name="petname" required class="form-control form-control-ml">
-      <option style="color:grey" hidden selected>pet</option>
-      <?php
-
-      if (isset($petList)) {
-        foreach ($petList as $pet) {
-          echo "<option value=" . $pet->getPetId() . ">" . $pet->getPetname() . "</option>";
-        } 
-      }
-      ?>
-   </select>
+  <section class="mb-5">
+  <div class="container-fluid">
+    <div class="container-sm mx-auto" style="width:400px">
+      <h3>Pet Profile</h3>
+    </div>
+    <div class="container-sm mx-auto shadow" style="width:400px">
+      <ul class="list-group">
+        <li class="list-group-item">Petname: <?php echo $pet->getPetname(); ?></li>
+        <li class="list-group-item">Size: <?php echo $pet->getSize(); ?></li>
+        <li class="list-group-item">Pet Type: <?php echo $pet->getPet_type(); ?></li>
+        <li class="list-group-item">Breed: <?php echo $pet->getBreed(); ?></li>
+      </ul>    
+    </div>    
   </div>
-</div>
 </section>
+
+
 
   <section class="mb-6">
     <div class="container-fluid">

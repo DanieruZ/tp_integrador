@@ -25,6 +25,7 @@ $petList = $petDAO->getMyPet($personId);
 				<th>Size</th>
 				<th>Pet type</th>
 				<th>Breed</th>
+				<th>Pet Options</th>
 				<th></th>
       </thead>
 <?php

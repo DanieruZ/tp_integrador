@@ -2,8 +2,9 @@
 
 namespace Views;
 
-use DAO\KeeperDAO;
-use DAO\ScheduleDAO;
+use DAO\KeeperDAO as KeeperDAO;
+use DAO\ScheduleDAO as ScheduleDAO;
+use DAO\PetDAO as PetDAO;
 
 require_once "Config\Autoload.php";
 require_once "keeper-nav.php";
@@ -14,6 +15,12 @@ $personId = $person->getPersonId();
 
 $scheduleDAO = new ScheduleDAO();
 $scheduleList = $scheduleDAO->getScheduleById($personId);
+
+$petDAO = new PetDAO;
+$petList = $petDAO->getPetType();
+[$pet] = $petList;
+
+
 
 if ($scheduleList) {
   [$schedule] = $scheduleList;
@@ -68,8 +75,26 @@ if (!$scheduleList || $schedule->getState() == 0) {
           <div class="form-group">
             <label for="cost">Cost for a day:</label>
             <input type="input" id="cost" name="cost" placeholder="enter the price" class="form-control form-control-lg w-50">
-          </div>      
+          </div>
 
+          <div class="form-group" style="width:200px">
+            <label for="size">Pet Type:</label>
+            <select name="pet_type" required class="form-control form-control-ml">
+              <option style="color:grey" required selected hidden>Select</option>
+              <?php
+
+              if (isset($petList)) {
+                foreach ($petList as $pet) {
+              ?> <option name="pet_type"  value="  <?php echo $pet->getPetId() ?> "> <?php echo $pet->getPet_type() ?> </option>" ; <?php
+                                                                                                                  }
+                
+                                                                                                                }
+                                                                                                                    ?>                  
+              
+            </select>
+          </div>
+        
+     
           <div class="form-group" style="width:400px">
             <label for="size">Size of Dog:</label>
             <select name="size">
@@ -80,22 +105,17 @@ if (!$scheduleList || $schedule->getState() == 0) {
             </select>
           </div>
 
-          <div class="form-group" style="width:400px">
-            <label for="pet_type">Pet Type</label>
-            <select name="pet_type">
-              <option name="pet_type" id="dog" value="dog" required selected>Dog </option>
-              <option name="pet_type" id="cat" value="cat">Cat </option>
-              <option name="pet_type" id="bird" value="bird">Bird </option>
-            </select>
-          </div>
           <button class="btn btn-dark" type="submit">Register</button>
         </div>
       </form>
+
     </section>
 
   <?php
 }
   ?>
+
+
     </main>
 
     <?php include('footer.php') ?>

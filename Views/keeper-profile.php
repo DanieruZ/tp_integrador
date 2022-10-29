@@ -6,6 +6,13 @@ require_once "Config\Autoload.php";
 
 use DAO\KeeperDAO as KeeperDAO;
 use DAO\ScheduleDAO as ScheduleDAO;
+use DAO\PetDAO as PetDAO;
+
+
+$user = $_SESSION['owner'];
+[$person] = $user;
+$ownerId = $person->getPersonId();
+
 
 $keeperDAO = new KeeperDAO;
 $keeperInfo = $keeperDAO->getKeeperById($personId);
@@ -16,9 +23,39 @@ $scheduleInfo = $scheduleDAO->getScheduleById($personId);
 [$schedule] = $scheduleInfo;
 
 
-
+$petDAO = new PetDAO;
+$petList = $petDAO->getMyPet($ownerId);
+[$pet] = $petList;
 
 ?>
+
+
+
+<section class="mb-5">
+<div class="container-sm mx-auto" style="width:400px">
+  <h3>Select Your Pet</h3>
+</div>
+
+<form action="<?php echo FRONT_ROOT ?>keeper/ProfileKeeperPet" method="POST" class="container-sm mx-auto shadow" style="width:400px">
+  <div class="form-group">
+  <select name="petId" required class="form-control form-control-ml">
+    <option style="color:grey" required selected hidden>pet</option>
+    <?php
+
+    if (isset($petList)) {
+      foreach ($petList as $pet) {
+        ?>  <option value="  <?php echo $pet->getPetId() ?> "> <?php echo $pet->getPetName() ?> </option>" ; <?php
+      } 
+    }
+    ?>
+     <input type="hidden" id="personId" name="personId" value="<?php echo $keeper->getPersonId(); ?>">
+ </select>
+ <button type="submit" class="btn btn-sm m-2 btn-outline-dark ml-auto d-block float-left">Select</button>
+
+</div>
+</form>
+</section>
+
 
 <main class="py-5">
   <section class="mb-5">
@@ -37,6 +74,8 @@ $scheduleInfo = $scheduleDAO->getScheduleById($personId);
       </div>
     </div>
   </section>
+
+
   
 <section class="mb-6">
       <div class="container-fluid">
@@ -53,6 +92,7 @@ $scheduleInfo = $scheduleDAO->getScheduleById($personId);
               <li name="size" class="list-group-item">Size Que cuida: <?php echo $schedule->getSize(); ?></li>
               <li name="pet_type" class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
             </ul> 
+            <input type="hidden" id="petId" name="petId" value="<?php echo $petId ?>">
             <button type="submit" class="btn btn-sm m-2 btn-outline-dark ml-auto d-block float-left">Reserve</button>
           </form>
         </div>

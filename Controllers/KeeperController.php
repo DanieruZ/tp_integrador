@@ -56,6 +56,13 @@ class KeeperController {
     require_once(VIEWS_PATH . "keeper-profile.php");      
   }
 
+  public function ProfileKeeperPet ($personId,$petId) {
+    //Utils::checkKeeperSession();        
+    print_r($petId);
+    require_once(VIEWS_PATH . "owner-nav.php");
+    require_once(VIEWS_PATH . "keeper-profile.php");      
+  }
+
   public function GetKeeperByAvailableDate($startDate, $endDate) {
     //Utils::checkOwnerSession();
     $this->keeperDAO->getKeeperByAvailableDate($startDate, $endDate);
