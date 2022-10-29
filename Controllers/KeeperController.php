@@ -57,8 +57,7 @@ class KeeperController {
   }
 
   public function ProfileKeeperPet ($personId,$petId) {
-    //Utils::checkKeeperSession();        
-    print_r($petId);
+    //Utils::checkKeeperSession();    
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "keeper-profile.php");      
   }

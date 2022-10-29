@@ -5,15 +5,19 @@ namespace Views;
 require_once "Config\Autoload.php";
 
 use DAO\BookDAO as BookDAO;
+$user = $_SESSION['owner'];
+[$person] = $user;
+
+
 
 $bookDAO = new BookDAO();
-$bookList = $bookDAO->getAllBook();
+$bookList = $bookDAO->getOwnerBook( $person->getPersonId());
 
 //$petId = $_POST['petId'];
 
-echo "<pre>";
-print_r($bookList);
-echo "</pre>";
+//echo "<pre>";
+//print_r($bookList);
+//echo "</pre>";
 ?>
 
 <main class="py-5">
@@ -25,8 +29,10 @@ echo "</pre>";
 			  <thead class="bg-dark text-white">
 				   <th>Start Date</th>
 				   <th>End Date</th>
-           <th>State</th>
-					 <th>Pet ID</th>
+           		   <th>State</th>
+				   <th>Reserve Info</th>
+				  
+					
 			  </thead>
 <?php
   if(isset($bookList)) {
@@ -35,9 +41,22 @@ echo "</pre>";
 			  <tbody>	  				
 				  <tr>
 					 	<td><?php echo $book->getStartDate(); ?></td>
-						<td><?php echo $book->getEndDate(); ?></td>
-						<td><?php echo $book->getState(); ?></td>
-						<td><?php echo $book->getPetId(); ?></td>
+						<td><?php echo $book->getEndDate(); ?></td>						
+						<?php if($book->getState() === 0 ){?> 
+						<td><?php echo "Pendiente"?> </td> <?php
+						} ?>
+						<?php if($book->getState() === 1 ){?> 
+						<td><?php echo "Aceptado"?> </td> <?php
+						} ?> 
+						<?php if($book->getState() === 2 ){?> 
+						<td><?php echo "Rechazado"?> </td> <?php
+						} ?>  
+					<td><button type="submit" name="btnProfile" class="btn btn-sm btn-outline-info">
+													<a href="<?php if (isset($bookList)) {
+																	echo FRONT_ROOT . "Book/OwnerViewBookInfo" ;
+																}; ?>">View Info</a>
+												</button></td>	
+						
 					</tr>
 				</tbody>
 <?php 

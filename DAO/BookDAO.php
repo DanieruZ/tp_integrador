@@ -14,13 +14,13 @@ class BookDAO implements IBookDAO {
   public function addBook(Book $book) {
     try {
 
-      $query = "INSERT INTO book (startDate, endDate, state, petId) 
-                VALUES (:startDate, :endDate, :state, :petId)";
+      $query = "INSERT INTO book (startDate, endDate, state) 
+                VALUES (:startDate, :endDate, :state)";
 
       $parameters['startDate'] = $book->getStartDate();
       $parameters['endDate'] = $book->getEndDate();
       $parameters['state'] = $book->getState();
-      $parameters['petId'] = $book->getPetId();
+     
 
       $this->connection = Connection::GetInstance();
       return $this->connection->executeNonQuery($query, $parameters);
@@ -47,7 +47,7 @@ class BookDAO implements IBookDAO {
         $book->setStartDate($value['startDate']);
         $book->setEndDate($value['endDate']);
         $book->setState($value['state']);
-        $book->setPetId($value['petId']);
+       
 
         array_push($bookList, $book);
       }
@@ -130,6 +130,64 @@ class BookDAO implements IBookDAO {
       }
   }
 
-}
+  public function getOwnerBook($personId)
+  {
+    try {       
 
-?>
+
+      $bookList = array();
+
+      $query = "SELECT * FROM book b
+                INNER JOIN person_book bk ON bk.bookId = b.bookId
+                WHERE bk.ownerId = '$personId';";
+
+      $this->connection = Connection::GetInstance();
+      $allBook = $this->connection->Execute($query);
+
+      foreach ($allBook as $value) {
+        $book = new Book();
+        $book->setStartDate($value['startDate']);
+        $book->setEndDate($value['endDate']);
+        $book->setState($value['state']);
+       
+
+        array_push($bookList, $book);
+      }
+
+      return $bookList;
+    } catch (\PDOException $ex) {
+      throw $ex;
+    }
+  }
+
+  public function getKeeperBook($personId)
+  {
+    try {       
+
+
+      $bookList = array();
+
+      $query = "SELECT * FROM book b
+                INNER JOIN person_book bk ON bk.bookId = b.bookId
+                WHERE bk.keeperId = '$personId';";
+
+      $this->connection = Connection::GetInstance();
+      $allBook = $this->connection->Execute($query);
+
+      foreach ($allBook as $value) {
+        $book = new Book();
+        $book->setStartDate($value['startDate']);
+        $book->setEndDate($value['endDate']);
+        $book->setState($value['state']);
+       
+
+        array_push($bookList, $book);
+      }
+
+      return $bookList;
+    } catch (\PDOException $ex) {
+      throw $ex;
+    }
+  }
+
+}
