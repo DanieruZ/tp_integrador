@@ -168,6 +168,30 @@ class PetDAO implements IPetDAO {
       }
   }
 
+  //funcion que nos trae el tipo de mascotas sin repetir
+  public function getPetType() {
+    try {
+      $petList = array();    
+
+      $query = "SELECT DISTINCT  pet_type FROM pet;"; // traemos solo uno pet de cada tipo
+
+      $this->connection = Connection::GetInstance();
+      $allPet = $this->connection->Execute($query);
+
+      foreach ($allPet as $value) {
+        $pet = new Pet();       
+        $pet->setPet_type($value['pet_type']);    
+        
+        array_push($petList, $pet);
+      }
+
+      return $petList;
+
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
   /*public function updatePet($petId, $petname, $size, $pet_type, $breed) {
     try {
       $query = "UPDATE pet 
