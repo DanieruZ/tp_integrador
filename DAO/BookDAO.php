@@ -3,6 +3,8 @@
 namespace DAO;
 
 use Models\Book as Book;
+use Models\Person as Person;
+use Models\Schedule as Schedule;
 use DAO\IBookDAO as IBookDAO;
 use DAO\Connection as Connection;
 
@@ -191,4 +193,58 @@ class BookDAO implements IBookDAO {
     }
   }
 
+  public function getBookInfo($personId) {
+    try {
+     
+      $bookList = array();
+
+      $query = "SELECT * FROM book b
+                INNER JOIN person_book pbk ON pbk.bookId = b.bookId
+                INNER JOIN person po ON po.personId = pbk.ownerId
+                INNER JOIN agenda a ON a.personId = pbk.keeperId
+                INNER JOIN person pk ON pk.personId = pbk.keeperId
+                WHERE po.personId = '$personId';";
+
+      $this->connection = Connection::GetInstance();
+      $allBook = $this->connection->Execute($query);
+
+      foreach ($allBook as $value) {
+        $book = new Book();
+        $book->setBookId($value['bookId']);
+        $book->setStartDate($value['startDate']);
+        $book->setEndDate($value['endDate']);
+        $book->setState($value['state']);
+
+        $schedule = new Schedule();
+        $schedule->setScheduleId($value['scheduleId']);
+        $schedule->setStartDate($value['startDate']);
+        $schedule->setEndDate($value['endDate']);
+        $schedule->setState($value['state']);
+        $schedule->setPersonId($value['personId']);
+        $schedule->setSize($value['size']);
+        $schedule->setPet_type($value['pet_type']);
+        $schedule->setCost($value['cost']);
+       
+        $person = new Person();
+        $person->setPersonId($value['personId']);
+        $person->setFirstname($value['firstname']);
+        $person->setLastname($value['lastname']);
+        $person->setDni($value['dni']);
+        $person->setEmail($value['email']);
+        $person->setGender($value['gender']);
+        $person->setIsActive($value['isActive']);
+        $person->setRolId($value['rolId']);
+
+        array_push($bookList, $book, $schedule, $person);
+      }
+
+      return $bookList;
+
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
 }
+
+?>

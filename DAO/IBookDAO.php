@@ -14,4 +14,7 @@ interface IBookDAO
 	function addPersonBook($keeperId,$petId);
 	function getOwnerBook($personId);
 	function getKeeperBook($personId);
+	function getBookInfo($personId);
 }
+
+?>
