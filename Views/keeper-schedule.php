@@ -16,6 +16,7 @@ $personId = $person->getPersonId();
 $scheduleDAO = new ScheduleDAO();
 $scheduleList = $scheduleDAO->getScheduleById($personId);
 
+
 $petDAO = new PetDAO;
 $petList = $petDAO->getPetType();
 [$pet] = $petList;
@@ -85,7 +86,7 @@ if (!$scheduleList || $schedule->getState() == 0) {
 
               if (isset($petList)) {
                 foreach ($petList as $pet) {
-              ?> <option name="pet_type"  value="  <?php echo $pet->getPetId() ?> "> <?php echo $pet->getPet_type() ?> </option>" ; <?php
+              ?> <option name="pet_type"  value=" <?php echo $pet->getPet_type() ?>" </option> <?php echo $pet->getPet_type() ?> <?php
                                                                                                                   }
                 
                                                                                                                 }

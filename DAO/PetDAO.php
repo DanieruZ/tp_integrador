@@ -173,7 +173,7 @@ class PetDAO implements IPetDAO {
     try {
       $petList = array();    
 
-      $query = "SELECT DISTINCT  pet_type FROM pet;"; // traemos solo uno pet de cada tipo
+      $query = "SELECT DISTINCT pet_type FROM pet;"; // traemos solo uno pet de cada tipo
 
       $this->connection = Connection::GetInstance();
       $allPet = $this->connection->Execute($query);

@@ -29,6 +29,7 @@ if (!empty($petList)){
 [$pet] = $petList;
 }
 
+print_r($schedule->getPet_type());
 
 if(isset($petId)){  
 $petInfo = $petDAO->getPetById($petId);
