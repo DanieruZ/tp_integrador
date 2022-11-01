@@ -18,7 +18,8 @@ class ScheduleController {
   }
 
   public function ScheduleView() {
-    //Utils::checkKeeperSession();
+    //Utils::checkKeeperSession();+
+    
     require_once(VIEWS_PATH . "keeper-nav.php");
     require_once(VIEWS_PATH . "keeper-schedule.php");
   }
