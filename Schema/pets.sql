@@ -94,7 +94,7 @@ VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 1, 2),
       
 INSERT INTO agenda
 VALUES (1, '2022-10-26', '2022-10-30', 1, 4, 'small', 'dog', 700),
-       (2, '2022-10-26', '2022-11-5', 0, 6, null, 'cat', 600);
+       (2, '2022-10-26', '2022-11-5', 0, 6, 'small', 'cat', 600);
               
 INSERT INTO pet
 VALUES (1, 'sasha', 'large', 'dog', 'golden retriever'),
@@ -109,7 +109,7 @@ VALUES (1, 'sasha', 'large', 'dog', 'golden retriever'),
        (10, 'lucky', 'medium', 'dog', 'siberian');      
        
 INSERT INTO book
-VALUES (12, '2022-10-26', '2022-10-30', 2),
+VALUES (1, '2022-10-26', '2022-10-30', 2),
  (2, '2022-10-26', '2022-10-30', 0),
  (3, '2022-10-26', '2022-10-30', 2);
 
