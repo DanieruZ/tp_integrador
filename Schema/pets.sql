@@ -81,7 +81,7 @@ VALUES (1, 'admin'),
        (3, 'keeper');     
       
 INSERT INTO person
-VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 0, 2),
+VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 1, 2),
        (2, 'ana', 'sanchez', '28542336', 'ana@gmail.com', 'female', 0, 2),
        (3, 'pedro', 'perez', '41528996', 'pedro@gmail.com', 'male', 0, 2),
        (4, 'carlos', 'garcia', '18968896', 'carlos@gmail.com', 'male', 1, 3),
@@ -91,7 +91,7 @@ VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 0, 2),
        (8, 'martin', 'menendez', '19968896', 'martin@gmail.com', 'male', 0, 2),
        (9, 'cristian', 'huerta', '39634484', 'cristian@gmail.com', 'male', 1, 2),
        (10, 'daniel', 'zeta', '77777777', 'daniel@gmail.com', 'male', 0, 1);
-       
+      
 INSERT INTO agenda
 VALUES (1, '2022-10-26', '2022-10-30', 1, 4, 'small', 'dog', 700),
        (2, '2022-10-26', '2022-11-5', 0, 6, null, 'cat', 600);
@@ -109,9 +109,9 @@ VALUES (1, 'sasha', 'large', 'dog', 'golden retriever'),
        (10, 'lucky', 'medium', 'dog', 'siberian');      
        
 INSERT INTO book
-VALUES (12, '2022-10-26', '2022-10-30', 2);
-VALUES (2, '2022-10-26', '2022-10-30', 0)
-VALUES (3, '2022-10-26', '2022-10-30', 2)
+VALUES (12, '2022-10-26', '2022-10-30', 2),
+ (2, '2022-10-26', '2022-10-30', 0),
+ (3, '2022-10-26', '2022-10-30', 2);
 
 
 INSERT INTO person_book
