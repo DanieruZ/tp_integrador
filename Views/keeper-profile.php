@@ -29,11 +29,12 @@ if (!empty($petList)){
 [$pet] = $petList;
 }
 
-print_r($schedule->getPet_type());
+
 
 if(isset($petId)){  
 $petInfo = $petDAO->getPetById($petId);
 [$petinformation] = $petInfo;
+
 }
 
 ?>
@@ -104,8 +105,8 @@ $petInfo = $petDAO->getPetById($petId);
               <li name="pet_type" class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
             </ul> 
             <input type="hidden" id="petId" name="petId" value="<?php echo $petId ?>">
-            <?php if(isset($petinformation ) )
-              if($petinformation->getPet_type() ===  $schedule->getPet_type()){               
+            <?php if(isset($petinformation ) )          
+              if(strcmp($petinformation->getPet_type(), $schedule->getPet_type()) === 0){               
                 ?> 
             <button type="submit" class="btn btn-sm m-2 btn-outline-dark ml-auto d-block float-left">Reserve</button>
             
@@ -115,6 +116,8 @@ $petInfo = $petDAO->getPetById($petId);
       <div class="container-sm mx-auto" style="width:400px">
       <?php
           }else{
+           print_r($schedule->getPet_type());
+          print_r($petinformation->getPet_type());
             echo "The Keeper is not available for this pet.";
           } ?> 
         <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Keeper/OwnerListView">Go back</a>
