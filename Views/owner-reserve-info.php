@@ -14,44 +14,18 @@ use DateTime;
 $user = $_SESSION['owner'];
 [$owner] = $user;
 
-echo "<pre>";
-print_r($owner);
-echo "</pre>";
-/*
 $bookDAO = new BookDAO;
-$reserveInfo = $bookDAO->getOwnerBook($person->getPersonId());
-[$reserve] = $reserveInfo;
+$booInfo = $bookDAO->getBookInfoOwner($owner->getPersonId());
+[$book, $schedule, $person,$pet] = $booInfo;
 
-print_r($reserve);
-
-$keeperDAO = new KeeperDAO;
-$keeperInfo = $keeperDAO->getKeeperById($personId);
-[$keeper] = $keeperInfo;
-
-print_r($keeper);
-
-$scheduleDAO = new ScheduleDAO;
-$scheduleInfo = $scheduleDAO->getScheduleById($personId);
-[$schedule] = $scheduleInfo;
-
-
+$startDate = $schedule->getStartDate();
+$endDate = $schedule->getEndDate();
 $fecha1 = new DateTime($startDate);
 $fecha2 = new DateTime($endDate);
 $diff = $fecha1->diff($fecha2);
 $dias = 1 + $diff->days;
 
-*/
 
-$bookDAO = new BookDAO;
-$booInfo = $bookDAO->getBookInfo($owner->getPersonId());
-[$book, $schedule, $person] = $booInfo;
-
-
-echo "<pre>";
-print_r($book);
-print_r($schedule);
-print_r($person);
-echo "</pre>";
 
 ?>
 
@@ -73,14 +47,40 @@ echo "</pre>";
       </div>
     </section>
 
+    <section class="mb-5">
+  <div class="container-fluid">
+    <div class="container-sm mx-auto" style="width:400px">
+      <h3>Pet Profile</h3>
+    </div>
+    <div class="container-sm mx-auto shadow" style="width:400px">
+      <ul class="list-group">
+        <li class="list-group-item">Petname: <?php echo $pet->getPetname(); ?></li>
+        <li class="list-group-item">Size: <?php echo $pet->getSize(); ?></li>
+        <li class="list-group-item">Pet Type: <?php echo $pet->getPet_type(); ?></li>
+        <li class="list-group-item">Breed: <?php echo $pet->getBreed(); ?></li>
+      </ul>    
+    </div>    
+  </div>
+</section>
 
-   
-    <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Book/OwnerView">Go back</a>
+<section class="mb-5">
+      <div class="container-fluid">
+        <div class="container-sm mx-auto" style="width:400px">
+          <h3>Keeper Schedule</h3>
+        </div>
+        <div class="container-sm mx-auto" style="width:400px">         
+        <ul class="list-group">                      
+            <li class="list-group-item">Start Date: <?php echo $schedule->getStartDate(); ?> </li>         
+            <li class="list-group-item">End Date: <?php echo $schedule->getEndDate(); ?> </li>           
+            <li class="list-group-item">Cost x <?php echo $dias ?> dias : $<?php echo $schedule->getCost() * $dias ?></li>
+            <li class="list-group-item">Size Que cuida: <?php echo $schedule->getSize(); ?></li>
+            <li class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
+            <input type="hidden" id="state" name="endDate" value="<?php echo $endDate ?>">
+          </ul>
 
-
-
-
-
+        <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Book/OwnerView">Go back</a>
+      </div>
+</section>
 
 
 </main>

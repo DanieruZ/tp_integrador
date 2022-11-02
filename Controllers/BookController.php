@@ -44,6 +44,35 @@ class BookController {
     require_once(VIEWS_PATH . "keeper-reserve-info.php");
   }
 
+  public function KeeperAceptReserve($bookId) {
+    //Utils::checkOwnerSession();
+    $book = new Book();   
+    print_r($bookId);
+    if ($book) {            
+      $book = new Book(); 
+      $book->setState(1);
+      $this->bookDAO->aceptReserve($bookId);     
+      $this->KeeperView();       
+    }
+  }
+
+  public function KeeperCancelReserve($startDate, $endDate, $keeperId,$petId) {
+    //Utils::checkOwnerSession();
+    $book = new Book();   
+   
+    if ($book) {            
+      $book = new Book();
+      $book->setStartDate($startDate);
+      $book->setEndDate($endDate);
+      $book->setState(2);
+    
+
+      $this->bookDAO->addBook($book);
+      $this->bookDAO->addPersonBook($keeperId,$petId);
+      $this->KeeperView();       
+    }
+  }
+
   public function AddBook($startDate, $endDate, $keeperId,$petId) {
     //Utils::checkOwnerSession();  
       $book = new Book();   

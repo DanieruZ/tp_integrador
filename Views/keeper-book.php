@@ -8,16 +8,16 @@ use DAO\BookDAO as BookDAO;
 $user = $_SESSION['keeper'];
 [$person] = $user;
 
-
+print_r($person->getPersonId());
 
 $bookDAO = new BookDAO();
 $bookList = $bookDAO->getKeeperBook( $person->getPersonId());
 
 //$petId = $_POST['petId'];
 
-//echo "<pre>";
-//print_r($bookList);
-//echo "</pre>";
+echo "<pre>";
+print_r($bookList);
+echo "</pre>";
 ?>
 
 <main class="py-5">
