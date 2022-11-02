@@ -13,11 +13,10 @@ use DateTime;
 $user = $_SESSION['keeper'];
 [$keeper] = $user;
 
-
-
 $bookDAO = new BookDAO;
-$booInfo = $bookDAO->getBookInfoKeeper($keeper->getPersonId());
-[$book, $schedule, $person,$pet] = $booInfo;
+//$booInfo = $bookDAO->getBookInfoKeeper($keeper->getPersonId());
+$booInfo = $bookDAO->getBookInfoKeeper($bookId);
+[$book, $schedule, $person, $pet] = $booInfo;
 
 $startDate = $schedule->getStartDate();
 $endDate = $schedule->getEndDate();
@@ -80,15 +79,26 @@ echo "</pre>";
         <ul class="list-group">                      
             <li class="list-group-item">Start Date: <?php echo $schedule->getStartDate(); ?> </li>         
             <li class="list-group-item">End Date: <?php echo $schedule->getEndDate(); ?> </li>           
-            <li class="list-group-item">Cost x <?php echo $dias ?> dias : $<?php echo $schedule->getCost() * $dias ?></li>
-            <li class="list-group-item">Size Que cuida: <?php echo $schedule->getSize(); ?></li>
-            <li class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
+            <li class="list-group-item">Cost x <?php echo $dias ?> dias: $<?php echo $schedule->getCost() * $dias ?></li>
+            <li class="list-group-item">Pet Size: <?php echo $schedule->getSize(); ?></li>
+            <li class="list-group-item">Pet Type: <?php echo $schedule->getPet_type(); ?></li>
             <input type="hidden" id="state" name="endDate" value="<?php echo $endDate ?>">
           </ul>
-          <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Book/KeeperAceptReserve/.5">Cancel</a>
-          <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Book/KeeperAceptReserve/ . <?php echo $book->getBookId?> ">Confirm</a>
+        </div>
+        <div class="container-sm mx-auto" style="width:400px">
+          <button type="submit" name="btnAcept" class="btn btn-sm m-2 btn-outline-success">
+          	<a href="<?php if (isset($bookList)) {
+              echo FRONT_ROOT . "Book/KeeperAceptReserve/" . $book->getBookId();
+            }; ?>">Confirm</a>
+					</button>
+          <button type="submit" name="btnCancel" class="btn btn-sm m-2 btn-outline-danger">
+          	<a href="<?php if (isset($bookList)) {
+              echo FRONT_ROOT . "Book/KeeperCancelReserve/" . $book->getBookId();
+            }; ?>">Decline</a>
+					</button>
+          <a class="float-right m-3" href="<?php echo FRONT_ROOT ?>Book/KeeperView">Go back</a>
+        </div>
         
-
       </div>
 </section>
 

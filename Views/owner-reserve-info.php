@@ -15,7 +15,8 @@ $user = $_SESSION['owner'];
 [$owner] = $user;
 
 $bookDAO = new BookDAO;
-$booInfo = $bookDAO->getBookInfoOwner($owner->getPersonId());
+//$booInfo = $bookDAO->getBookInfoOwner($owner->getPersonId());
+$booInfo = $bookDAO->getBookInfoOwner($bookId);
 [$book, $schedule, $person,$pet] = $booInfo;
 
 $startDate = $schedule->getStartDate();

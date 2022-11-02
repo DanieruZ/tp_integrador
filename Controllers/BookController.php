@@ -26,37 +26,38 @@ class BookController {
     require_once(VIEWS_PATH . "keeper-book.php");
   }
 
-  public function OwnerReserve($personId, $startDate, $endDate,$petId) {
+  public function OwnerReserve($personId, $startDate, $endDate, $petId) {
     //Utils::checkOwnerSession();      
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "owner-book-detail.php");
   }
 
-  public function OwnerViewBookInfo() {
+  public function OwnerViewBookInfo($bookId) {
     //Utils::checkOwnerSession();
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "owner-reserve-info.php");
   }
 
-  public function KeeperViewBookInfo() {
-    //Utils::checkOwnerSession();
+  public function KeeperViewBookInfo($bookId) {
+    //Utils::checkKeeperSession();
     require_once(VIEWS_PATH . "keeper-nav.php");
     require_once(VIEWS_PATH . "keeper-reserve-info.php");
   }
 
   public function KeeperAceptReserve($bookId) {
     //Utils::checkOwnerSession();
-    $book = new Book();   
-    print_r($bookId);
+    /*$book = new Book();   
+    
     if ($book) {            
-      $book = new Book(); 
-      $book->setState(1);
+      $book = new Book();
+      $book->setState(1);*/
+
       $this->bookDAO->aceptReserve($bookId);     
       $this->KeeperView();       
-    }
+    //}
   }
 
-  public function KeeperCancelReserve($startDate, $endDate, $keeperId,$petId) {
+  public function KeeperCancelReserve($startDate, $endDate, $keeperId, $petId) {
     //Utils::checkOwnerSession();
     $book = new Book();   
    
@@ -65,15 +66,14 @@ class BookController {
       $book->setStartDate($startDate);
       $book->setEndDate($endDate);
       $book->setState(2);
-    
 
       $this->bookDAO->addBook($book);
-      $this->bookDAO->addPersonBook($keeperId,$petId);
+      $this->bookDAO->addPersonBook($keeperId, $petId);
       $this->KeeperView();       
     }
   }
 
-  public function AddBook($startDate, $endDate, $keeperId,$petId) {
+  public function AddBook($startDate, $endDate, $keeperId, $petId) {
     //Utils::checkOwnerSession();  
       $book = new Book();   
    
@@ -82,13 +82,26 @@ class BookController {
       $book->setStartDate($startDate);
       $book->setEndDate($endDate);
       $book->setState(0);
-    
 
       $this->bookDAO->addBook($book);
       $this->bookDAO->addPersonBook($keeperId,$petId);
       $this->OwnerView();       
     }
   }
+
+  public function GetBookInfoKeeper($bookId) {
+    //Utils::checkKeeperSession();  
+
+      $this->bookDAO->getBookInfoKeeper($bookId);
+      $this->KeeperViewBookInfo($bookId);       
+    }
+
+    public function GetBookInfoOwner($bookId) {
+      //Utils::checkOwnerSession();  
+  
+        $this->bookDAO->getBookInfoOwner($bookId);
+        $this->OwnerViewBookInfo($bookId);       
+      }
 
 }
 

@@ -33,30 +33,30 @@ class BookDAO implements IBookDAO {
       }
   }
 
-  public function aceptReserve($bookId)
-  {
+  public function aceptReserve($bookId) {
     try {
-      $allbookList = array();
-    
+
+      $bookList = array();
 
       $query = "UPDATE book
                 SET state = 1 
-                WHERE bookId = '$bookId';";
+                WHERE bookId = '$bookId;";
 
       $this->connection = Connection::GetInstance();
-      $allbookList = $this->connection->Execute($query);
+      $allBook = $this->connection->Execute($query);
 
-      foreach ($allbookList as $value) {
+      foreach ($allBook as $value) {
         $book = new Book();
         $book->setState($value['state']);
 
-        array_push($allbookList, $book);
+        array_push($bookList, $book);
       }
 
-      return $allbookList;
+      return $bookList;
+    
     } catch (\PDOException $ex) {
-      throw $ex;
-    }
+        throw $ex;
+      }
   }
 
   //* Lista todas las reservas.
@@ -176,6 +176,7 @@ class BookDAO implements IBookDAO {
 
       foreach ($allBook as $value) {
         $book = new Book();
+        $book->setBookId($value['bookId']);
         $book->setStartDate($value['startDate']);
         $book->setEndDate($value['endDate']);
         $book->setState($value['state']);
@@ -206,6 +207,7 @@ class BookDAO implements IBookDAO {
 
       foreach ($allBook as $value) {
         $book = new Book();
+        $book->setBookId($value['bookId']);
         $book->setStartDate($value['startDate']);
         $book->setEndDate($value['endDate']);
         $book->setState($value['state']);
@@ -220,18 +222,17 @@ class BookDAO implements IBookDAO {
     }
   }
 
-  public function getBookInfoOwner($personId) {
+  public function getBookInfoOwner($bookId) {
     try {
      
       $bookList = array();
 
       $query = "SELECT * FROM book b
                 INNER JOIN person_book pbk ON pbk.bookId = b.bookId
-                INNER JOIN person po ON po.personId = pbk.ownerId
                 INNER JOIN agenda a ON a.personId = pbk.keeperId
                 INNER JOIN person pk ON pk.personId = pbk.keeperId
                 INNER JOIN pet pt ON pt.petId = pbk.petId
-                WHERE po.personId = '$personId';";
+                WHERE pbk.bookId = '$bookId';";
 
       $this->connection = Connection::GetInstance();
       $allBook = $this->connection->Execute($query);
@@ -280,18 +281,17 @@ class BookDAO implements IBookDAO {
       }
   }
 
-  public function getBookInfoKeeper($personId) {
+  public function getBookInfoKeeper($bookId) {
     try {
      
       $bookList = array();
 
       $query = "SELECT * FROM book b
                 INNER JOIN person_book pbk ON pbk.bookId = b.bookId
-                INNER JOIN person po ON po.personId = pbk.keeperId
+                INNER JOIN person po ON po.personId = pbk.ownerId
                 INNER JOIN agenda a ON a.personId = pbk.keeperId
-                INNER JOIN person pk ON pk.personId = pbk.ownerId
                 INNER JOIN pet pt ON pt.petId = pbk.petId
-                WHERE po.personId = '$personId';";
+                WHERE pbk.bookId = '$bookId';";
 
       $this->connection = Connection::GetInstance();
       $allBook = $this->connection->Execute($query);

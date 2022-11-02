@@ -8,10 +8,8 @@ use DAO\BookDAO as BookDAO;
 $user = $_SESSION['owner'];
 [$person] = $user;
 
-
-
 $bookDAO = new BookDAO();
-$bookList = $bookDAO->getOwnerBook( $person->getPersonId());
+$bookList = $bookDAO->getOwnerBook($person->getPersonId());
 
 //$petId = $_POST['petId'];
 
@@ -29,7 +27,7 @@ $bookList = $bookDAO->getOwnerBook( $person->getPersonId());
 			  <thead class="bg-dark text-white">
 				   <th>Start Date</th>
 				   <th>End Date</th>
-           		   <th>State</th>
+           <th>State</th>
 				   <th>Reserve Info</th>
 				  
 					
@@ -42,20 +40,20 @@ $bookList = $bookDAO->getOwnerBook( $person->getPersonId());
 				  <tr>
 					 	<td><?php echo $book->getStartDate(); ?></td>
 						<td><?php echo $book->getEndDate(); ?></td>						
-						<?php if($book->getState() === 0 ){?> 
-						<td><?php echo "Pendiente"?> </td> <?php
+						<?php if($book->getState() == 0 ){?> 
+						<td><?php echo "Pending"?> </td> <?php
 						} ?>
-						<?php if($book->getState() === 1 ){?> 
-						<td><?php echo "Aceptado"?> </td> <?php
+						<?php if($book->getState() == 1 ){?> 
+						<td><?php echo "Confirmed"?> </td> <?php
 						} ?> 
-						<?php if($book->getState() === 2 ){?> 
-						<td><?php echo "Rechazado"?> </td> <?php
+						<?php if($book->getState() == 2 ){?> 
+						<td><?php echo "Declined"?> </td> <?php
 						} ?>  
-					<td><button type="submit" name="btnProfile" class="btn btn-sm btn-outline-info">
-													<a href="<?php if (isset($bookList)) {
-																	echo FRONT_ROOT . "Book/OwnerViewBookInfo" ;
-																}; ?>">View Info</a>
-												</button></td>	
+					<td><button type="submit" name="btnViewInfo" class="btn btn-sm btn-outline-info">
+          		<a href="<?php if (isset($bookList)) {
+              	echo FRONT_ROOT . "Book/GetBookInfoOwner/" . $book->getBookId();
+            	}; ?>">View Info</a>
+						</button></td>
 						
 					</tr>
 				</tbody>
