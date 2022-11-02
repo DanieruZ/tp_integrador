@@ -229,9 +229,9 @@ class BookDAO implements IBookDAO {
 
       $query = "SELECT * FROM book b
                 INNER JOIN person_book pbk ON pbk.bookId = b.bookId
-                INNER JOIN agenda a ON a.personId = pbk.keeperId
                 INNER JOIN person pk ON pk.personId = pbk.keeperId
                 INNER JOIN pet pt ON pt.petId = pbk.petId
+                /*INNER JOIN agenda a ON a.personId = pbk.keeperId*/
                 WHERE pbk.bookId = '$bookId';";
 
       $this->connection = Connection::GetInstance();
@@ -243,7 +243,7 @@ class BookDAO implements IBookDAO {
         $book->setStartDate($value['startDate']);
         $book->setEndDate($value['endDate']);
         $book->setState($value['state']);
-
+/*
         $schedule = new Schedule();
         $schedule->setScheduleId($value['scheduleId']);
         $schedule->setStartDate($value['startDate']);
@@ -252,7 +252,7 @@ class BookDAO implements IBookDAO {
         $schedule->setPersonId($value['personId']);
         $schedule->setSize($value['size']);
         $schedule->setPet_type($value['pet_type']);
-        $schedule->setCost($value['cost']);
+        $schedule->setCost($value['cost']);*/
        
         $person = new Person();
         $person->setPersonId($value['personId']);
@@ -271,7 +271,7 @@ class BookDAO implements IBookDAO {
         $pet->setPet_type($value['pet_type']);
         $pet->setBreed($value['breed']);
 
-        array_push($bookList, $book, $schedule, $person, $pet);
+        array_push($bookList, $book, $person, $pet);
       }
 
       return $bookList;
