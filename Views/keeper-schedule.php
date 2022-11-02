@@ -86,7 +86,7 @@ if (!$scheduleList || $schedule->getState() == 0) {
 
               if (isset($petList)) {
                 foreach ($petList as $pet) {
-              ?> <option name="pet_type"  value=" <?php echo $pet->getPet_type() ?>" </option> <?php echo $pet->getPet_type() ?> <?php
+              ?> <option name="pet_type"  value="<?php echo $pet->getPet_type() ?>" </option> <?php echo $pet->getPet_type() ?> <?php
                                                                                                                   }
                 
                                                                                                                 }
