@@ -14,9 +14,9 @@ $bookList = $bookDAO->getOwnerBook($person->getPersonId());
 
 //$petId = $_POST['petId'];
 
-//echo "<pre>";
-//print_r($bookList);
-//echo "</pre>";
+echo "<pre>";
+print_r($bookList);
+echo "</pre>";
 ?>
 
 <main class="py-5">
@@ -29,6 +29,7 @@ $bookList = $bookDAO->getOwnerBook($person->getPersonId());
 					<th>Start Date</th>
 					<th>End Date</th>
 					<th>State</th>
+					<th>State Payment</th>
 					<th>Reserve Info</th>
 
 
@@ -49,6 +50,15 @@ $bookList = $bookDAO->getOwnerBook($person->getPersonId());
 																	} ?>
 								<?php if ($book->getStateBook() == 2) { ?>
 									<td><?php echo "Declined" ?> </td> <?php
+																	} ?>
+								<?php if ($book->getStatePayment() == 0) { ?>
+									<td><?php echo "Unpaid" ?> </td> <?php
+																	} ?>
+								<?php if ($book->getStatePayment() == 1) { ?>
+									<td><?php echo "Paid" ?> </td> <?php
+																	} ?>
+								<?php if ($book->getStatePayment() == 2) { ?>
+									<td><?php echo "Payment declined" ?> </td> <?php
 																	} ?>
 								<td><button type="submit" name="btnViewInfo" class="btn btn-sm btn-outline-info">
 										<a href="<?php if (isset($bookList)) {
