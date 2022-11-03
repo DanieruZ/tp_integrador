@@ -38,31 +38,35 @@ class KeeperController {
     require_once(VIEWS_PATH . "keeper-list.php");
   }
 
+  public function OwnerSearchListView() {
+    //Utils::checkOwnerSession();
+    require_once(VIEWS_PATH . "owner-nav.php");
+    require_once(VIEWS_PATH . "keeper-search-list.php");
+  }
+
   public function AdminListView() {
     //Utils::checkAdminSession();
     require_once(VIEWS_PATH . "admin-nav.php");
     require_once(VIEWS_PATH . "keeper-list.php");
   }
 
-  public function fecha ($fechaInicio,$fechaFin ) {
-    //Utils::checkKeeperSession();  
-    $person = new Person();  
+  public function Profile ($personId) {
+    //Utils::checkKeeperSession();        
+    require_once(VIEWS_PATH . "owner-nav.php");
+    require_once(VIEWS_PATH . "keeper-profile.php");      
+  }
 
-    if ($person) {            
-      $person = new Person();
-      $person->setIsActive(1); 
-      
-      $user = $_SESSION['keeper'];
-      [$person] = $user;     
+  public function ProfileKeeperPet ($personId,$petId) {
+    //Utils::checkKeeperSession();    
+    require_once(VIEWS_PATH . "owner-nav.php");
+    require_once(VIEWS_PATH . "keeper-profile.php");      
+  }
 
-      $this->keeperDAO->addKeeper($person);
-      $this->ScheduleView();       
-    }
-    print_r($fechaInicio );
-    echo("<br>");
-    print_r($fechaFin );
-   
-   }
+  public function GetKeeperByAvailableDate($startDate, $endDate) {
+    //Utils::checkOwnerSession();
+    $this->keeperDAO->getKeeperByAvailableDate($startDate, $endDate);
+    $this->OwnerSearchListView();
+  }
 
 }
 

@@ -33,7 +33,7 @@ class KeeperDAO implements IKeeperDAO {
       }
   }
 
-//* Lista todos los keepers activos.
+  //* Lista todos los keepers activos.
   public function getAllKeeper() {
     try {
       $keeperList = array();
@@ -66,33 +66,137 @@ class KeeperDAO implements IKeeperDAO {
       }
   }
 
-  public function getScheduleById($personId) {
+   public function getKeeperById($personId) {
     try {
-      $scheduleList = array();
+      $keeperList = array();    
 
-      $query = "SELECT * FROM agenda a
-                INNER JOIN person p ON p.scheduleId = a.scheduleId
-                WHERE p.personId = '$personId';";
+      $query = "SELECT * FROM person p
+                INNER JOIN rol r ON r.rolId = p.rolId
+                INNER JOIN agenda a ON a.personId = p.personId 
+                WHERE r.rol = 'keeper' AND p.personId = '$personId' AND p.isActive = 1 AND a.state = 1;";
 
       $this->connection = Connection::GetInstance();
-      $allSchedule = $this->connection->Execute($query);
+      $allKeeper = $this->connection->Execute($query);
 
-      foreach ($allSchedule as $value) {
-        $schedule = new Schedule();
-        $schedule->setScheduleId($value['scheduleId']);
-        $schedule->setStartDate($value['startDate']);
-        $schedule->setEndDate($value['endDate']);
+      foreach ($allKeeper as $value) {
+        $person = new Person();
+        $person->setPersonId($value['personId']);
+        $person->setFirstname($value['firstname']);
+        $person->setLastname($value['lastname']);
+        $person->setDni($value['dni']);
+        $person->setEmail($value['email']);
+        $person->setGender($value['gender']);
+        $person->setIsActive($value['isActive']);
+        $person->setRolId($value['rolId']);
         
 
-        array_push($scheduleList, $schedule);
+       
+        array_push($keeperList, $person);
       }
 
-      return $scheduleList;
+      return $keeperList;
 
     } catch (\PDOException $ex) {
         throw $ex;
       }
   }
+
+    //* Activa el estado de un Keeper
+    public function deleteKeeper() {
+      try {
+        $personList = array();
+
+        $user = $_SESSION['keeper'];
+        [$person] = $user;
+        $personId = $person->getPersonId();
+  
+        $query = "UPDATE person
+                  SET isActive = 0 
+                  WHERE personId = '$personId';";
+  
+        $this->connection = Connection::GetInstance();
+        $allPerson = $this->connection->Execute($query);
+  
+        foreach ($allPerson as $value) {
+          $person = new Person();
+          $person->setIsActive($value['isActive']);
+  
+          array_push($personList, $person);
+        }
+  
+        return $personList;
+
+      } catch (\PDOException $ex) {
+          throw $ex;
+        }
+    }
+  
+    //* Activa el estado de un Keeper sin agenda o agenda eliminada.
+    public function activeKeeper() {
+      try {
+        $personList = array();
+
+        $user = $_SESSION['keeper'];
+        [$person] = $user;
+        $personId = $person->getPersonId();
+  
+        $query = "UPDATE person
+                  SET isActive = 1 
+                  WHERE personId = '$personId';";
+  
+        $this->connection = Connection::GetInstance();
+        $allPerson = $this->connection->Execute($query);
+  
+        foreach ($allPerson as $value) {
+          $person = new Person();
+          $person->setIsActive($value['isActive']);
+  
+          array_push($personList, $person);
+        }
+  
+        return $personList;
+
+      } catch (\PDOException $ex) {
+          throw $ex;
+        }
+    }
+
+    public function getKeeperByAvailableDate($startDate, $endDate) {
+      try {
+        $keeperList = array();
+  
+        $query = "SELECT * FROM person p
+                  INNER JOIN rol r ON r.rolId = p.rolId
+                  INNER JOIN agenda a ON a.personId = p.personId
+                  WHERE r.rol = 'keeper' 
+                  AND p.isActive = 1
+                  AND a.startDate BETWEEN '$startDate' AND '$endDate'
+                  AND a.endDate BETWEEN '$startDate' AND '$endDate'
+                  GROUP BY p.personId;";
+  
+        $this->connection = Connection::GetInstance();
+        $allKeeper = $this->connection->Execute($query);
+  
+        foreach ($allKeeper as $value) {
+          $person = new Person();
+          $person->setPersonId($value['personId']);
+          $person->setFirstname($value['firstname']);
+          $person->setLastname($value['lastname']);
+          $person->setDni($value['dni']);
+          $person->setEmail($value['email']);
+          $person->setGender($value['gender']);
+          $person->setIsActive($value['isActive']);
+          $person->setRolId($value['rolId']);
+  
+          array_push($keeperList, $person);
+        }
+  
+        return $keeperList;
+  
+      } catch (\PDOException $ex) {
+          throw $ex;
+        }
+    }
 
 }
 

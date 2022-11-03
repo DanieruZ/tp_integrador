@@ -9,9 +9,12 @@ use DAO\ScheduleDAO as ScheduleDAO;
 use DAO\petDAO as PetDAO;
 use DateTime;
 
+
+
 $petDAO = new PetDAO;
 $petInfo = $petDAO->getPetById($petId);
 [$pet] = $petInfo;
+
 
 $startDate = $_POST['startDate'];
 $endDate = $_POST['endDate'];
@@ -24,10 +27,12 @@ $scheduleDAO = new ScheduleDAO;
 $scheduleInfo = $scheduleDAO->getScheduleById($personId);
 [$schedule] = $scheduleInfo;
 
+
 $fecha1 = new DateTime($startDate);
 $fecha2 = new DateTime($endDate);
 $diff = $fecha1->diff($fecha2);
 $dias = 1 + $diff->days;
+
 
 ?>
 
@@ -82,9 +87,9 @@ $dias = 1 + $diff->days;
             <input type="hidden" id="startDate" name="startDate" value="<?php echo $startDate ?>">
             <li class="list-group-item">End Date: <?php echo $endDate; ?> </li>
             <input type="hidden" id="endDate" name="endDate" value="<?php echo $endDate ?>">
-            <li class="list-group-item">Cost x <?php echo $dias ?> dias: $<?php echo $schedule->getCost() * $dias ?></li>
-            <li class="list-group-item">Pet Size: <?php echo $schedule->getSize(); ?></li>
-            <li class="list-group-item">Pet Type: <?php echo $schedule->getPet_type(); ?></li>
+            <li class="list-group-item">Cost x <?php echo $dias ?> dias : $<?php echo $schedule->getCost() * $dias ?></li>
+            <li class="list-group-item">Size Que cuida: <?php echo $schedule->getSize(); ?></li>
+            <li class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
             <input type="hidden" id="state" name="endDate" value="<?php echo $endDate ?>">
           </ul>
           <input type="hidden" id="petId" name="petId" value="<?php echo $petId ?>">
