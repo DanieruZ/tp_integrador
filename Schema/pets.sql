@@ -7,6 +7,13 @@ CREATE TABLE IF NOT EXISTS rol (
   PRIMARY KEY (rolId)
 )Engine=InnoDB;
 
+CREATE TABLE IF NOT EXISTS agenda (
+  scheduleId INT NOT NULL AUTO_INCREMENT,
+  startDate DATE NOT NULL,
+  endDate DATE NOT NULL,
+  PRIMARY KEY (scheduleId)
+)Engine=InnoDB;
+
 CREATE TABLE IF NOT EXISTS person (
   personId INT NOT NULL AUTO_INCREMENT,
   firstname VARCHAR(50) NOT NULL,
@@ -16,85 +23,53 @@ CREATE TABLE IF NOT EXISTS person (
   gender ENUM('female', 'male', 'other') NOT NULL,
   isActive BOOLEAN NOT NULL DEFAULT 0,
   rolId INT NOT NULL,
-  PRIMARY KEY (personId),  
-  FOREIGN KEY (rolId) REFERENCES rol (rolId),  
+  scheduleId INT DEFAULT NULL,
+  PRIMARY KEY (personId),
+  FOREIGN KEY (scheduleId) REFERENCES agenda (scheduleId),
+  FOREIGN KEY (rolId) REFERENCES rol (rolId),
   UNIQUE (dni, email) 
 )Engine=InnoDB;
 
-CREATE TABLE IF NOT EXISTS agenda (
-  scheduleId INT NOT NULL AUTO_INCREMENT,
-  startDate DATE NOT NULL,
-  endDate DATE NOT NULL,
-  state BOOLEAN DEFAULT 0,
-  personId INT,
-  size varchar(30),
-  pet_type varchar(30),
-  cost float,  
-  PRIMARY KEY (scheduleId),
-  FOREIGN KEY (personId) REFERENCES person (personId)
-)Engine=InnoDB;
-
 CREATE TABLE IF NOT EXISTS pet (
-  petId INT NOT NULL AUTO_INCREMENT,
-  petname VARCHAR(50) NOT NULL,
-  size ENUM('small', 'medium', 'large' , 'x-large') NOT NULL,
-  pet_type ENUM('dog', 'cat', 'bird') NOT NULL,
-  breed VARCHAR(50) NOT NULL,
-  PRIMARY KEY (petId)
-)Engine=InnoDB;
-
-CREATE TABLE IF NOT EXISTS book (
-  bookId INT NOT NULL AUTO_INCREMENT,
-  startDate DATE NOT NULL,
-  endDate DATE NOT NULL,
-  state BOOLEAN DEFAULT '0',
-  PRIMARY KEY (bookId)
-)Engine=InnoDB;
-
-CREATE TABLE IF NOT EXISTS person_book (
-  person_bookId INT NOT NULL AUTO_INCREMENT,
-  ownerId INT,
-  petId INT,
-  keeperId INT,
-  bookId INT,
-  PRIMARY KEY (person_bookId),
-  FOREIGN KEY (ownerId) REFERENCES person (personId) ON DELETE SET NULL,
-  FOREIGN KEY (petId) REFERENCES pet (petId) ON DELETE SET NULL,
-  FOREIGN KEY (keeperId) REFERENCES person (personId) ON DELETE SET NULL,
-  FOREIGN KEY (bookId) REFERENCES book (bookId) ON DELETE SET NULL,
-  UNIQUE (ownerId, petId, keeperId, bookId)
+    petId INT NOT NULL AUTO_INCREMENT,
+    petname VARCHAR(50) NOT NULL,
+    size ENUM('small', 'medium', 'large' , 'x-large') NOT NULL,
+    pet_type ENUM('dog', 'cat', 'bird') NOT NULL,
+    breed VARCHAR(50) NOT NULL,
+    PRIMARY KEY (petId)
 )Engine=InnoDB;
 
 CREATE TABLE IF NOT EXISTS pet_owner (
-  pet_ownerId INT NOT NULL AUTO_INCREMENT,
-  personId INT,
-  petId INT,
-  PRIMARY KEY (pet_ownerId),
-  FOREIGN KEY (personId) REFERENCES person (personId) ON DELETE SET NULL,
-  FOREIGN KEY (petId) REFERENCES pet (petId) ON DELETE SET NULL,
-  UNIQUE (personId, petId)
+    pet_ownerId INT NOT NULL AUTO_INCREMENT,
+    personId INT,
+    petId INT,
+    PRIMARY KEY (pet_ownerId),
+    FOREIGN KEY (personId) REFERENCES person (personId) ON DELETE SET NULL,
+    FOREIGN KEY (petId) REFERENCES pet (petId) ON DELETE SET NULL,
+    UNIQUE (personId, petId)
 )Engine=InnoDB;
 
 INSERT INTO rol
 VALUES (1, 'admin'),
        (2, 'owner'),
-       (3, 'keeper');     
-      
-INSERT INTO person
-VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 1, 2),
-       (2, 'ana', 'sanchez', '28542336', 'ana@gmail.com', 'female', 0, 2),
-       (3, 'pedro', 'perez', '41528996', 'pedro@gmail.com', 'male', 0, 2),
-       (4, 'carlos', 'garcia', '18968896', 'carlos@gmail.com', 'male', 1, 3),
-       (5, 'susana', 'jerez', '39688964', 'susana@gmail.com', 'female', 0, 2),
-	   (6, 'maria', 'rodriguez', '28542996', 'maria@gmail.com', 'female', 1, 3 ),
-       (7, 'marcela', 'dominguez', '48538996', 'marcela@gmail.com', 'female', 0, 2),
-       (8, 'martin', 'menendez', '19968896', 'martin@gmail.com', 'male', 0, 2),
-       (9, 'cristian', 'huerta', '39634484', 'cristian@gmail.com', 'male', 1, 2),
-       (10, 'daniel', 'zeta', '77777777', 'daniel@gmail.com', 'male', 0, 1);
-      
+       (3, 'keeper');
+       
 INSERT INTO agenda
-VALUES (1, '2022-10-26', '2022-10-30', 1, 4, 'small', 'dog', 700),
-       (2, '2022-10-26', '2022-11-5', 0, 6, 'small', 'cat', 600);
+VALUES (1, '2022-10-01', '2022-11-30'),
+       (2, '2022-10-01', '2022-11-30'),
+       (3, '2022-10-01', '2022-11-30');      
+       
+INSERT INTO person
+VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 0, 2, null),
+       (2, 'ana', 'sanchez', '28542336', 'ana@gmail.com', 'female', 0, 2, null),
+       (3, 'pedro', 'perez', '41528996', 'pedro@gmail.com', 'male', 0, 2, null),
+       (4, 'carlos', 'garcia', '18968896', 'carlos@gmail.com', 'male', 1, 3, 3),
+       (5, 'susana', 'jerez', '39688964', 'susana@gmail.com', 'female', 0, 2, null),
+	   (6, 'maria', 'rodriguez', '28542996', 'maria@gmail.com', 'female', 1, 3, 1),
+       (7, 'marcela', 'dominguez', '48538996', 'marcela@gmail.com', 'female', 0, 2, null),
+       (8, 'martin', 'menendez', '19968896', 'martin@gmail.com', 'male', 0, 2, null),
+       (9, 'cristian', 'huerta', '39634484', 'cristian@gmail.com', 'male', 1, 2, 2),
+       (10, 'daniel', 'zeta', '77777777', 'daniel@gmail.com', 'male', 0, 1, null);
               
 INSERT INTO pet
 VALUES (1, 'sasha', 'large', 'dog', 'golden retriever'),
@@ -108,15 +83,6 @@ VALUES (1, 'sasha', 'large', 'dog', 'golden retriever'),
        (9, 'hueso', 'large', 'dog', 'rotewailer'),
        (10, 'lucky', 'medium', 'dog', 'siberian');      
        
-INSERT INTO book
-VALUES (1, '2022-10-26', '2022-10-30', 2),
- (2, '2022-10-26', '2022-10-30', 0),
- (3, '2022-10-26', '2022-10-30', 2);
-
-
-INSERT INTO person_book
-VALUES (1, 2, 4, 4, 1);
-
 INSERT INTO pet_owner
 VALUES (1, 5, 2),
        (2, 5, 6),     

@@ -10,6 +10,7 @@ interface IScheduleDAO {
 	function getSchedule();
   function getScheduleById($personId);
   function deleteSchedule();
+  function scheduleReserve($scheduleId,$endDateBook);
 
 }
 

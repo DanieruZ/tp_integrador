@@ -5,9 +5,10 @@ namespace Models;
 class Book {
 
   private $bookId;
-  private $startDate;
-  private $endDate;
-  private $state;
+  private $startDateBook;
+  private $endDateBook;
+  private $stateBook;
+  private $statePayment;
  
 
   public function __construct() {}
@@ -33,83 +34,84 @@ class Book {
     return $this;
   }
 
+
+
   /**
-   * Get the value of startDate
+   * Get the value of startDateBook
    */ 
-  public function getStartDate()
+  public function getStartDateBook()
   {
-    return $this->startDate;
+    return $this->startDateBook;
   }
 
   /**
-   * Set the value of startDate
+   * Set the value of startDateBook
    *
    * @return  self
    */ 
-  public function setStartDate($startDate)
+  public function setStartDateBook($startDateBook)
   {
-    $this->startDate = $startDate;
+    $this->startDateBook = $startDateBook;
 
     return $this;
   }
 
   /**
-   * Get the value of endDate
+   * Get the value of endDateBook
    */ 
-  public function getEndDate()
+  public function getEndDateBook()
   {
-    return $this->endDate;
+    return $this->endDateBook;
   }
 
   /**
-   * Set the value of endDate
+   * Set the value of endDateBook
    *
    * @return  self
    */ 
-  public function setEndDate($endDate)
+  public function setEndDateBook($endDateBook)
   {
-    $this->endDate = $endDate;
+    $this->endDateBook = $endDateBook;
 
     return $this;
   }
 
   /**
-   * Get the value of state
+   * Get the value of stateBook
    */ 
-  public function getState()
+  public function getStateBook()
   {
-    return $this->state;
+    return $this->stateBook;
   }
 
   /**
-   * Set the value of state
+   * Set the value of stateBook
    *
    * @return  self
    */ 
-  public function setState($state)
+  public function setStateBook($stateBook)
   {
-    $this->state = $state;
+    $this->stateBook = $stateBook;
 
     return $this;
   }
-  
 
   /**
-   * Get the value of petId
+   * Get the value of statePayment
    */ 
-  public function getPetId()
+  public function getStatePayment()
   {
-    return $this->petId;
+    return $this->statePayment;
   }
 
   /**
-   * Set the value of petId
+   * Set the value of statePayment
    *
    * @return  self
    */ 
-  public function setPetId($petId)
+  public function setStatePayment($statePayment)
   {
-    $this->petId = $petId;
+    $this->statePayment = $statePayment;
 
     return $this;
   }

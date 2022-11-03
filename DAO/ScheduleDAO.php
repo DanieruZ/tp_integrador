@@ -6,6 +6,7 @@ use Models\Schedule;
 use DAO\IScheduleDAO as IScheduleDAO;
 use DAO\Connection as Connection;
 
+
 class ScheduleDAO implements IScheduleDAO
 {
 
@@ -136,6 +137,35 @@ class ScheduleDAO implements IScheduleDAO
         throw $ex;
       }
   } 
+
+  public function scheduleReserve($scheduleId,$endDateBook) {
+    
+    try {
+      print_r($scheduleId);
+      print_r($endDateBook);
+
+      $scheduleList = array();
+
+      $query = "UPDATE agenda 
+                SET startDate = '$endDateBook'                                 
+                WHERE scheduleId = '$scheduleId';";
+
+      $this->connection = Connection::GetInstance();    
+      $allSchedule = $this->connection->Execute($query);    
+       
+      foreach ($allSchedule as $value) {
+        $schedule = new Schedule();
+        $schedule->setStartDate($value['startDate']);        
+
+        array_push($scheduleList, $schedule);
+      }
+
+      return $scheduleList;
+    
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
 
 
   public function deleteSchedule()

@@ -8,12 +8,9 @@ interface IPetDAO {
 
 	function addPet(Pet $pet);
 	function getPetLastId();
-	function addPetOwner();
+	function addPetOwner($personId, $petId);
 	function getAllPet();
 	function getMyPet($personId);
-	function deletePetById($petId);
-	function getPetById($petId);
-	function getPetType();
 	
 }
 
