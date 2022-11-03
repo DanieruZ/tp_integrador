@@ -17,6 +17,7 @@ interface IBookDAO
 	function getBookInfoOwner($personId);
 	function getBookInfoKeeper($personId);
 	function bookReserve($bookId);
+	function bookReservePayment($bookId);
 }
 
 ?>
