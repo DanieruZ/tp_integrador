@@ -4,23 +4,15 @@ namespace Views;
 
 require_once "Config\Autoload.php";
 
-use DAO\KeeperDAO as KeeperDAO;
-use DAO\ScheduleDAO as ScheduleDAO;
-use DAO\petDAO as PetDAO;
 use DAO\bookDAO as BookDAO;
 use DateTime;
-
 
 $user = $_SESSION['owner'];
 [$owner] = $user;
 
 $bookDAO = new BookDAO;
-//$booInfo = $bookDAO->getBookInfoOwner($owner->getPersonId());
 $booInfo = $bookDAO->getBookInfoOwner($bookId);
 [$book,$schedule, $person, $pet] = $booInfo;
-
-//$scheduleDAO = new ScheduleDAO;
-//$scheduleList = $scheduleDAO->getScheduleById($person->getPersonId());
 
 $startDate = $book->getStartDateBook();
 $endDate = $book->getEndDateBook();
@@ -29,13 +21,6 @@ $fecha2 = new DateTime($endDate);
 $diff = $fecha1->diff($fecha2);
 $dias = 1 + $diff->days;
 
-echo "<pre>";
-print_r($book);
-print_r($schedule);
-print_r($person);
-print_r($pet);
-echo "</pre>";
-echo "holaaaa";
 ?>
 
   <main class="py-5"> 
@@ -64,8 +49,8 @@ echo "holaaaa";
     <div class="container-sm mx-auto shadow" style="width:400px">
       <ul class="list-group">
         <li class="list-group-item">Petname: <?php echo $pet->getPetname(); ?></li>
-        <li class="list-group-item">Size: <?php echo $pet->getSize(); ?></li>
         <li class="list-group-item">Pet Type: <?php echo $pet->getPet_type(); ?></li>
+        <li class="list-group-item">Size: <?php echo $pet->getSize(); ?></li>
         <li class="list-group-item">Breed: <?php echo $pet->getBreed(); ?></li>
       </ul>    
     </div>    
@@ -81,20 +66,19 @@ echo "holaaaa";
         <ul class="list-group">                      
             <li class="list-group-item">Start Date: <?php echo $book->getStartDateBook(); ?> </li>         
             <li class="list-group-item">End Date: <?php echo $book->getEndDateBook(); ?> </li>           
-            <li class="list-group-item">Cost x <?php echo $dias ?> dias : $<?php echo $schedule->getCost() * $dias ?></li>
-            <li class="list-group-item">Size Que cuida: <?php echo $schedule->getSize(); ?></li>
-            <li class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
+            <li class="list-group-item">Cost x <?php echo $dias ?> day: $<?php echo $schedule->getCost() * $dias ?></li>
+            <li class="list-group-item">Pet Type: <?php echo $schedule->getPet_type(); ?></li>
+            <li class="list-group-item">Size: <?php echo $schedule->getSize(); ?></li>
             <input type="hidden" id="state" name="endDate" value="<?php echo $endDate ?>">
-           
           </ul>
 
         <a class="float-right m-1" href="<?php echo FRONT_ROOT ?>Book/OwnerView">Go back</a>
         <?php if($book->getStateBook() == 1){               
                 ?>            
-                 <button type="submit" name="btnPayment" class="btn btn-sm btn-outline-info">
+                 <button type="submit" name="btnPayment" class="btn btn-sm m-2 btn-outline-success">
 												<a href="<?php if (isset($schedule)) {
 																echo FRONT_ROOT . "Book/PaymentReserve/" . $book->getBookId();
-															}; ?>">Pagar</a>
+															}; ?>">Pay</a>
 											</button>
             <?php }?> 
       </div>

@@ -4,9 +4,6 @@ namespace Views;
 
 require_once "Config\Autoload.php";
 
-use DAO\KeeperDAO as KeeperDAO;
-use DAO\ScheduleDAO as ScheduleDAO;
-use DAO\petDAO as PetDAO;
 use DAO\bookDAO as BookDAO;
 use DateTime;
 
@@ -18,20 +15,12 @@ $bookDAO = new BookDAO;
 $booInfo = $bookDAO->getBookInfoOwner($bookId);
 [$book,$schedule, $person, $pet] = $booInfo;
 
-
 $startDate = $book->getStartDateBook();
 $endDate = $book->getEndDateBook();
 $fecha1 = new DateTime($startDate);
 $fecha2 = new DateTime($endDate);
 $diff = $fecha1->diff($fecha2);
 $dias = 1 + $diff->days;
-
-echo "<pre>";
-print_r($book);
-print_r($schedule);
-print_r($person);
-print_r($pet);
-echo "</pre>";
 
 ?>
 
@@ -46,9 +35,10 @@ echo "</pre>";
         <ul class="list-group">                      
             <li class="list-group-item">Start Date: <?php echo $book->getStartDateBook(); ?> </li>         
             <li class="list-group-item">End Date: <?php echo $book->getEndDateBook(); ?> </li>    
-            <li class="list-group-item">Cantidad de dias: <?php echo $dias ; ?> </li>        
-            <li class="list-group-item">Costo individual por dia : $<?php echo $schedule->getCost() ?></li>
-            <li class="list-group-item">Cost Total: $<?php echo $schedule->getCost() * $dias ?></li>        
+            <li class="list-group-item">Total days: <?php echo $dias ; ?> </li>        
+            <li class="list-group-item">Cost x day : $<?php echo $schedule->getCost() ?></li>
+            <li class="list-group-item">SubTotal Cost: $<?php echo $schedule->getCost() * $dias / 2 ?></li>  
+            <li class="list-group-item">Total Cost: $<?php echo $schedule->getCost() * $dias ?></li>        
             <input type="hidden" id="state" name="endDate" value="<?php echo $endDate ?>">           
           </ul>
 
@@ -56,10 +46,10 @@ echo "</pre>";
        
         <?php if($book->getStatePayment() != 1 || $book->getStatePayment() == 2){               
                 ?> 
-           <button type="submit" name="btnPayment" class="btn btn-sm btn-outline-info">
+           <button type="submit" name="btnPayment" class="btn btn-sm m-2 btn-outline-success">
 		   <a href="<?php if (isset($schedule)) {
 		   echo FRONT_ROOT . "Book/Payment/" . $book->getBookId();
-		   }; ?>">Pagar</a>
+		   }; ?>">Pay</a>
 		 </button>
             <?php }?> 
       </div>

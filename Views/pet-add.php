@@ -36,7 +36,8 @@
 					<input type="text" name="breed" class="form-control">
 				</div>
 			</div>
-			<button type="submit" class="btn btn-outline-dark ml-auto d-block float-left">Add</button>
+			<button type="submit" class="btn btn-outline-dark btn-sm ml-auto d-block float-left">Add</button>
+		  <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Pet/OwnerListView">Go back</a>
 		</form>
 	</div>
 </section>

@@ -222,14 +222,21 @@ class PetDAO implements IPetDAO {
                     breed = :breed,
                 WHERE petId = :petId';";
 
-      $parameters['petId'] = $pet->getPetId();
-      $parameters['petname'] = $pet->getPetname();
-      $parameters['size'] = $pet->getSize();
-      $parameters['pet_type'] = $pet->getPet_type();
-      $parameters['breed'] = $pet->getBreed(); 
-
       $this->connection = Connection::GetInstance();
-      return $this->connection->executeNonQuery($query, $parameters);
+      $allPet = $this->connection->Execute($query);
+
+      foreach ($allPet as $value) {
+        $pet = new Pet();
+        $pet->setPetId($value['petId']);
+        $pet->setPetname($value['petname']);
+        $pet->setSize($value['size']);
+        $pet->setPet_type($value['pet_type']);
+        $pet->setBreed($value['breed']);   
+  
+        array_push($petList, $pet);
+      }
+
+      return $petList;
 
     } catch (\PDOException $ex) {
         throw $ex;

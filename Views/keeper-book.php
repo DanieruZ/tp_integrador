@@ -11,9 +11,6 @@ $user = $_SESSION['keeper'];
 
 $bookDAO = new BookDAO();
 $bookList = $bookDAO->getKeeperBook($person->getPersonId());
-echo "<pre>";
-print_r($bookList);
-echo "</pre>";
 
 ?>
 
@@ -53,10 +50,10 @@ echo "</pre>";
 																	} ?>
 
 								<?php if ($book->getStatePayment() == 0) { ?>
-								<td><?php echo "Unpained"; ?></td> <?php
+								<td><?php echo "Unpaid"; ?></td> <?php
 																} ?>
 							<?php if ($book->getStatePayment() == 1 ){ ?>
-								<td><?php echo "Pained"; ?></td> <?php
+								<td><?php echo "Paid"; ?></td> <?php
 																} ?>
 							<?php if ($book->getStatePayment() == 2) { ?>
 								<td><?php echo "Payment Declined"; ?></td> <?php

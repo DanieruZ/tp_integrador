@@ -8,11 +8,9 @@ use DAO\KeeperDAO as KeeperDAO;
 use DAO\ScheduleDAO as ScheduleDAO;
 use DAO\PetDAO as PetDAO;
 
-
 $user = $_SESSION['owner'];
 [$person] = $user;
 $ownerId = $person->getPersonId();
-
 
 $keeperDAO = new KeeperDAO;
 $keeperInfo = $keeperDAO->getKeeperById($personId);
@@ -22,18 +20,11 @@ $scheduleDAO = new ScheduleDAO;
 $scheduleInfo = $scheduleDAO->getScheduleById($personId);
 [$schedule] = $scheduleInfo;
 
-echo "<pre>";
-print_r($r=$scheduleDAO->getScheduleById($personId));
-echo "</pre>";
-
-
 $petDAO = new PetDAO;
 $petList = $petDAO->getMyPet($ownerId);
 if (!empty($petList)){  
 [$pet] = $petList;
 }
-
-
 
 if(isset($petId)){  
 $petInfo = $petDAO->getPetById($petId);
@@ -42,8 +33,6 @@ $petInfo = $petDAO->getPetById($petId);
 }
 
 ?>
-
-
 
 <section class="mb-5">
 <div class="container-sm mx-auto" style="width:400px">
@@ -104,9 +93,9 @@ $petInfo = $petDAO->getPetById($petId);
               <input type="hidden" id="personId" name="personId" value="<?php echo $keeper->getPersonId(); ?>">
               <li class="list-group-item" for="startDate">Start Date: <input type="date" id="startDate" name="startDate" value="<?php echo $schedule->getStartDate(); ?>" min="<?php echo $schedule->getStartDate(); ?>" class="form-control form-control-lg w-50"> </li>
               <li class="list-group-item" for="endDate">End Date: <input type="date" id="endDate" name="endDate" value="<?php echo $schedule->getEndDate(); ?>" min="<?php echo $schedule->getStartDate(); ?>" max="<?php echo $schedule->getEndDate(); ?>" class="form-control form-control-lg w-50"> </li>
-              <li name="cost" class="list-group-item">Cost for a Day: $<?php echo $schedule->getCost(); ?></li>
-              <li name="size" class="list-group-item">Size Que cuida: <?php echo $schedule->getSize(); ?></li>
-              <li name="pet_type" class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
+              <li name="cost" class="list-group-item">Cost x Day: $<?php echo $schedule->getCost(); ?></li>
+              <li name="pet_type" class="list-group-item">Pet Type: <?php echo $schedule->getPet_type(); ?></li>
+              <li name="size" class="list-group-item">Size: <?php echo $schedule->getSize(); ?></li>
             </ul> 
             <input type="hidden" id="petId" name="petId" value="<?php echo $petId ?>">
             <?php if(isset($petinformation ) )             
