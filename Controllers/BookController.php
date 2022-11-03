@@ -2,7 +2,8 @@
 
 namespace Controllers;
 
-use DAO\BookDAO;
+use DAO\BookDAO as BookDAO;
+use DAO\ScheduleDAO as ScheduleDAO;
 use Models\Book as Book;
 use Utils\Utils as Utils;
 
@@ -12,6 +13,8 @@ class BookController {
 
   public function __construct() {
     $this->bookDAO = new BookDAO();
+    $this->scheduleDAO = new ScheduleDAO();
+
   }
 
   public function OwnerView() {
@@ -26,69 +29,64 @@ class BookController {
     require_once(VIEWS_PATH . "keeper-book.php");
   }
 
-  public function OwnerReserve($personId, $startDate, $endDate,$petId) {
+  public function OwnerReserve($personId, $startDate, $endDate, $petId) {
     //Utils::checkOwnerSession();      
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "owner-book-detail.php");
   }
 
-  public function OwnerViewBookInfo() {
+  public function OwnerViewBookInfo($bookId) {
     //Utils::checkOwnerSession();
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "owner-reserve-info.php");
   }
 
-  public function KeeperViewBookInfo() {
-    //Utils::checkOwnerSession();
+  public function KeeperViewBookInfo($bookId) {
+    //Utils::checkKeeperSession();
     require_once(VIEWS_PATH . "keeper-nav.php");
     require_once(VIEWS_PATH . "keeper-reserve-info.php");
   }
 
-  public function KeeperAceptReserve($bookId) {
-    //Utils::checkOwnerSession();
-    $book = new Book();   
-    print_r($bookId);
-    if ($book) {            
-      $book = new Book(); 
-      $book->setState(1);
-      $this->bookDAO->aceptReserve($bookId);     
-      $this->KeeperView();       
-    }
-  }
-
-  public function KeeperCancelReserve($startDate, $endDate, $keeperId,$petId) {
-    //Utils::checkOwnerSession();
-    $book = new Book();   
+  public function KeeperSendInfoReserve($bookId,$button,$scheduleId,$endDateBook) {
+    //Utils::checkOwnerSession();   
    
-    if ($book) {            
-      $book = new Book();
-      $book->setStartDate($startDate);
-      $book->setEndDate($endDate);
-      $book->setState(2);
-    
-
-      $this->bookDAO->addBook($book);
-      $this->bookDAO->addPersonBook($keeperId,$petId);
+      $this->bookDAO->bookReserve($bookId);
+      $this->scheduleDAO->scheduleReserve($scheduleId,$endDateBook);         
       $this->KeeperView();       
-    }
+    //}
   }
+ 
 
-  public function AddBook($startDate, $endDate, $keeperId,$petId) {
+  public function AddBook($startDate, $endDate, $keeperId, $petId) {
     //Utils::checkOwnerSession();  
       $book = new Book();   
    
     if ($book) {            
       $book = new Book();
-      $book->setStartDate($startDate);
-      $book->setEndDate($endDate);
-      $book->setState(0);
-    
+      $book->setStartDateBook($startDate);
+      $book->setEndDateBook($endDate);
+      $book->setStateBook(0);
+      $book->setStatePayment(0); //pendiente de pago en 0
 
       $this->bookDAO->addBook($book);
       $this->bookDAO->addPersonBook($keeperId,$petId);
       $this->OwnerView();       
     }
   }
+
+  public function GetBookInfoKeeper($bookId) {
+    //Utils::checkKeeperSession();  
+
+      $this->bookDAO->getBookInfoKeeper($bookId);
+      $this->KeeperViewBookInfo($bookId);       
+    }
+
+    public function GetBookInfoOwner($bookId) {
+      //Utils::checkOwnerSession();  
+  
+        $this->bookDAO->getBookInfoOwner($bookId);
+        $this->OwnerViewBookInfo($bookId);       
+      }
 
 }
 

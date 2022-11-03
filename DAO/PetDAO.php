@@ -200,17 +200,14 @@ class PetDAO implements IPetDAO {
                     pet_type = '$pet_type',
                     breed = '$breed'
                 WHERE petId = '$petId';";
-
       $pet = new Pet();
       $parameters['petId'] = $pet->getPetId();
       $parameters['petname'] = $pet->getPetname();
       $parameters['size'] = $pet->getSize();
       $parameters['pet_type'] = $pet->getPet_type();
       $parameters['breed'] = $pet->getBreed(); 
-
       $this->connection = Connection::GetInstance();
       return $this->connection->executeNonQuery($query, $parameters);
-
     } catch (\PDOException $ex) {
         throw $ex;
       }

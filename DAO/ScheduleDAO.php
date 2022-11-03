@@ -6,6 +6,7 @@ use Models\Schedule;
 use DAO\IScheduleDAO as IScheduleDAO;
 use DAO\Connection as Connection;
 
+
 class ScheduleDAO implements IScheduleDAO
 {
 
@@ -67,7 +68,7 @@ class ScheduleDAO implements IScheduleDAO
       throw $ex;
     }
   }
-
+/*
   public function getScheduleById($personId)
   {
     try {       
@@ -101,7 +102,70 @@ class ScheduleDAO implements IScheduleDAO
     } catch (\PDOException $ex) {
       throw $ex;
     }
-  }  
+  }  */
+
+  public function getScheduleById($personId) {
+    try {       
+
+
+      $scheduleList = array();
+
+      $query = "SELECT * FROM agenda a
+                INNER JOIN person p ON p.personId = a.personId
+                WHERE p.personId = '$personId' 
+                AND a.state = 1;";
+
+      $this->connection = Connection::GetInstance();
+      $allSchedule = $this->connection->Execute($query);
+
+      foreach ($allSchedule as $value) {
+        $schedule = new Schedule();
+        $schedule->setScheduleId($value['scheduleId']);
+        $schedule->setStartDate($value['startDate']);
+        $schedule->setState($value['state']);
+        $schedule->setEndDate($value['endDate']);
+        $schedule->setSize($value['size']);
+        $schedule->setPet_type($value['pet_type']);
+        $schedule->setCost($value['cost']);
+
+        array_push($scheduleList, $schedule);
+      }
+
+      return $scheduleList;
+
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  } 
+
+  public function scheduleReserve($scheduleId,$endDateBook) {
+    
+    try {
+      print_r($scheduleId);
+      print_r($endDateBook);
+
+      $scheduleList = array();
+
+      $query = "UPDATE agenda 
+                SET startDate = '$endDateBook'                                 
+                WHERE scheduleId = '$scheduleId';";
+
+      $this->connection = Connection::GetInstance();    
+      $allSchedule = $this->connection->Execute($query);    
+       
+      foreach ($allSchedule as $value) {
+        $schedule = new Schedule();
+        $schedule->setStartDate($value['startDate']);        
+
+        array_push($scheduleList, $schedule);
+      }
+
+      return $scheduleList;
+    
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
 
 
   public function deleteSchedule()

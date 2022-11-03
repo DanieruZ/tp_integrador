@@ -22,6 +22,10 @@ $scheduleDAO = new ScheduleDAO;
 $scheduleInfo = $scheduleDAO->getScheduleById($personId);
 [$schedule] = $scheduleInfo;
 
+echo "<pre>";
+print_r($r=$scheduleDAO->getScheduleById($personId));
+echo "</pre>";
+
 
 $petDAO = new PetDAO;
 $petList = $petDAO->getMyPet($ownerId);
@@ -54,11 +58,11 @@ $petInfo = $petDAO->getPetById($petId);
 
     if (isset($petList)) {
       foreach ($petList as $pet) {
-        ?>  <option value="  <?php echo $pet->getPetId() ?> "> <?php echo $pet->getPetName() ?> </option>" ; <?php
+        ?>  <option value="<?php echo $pet->getPetId(); ?> "> <?php echo $pet->getPetName(); ?></option> <?php
       } 
     }
     else{
-      echo "no hay mascotas que mostrar";
+      echo "No pets available.";
     }
     ?>
      <input type="hidden" id="personId" name="personId" value="<?php echo $keeper->getPersonId(); ?>">

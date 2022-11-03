@@ -15,18 +15,27 @@ $user = $_SESSION['owner'];
 [$owner] = $user;
 
 $bookDAO = new BookDAO;
-$booInfo = $bookDAO->getBookInfoOwner($owner->getPersonId());
-[$book, $schedule, $person,$pet] = $booInfo;
+//$booInfo = $bookDAO->getBookInfoOwner($owner->getPersonId());
+$booInfo = $bookDAO->getBookInfoOwner($bookId);
+[$book,$schedule, $person, $pet] = $booInfo;
 
-$startDate = $schedule->getStartDate();
-$endDate = $schedule->getEndDate();
+//$scheduleDAO = new ScheduleDAO;
+//$scheduleList = $scheduleDAO->getScheduleById($person->getPersonId());
+
+$startDate = $book->getStartDateBook();
+$endDate = $book->getEndDateBook();
 $fecha1 = new DateTime($startDate);
 $fecha2 = new DateTime($endDate);
 $diff = $fecha1->diff($fecha2);
 $dias = 1 + $diff->days;
 
-
-
+echo "<pre>";
+print_r($book);
+print_r($schedule);
+print_r($person);
+print_r($pet);
+echo "</pre>";
+echo "holaaaa";
 ?>
 
   <main class="py-5"> 
@@ -70,8 +79,8 @@ $dias = 1 + $diff->days;
         </div>
         <div class="container-sm mx-auto" style="width:400px">         
         <ul class="list-group">                      
-            <li class="list-group-item">Start Date: <?php echo $schedule->getStartDate(); ?> </li>         
-            <li class="list-group-item">End Date: <?php echo $schedule->getEndDate(); ?> </li>           
+            <li class="list-group-item">Start Date: <?php echo $book->getStartDateBook(); ?> </li>         
+            <li class="list-group-item">End Date: <?php echo $book->getEndDateBook(); ?> </li>           
             <li class="list-group-item">Cost x <?php echo $dias ?> dias : $<?php echo $schedule->getCost() * $dias ?></li>
             <li class="list-group-item">Size Que cuida: <?php echo $schedule->getSize(); ?></li>
             <li class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
@@ -79,6 +88,10 @@ $dias = 1 + $diff->days;
           </ul>
 
         <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Book/OwnerView">Go back</a>
+        <?php if($book->getStateBook() == 1){               
+                ?> 
+            <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Book/Prueba">Pagar</a>
+            <?php }?> 
       </div>
 </section>
 
