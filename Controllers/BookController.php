@@ -7,61 +7,93 @@ use DAO\ScheduleDAO as ScheduleDAO;
 use Models\Book as Book;
 use Utils\Utils as Utils;
 
-class BookController {
+class BookController
+{
 
   private $bookDAO;
 
-  public function __construct() {
+  public function __construct()
+  {
     $this->bookDAO = new BookDAO();
     $this->scheduleDAO = new ScheduleDAO();
-
   }
 
-  public function OwnerView() {
+  public function OwnerView()
+  {
     //Utils::checkOwnerSession();
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "owner-book.php");
   }
 
-  public function KeeperView() {
+  public function KeeperView()
+  {
     //Utils::checkKeeperSession();
     require_once(VIEWS_PATH . "keeper-nav.php");
     require_once(VIEWS_PATH . "keeper-book.php");
   }
 
-  public function OwnerReserve($personId, $startDate, $endDate, $petId) {
+  public function PaymentOwner($bookId)
+  {
+    //Utils::checkKeeperSession();
+    require_once(VIEWS_PATH . "owner-nav.php");
+    require_once(VIEWS_PATH . "cupon-pago.php");
+  }
+
+  public function OwnerReserve($personId, $startDate, $endDate, $petId)
+  {
     //Utils::checkOwnerSession();      
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "owner-book-detail.php");
   }
 
-  public function OwnerViewBookInfo($bookId) {
+  public function OwnerViewBookInfo($bookId)
+  {
     //Utils::checkOwnerSession();
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "owner-reserve-info.php");
   }
 
-  public function KeeperViewBookInfo($bookId) {
+  public function KeeperViewBookInfo($bookId)
+  {
     //Utils::checkKeeperSession();
     require_once(VIEWS_PATH . "keeper-nav.php");
     require_once(VIEWS_PATH . "keeper-reserve-info.php");
   }
 
-  public function KeeperSendInfoReserve($bookId,$button,$scheduleId,$endDateBook) {
+  public function KeeperSendInfoReserve($bookId, $button, $scheduleId, $endDateBook)
+  {
     //Utils::checkOwnerSession();   
-   
-      $this->bookDAO->bookReserve($bookId);
-      $this->scheduleDAO->scheduleReserve($scheduleId,$endDateBook);         
-      $this->KeeperView();       
+
+    $this->bookDAO->bookReserve($bookId);
+    $this->scheduleDAO->scheduleReserve($scheduleId, $endDateBook);
+    $this->KeeperView();
     //}
   }
- 
 
-  public function AddBook($startDate, $endDate, $keeperId, $petId) {
+  public function PaymentReserve($bookId)
+  {
+    //Utils::checkOwnerSession();    
+
+    $this->PaymentOwner($bookId);
+    //}
+  }
+
+  public function Payment($bookId)
+  {
+    //Utils::checkOwnerSession();    
+    print_r($bookId);
+    $this->bookDAO->bookReservePayment($bookId);
+    $this->OwnerView();
+    //}
+  }
+
+
+  public function AddBook($startDate, $endDate, $keeperId, $petId)
+  {
     //Utils::checkOwnerSession();  
-      $book = new Book();   
-   
-    if ($book) {            
+    $book = new Book();
+
+    if ($book) {
       $book = new Book();
       $book->setStartDateBook($startDate);
       $book->setEndDateBook($endDate);
@@ -69,25 +101,24 @@ class BookController {
       $book->setStatePayment(0); //pendiente de pago en 0
 
       $this->bookDAO->addBook($book);
-      $this->bookDAO->addPersonBook($keeperId,$petId);
-      $this->OwnerView();       
+      $this->bookDAO->addPersonBook($keeperId, $petId);
+      $this->OwnerView();
     }
   }
 
-  public function GetBookInfoKeeper($bookId) {
+  public function GetBookInfoKeeper($bookId)
+  {
     //Utils::checkKeeperSession();  
 
-      $this->bookDAO->getBookInfoKeeper($bookId);
-      $this->KeeperViewBookInfo($bookId);       
-    }
+    $this->bookDAO->getBookInfoKeeper($bookId);
+    $this->KeeperViewBookInfo($bookId);
+  }
 
-    public function GetBookInfoOwner($bookId) {
-      //Utils::checkOwnerSession();  
-  
-        $this->bookDAO->getBookInfoOwner($bookId);
-        $this->OwnerViewBookInfo($bookId);       
-      }
+  public function GetBookInfoOwner($bookId)
+  {
+    //Utils::checkOwnerSession();  
 
+    $this->bookDAO->getBookInfoOwner($bookId);
+    $this->OwnerViewBookInfo($bookId);
+  }
 }
-
-?>

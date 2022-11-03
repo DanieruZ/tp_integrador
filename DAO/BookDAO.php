@@ -61,6 +61,32 @@ class BookDAO implements IBookDAO
       }
   }
 
+  public function bookReservePayment($bookId) {
+    try {
+    
+      $bookList = array();
+
+      $query = "UPDATE book 
+                SET statePayment = 1               
+                WHERE bookId = '$bookId';";
+
+      $this->connection = Connection::GetInstance();    
+      $allBook = $this->connection->Execute($query);    
+
+      foreach ($allBook as $value) {
+        $book = new Book();
+        $book->setStatePayment($value['statePayment']);
+
+        array_push($bookList, $book);
+      }
+
+      return $bookList;
+    
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
 
   
 

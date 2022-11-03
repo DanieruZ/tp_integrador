@@ -85,12 +85,17 @@ echo "holaaaa";
             <li class="list-group-item">Size Que cuida: <?php echo $schedule->getSize(); ?></li>
             <li class="list-group-item">Pet Type Que cuida: <?php echo $schedule->getPet_type(); ?></li>
             <input type="hidden" id="state" name="endDate" value="<?php echo $endDate ?>">
+           
           </ul>
 
-        <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Book/OwnerView">Go back</a>
+        <a class="float-right m-1" href="<?php echo FRONT_ROOT ?>Book/OwnerView">Go back</a>
         <?php if($book->getStateBook() == 1){               
-                ?> 
-            <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Book/Prueba">Pagar</a>
+                ?>            
+                 <button type="submit" name="btnPayment" class="btn btn-sm btn-outline-info">
+												<a href="<?php if (isset($schedule)) {
+																echo FRONT_ROOT . "Book/PaymentReserve/" . $book->getBookId();
+															}; ?>">Pagar</a>
+											</button>
             <?php }?> 
       </div>
 </section>
