@@ -6,15 +6,10 @@ require_once "Config\Autoload.php";
 
 use DAO\KeeperDAO as KeeperDAO;
 use DAO\ScheduleDAO as ScheduleDAO;
-use Models\Schedule;
 
 $keeperDAO = new KeeperDAO;
 $personList = $keeperDAO->getAllKeeper();
-/*
-echo "<pre>";
-print_r($personList);
-echo "</pre>";
-*/
+
 $scheduleDAO = new ScheduleDAO();
 $scheduleList = $scheduleDAO->getSchedule();
 
@@ -42,8 +37,8 @@ $scheduleList = $scheduleDAO->getSchedule();
 					<th>Last Name</th>
 					<th>Start Date</th>
 					<th>End Date</th>
+					<th>Rate</th>
 					<th>Info</th>
-					<th></th>
 				</thead>
 				<?php
 
@@ -59,11 +54,17 @@ $scheduleList = $scheduleDAO->getSchedule();
 											<td><?php echo $person->getLastname(); ?></td>
 											<td><?php echo $schedule->getStartDate(); ?></td>
 											<td><?php echo $schedule->getEndDate(); ?></td>
+											<td><?php echo "Aca review rate"; ?></td>
 											<td>
 												<button type="submit" name="btnProfile" class="btn btn-sm btn-outline-info">
 													<a href="<?php if (isset($schedule)) {
 																	echo FRONT_ROOT . "Keeper/Profile/" . $person->getPersonId();
 																}; ?>">Profile</a>
+												</button>
+												<button type="submit" name="btnReview" class="btn btn-sm btn-outline-dark">
+													<a href="<?php if (isset($schedule)) {
+																	echo FRONT_ROOT . "Review/OwnerAddView/" . $person->getPersonId();
+																}; ?>">Add Review</a>
 												</button>
 											</td>
 										</tr>

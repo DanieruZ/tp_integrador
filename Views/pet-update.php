@@ -86,7 +86,7 @@ $pet = $petList[0];
                     </div>
                     
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>
+                <button type="submit" class="btn btn-sm btn-dark btn-lg btn-block">Save</button>
             </form>
         </div>
     </section>
