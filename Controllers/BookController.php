@@ -60,11 +60,11 @@ class BookController
     require_once(VIEWS_PATH . "keeper-reserve-info.php");
   }
 
-  public function KeeperSendInfoReserve($bookId, $button, $scheduleId, $endDateBook)
+  public function KeeperSendInfoReserve($bookId, $stateValue, $scheduleId, $endDateBook)
   {
     //Utils::checkOwnerSession();   
 
-    $this->bookDAO->bookReserve($bookId);
+    $this->bookDAO->bookReserve($bookId, $stateValue);
     $this->scheduleDAO->scheduleReserve($scheduleId, $endDateBook);
     $this->KeeperView();
     //}

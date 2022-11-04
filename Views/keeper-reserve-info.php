@@ -80,12 +80,13 @@ $dias = 1 + $diff->days;
 
         <?php if($book->getStateBook() == 0) { ?>
 
-        <button type="submit" name="button" value="1" class="btn btn-sm m-2 btn-outline-success ml-auto d-block float-left">Confirm</button>
-        <button type="submit" name="button" value="2"class="btn btn-sm m-2 btn-outline-danger ml-auto d-block float-left">Cancel</button>
+        <button type="submit" name="stateValue" value="1" class="btn btn-sm m-2 btn-outline-success ml-auto d-block float-left">Confirm</button>
+        <button type="submit" name="stateValue" value="2" class="btn btn-sm m-2 btn-outline-danger ml-auto d-block float-left">Cancel</button>
         
       </div>
 
       <?php } ?>
+      <div class="container-sm mx-auto" style="width:400px">
       <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Book/KeeperView">Go back</a>
     </div>
   </section>
