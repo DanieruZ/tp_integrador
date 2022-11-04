@@ -35,13 +35,13 @@ class BookDAO implements IBookDAO
     }
   }
 
-  public function bookReserve($bookId) {
+  public function bookReserve($bookId, $stateValue) {
     try {
     
       $bookList = array();
 
       $query = "UPDATE book 
-                SET stateBook = 1               
+                SET stateBook = '$stateValue'                
                 WHERE bookId = '$bookId';";
 
       $this->connection = Connection::GetInstance();    

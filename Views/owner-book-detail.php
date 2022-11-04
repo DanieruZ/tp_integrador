@@ -87,11 +87,12 @@ $dias = 1 + $diff->days;
             <li class="list-group-item">Size: <?php echo $schedule->getSize(); ?></li>
             <input type="hidden" id="state" name="endDate" value="<?php echo $endDate ?>">
           </ul>
+        </div>
+        <div class="container-sm mx-auto" style="width:400px">
           <input type="hidden" id="petId" name="petId" value="<?php echo $petId ?>">
-          <button type="submit" class="btn btn-sm m-2 btn-outline-dark ml-auto d-block float-left">Confirm</button>
+          <button type="submit" class="btn btn-sm m-2 btn-outline-success ml-auto d-block float-left">Confirm</button>
           <a class="btn btn-sm btn-outline-danger m-2" href="<?php echo FRONT_ROOT ?>Keeper/OwnerListView">Cancel</a>
         </div>
-      </div>
     </section>
     
 

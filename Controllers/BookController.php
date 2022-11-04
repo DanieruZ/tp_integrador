@@ -36,7 +36,7 @@ class BookController
   {
     //Utils::checkKeeperSession();
     require_once(VIEWS_PATH . "owner-nav.php");
-    require_once(VIEWS_PATH . "cupon-pago.php");
+    require_once(VIEWS_PATH . "bill.php");
   }
 
   public function OwnerReserve($personId, $startDate, $endDate, $petId)
@@ -60,11 +60,11 @@ class BookController
     require_once(VIEWS_PATH . "keeper-reserve-info.php");
   }
 
-  public function KeeperSendInfoReserve($bookId, $button, $scheduleId, $endDateBook)
+  public function KeeperSendInfoReserve($bookId, $stateValue, $scheduleId, $endDateBook)
   {
     //Utils::checkOwnerSession();   
 
-    $this->bookDAO->bookReserve($bookId);
+    $this->bookDAO->bookReserve($bookId, $stateValue);
     $this->scheduleDAO->scheduleReserve($scheduleId, $endDateBook);
     $this->KeeperView();
     //}
@@ -75,16 +75,13 @@ class BookController
     //Utils::checkOwnerSession();    
 
     $this->PaymentOwner($bookId);
-    //}
   }
 
   public function Payment($bookId)
   {
-    //Utils::checkOwnerSession();    
-    print_r($bookId);
+    //Utils::checkOwnerSession();
     $this->bookDAO->bookReservePayment($bookId);
     $this->OwnerView();
-    //}
   }
 
 

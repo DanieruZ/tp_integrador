@@ -78,7 +78,7 @@ $dias = 1 + $diff->days;
                  <button type="submit" name="btnPayment" class="btn btn-sm m-2 btn-outline-success">
 												<a href="<?php if (isset($schedule)) {
 																echo FRONT_ROOT . "Book/PaymentReserve/" . $book->getBookId();
-															}; ?>">Pay</a>
+															}; ?>">Continue</a>
 											</button>
             <?php }?> 
       </div>
