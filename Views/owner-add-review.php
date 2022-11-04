@@ -42,12 +42,17 @@ $(document).ready(function(){
 			</div>
 			<div class="col-lg-4">
 				<p>Select your rating</p>
-				<div class="form-group star_content star">
-        <input name="rate" value="1" type="radio" class="star"/> 
-        <input name="rate" value="2" type="radio" class="star"/> 
-        <input name="rate" value="3" type="radio" class="star" checked="checked"/> 
-        <input name="rate" value="4" type="radio" class="star"/> 
-        <input name="rate" value="5" type="radio" class="star"/>
+				<div class="form-group clasificacion">
+        <input id="radio1" name="rate" value="5" type="radio"/><!--
+				--><label for="radio1">★</label><!--
+        --><input id="radio2" name="rate" value="4" type="radio"/><!--
+				--><label for="radio2">★</label><!--
+        --><input id="radio3" name="rate" value="3" type="radio" checked="checked"/><!-- 
+				--><label for="radio3">★</label><!--
+        --><input id="radio4" name="rate" value="2" type="radio"/><!--
+				--><label for="radio4">★</label><!--
+        --><input id="radio5" name="rate" value="1" type="radio"/><!--
+				--><label for="radio5">★</label>
 				</div>
 			</div>
 			<button type="submit" class="btn btn-sm btn-outline-dark ml-auto d-block float-left">Add</button>

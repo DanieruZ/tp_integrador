@@ -23,7 +23,7 @@ class ReviewController {
   public function OwnerView() {
     //Utils::checkOwnerSession();
     require_once(VIEWS_PATH . "owner-nav.php");
-    require_once(VIEWS_PATH . "owner-review.php");
+    require_once(VIEWS_PATH . "keeper-list.php");
   }
 
   public function OwnerAddView($personId) {
