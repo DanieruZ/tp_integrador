@@ -74,13 +74,19 @@ $dias = 1 + $diff->days;
         </ul>
       </div>
       <div class="container-sm mx-auto" style="width:400px">
-      <input type="hidden" id="bookId" name="bookId" value="<?php echo $book->getBookId() ?>">   
-      <input type="hidden" id="endDateBook" name="endDateBook" value="<?php echo $book->getEndDateBook() ?>">   
-      <input type="hidden" id="scheduleId" name="scheduleId" value="<?php echo $schedule->getScheduleId() ?>">
+        <input type="hidden" id="bookId" name="bookId" value="<?php echo $book->getBookId() ?>">   
+        <input type="hidden" id="endDateBook" name="endDateBook" value="<?php echo $book->getEndDateBook() ?>">   
+        <input type="hidden" id="scheduleId" name="scheduleId" value="<?php echo $schedule->getScheduleId() ?>">
+
+        <?php if($book->getStateBook() == 0) { ?>
+
         <button type="submit" name="button" value="1" class="btn btn-sm m-2 btn-outline-success ml-auto d-block float-left">Confirm</button>
         <button type="submit" name="button" value="2"class="btn btn-sm m-2 btn-outline-danger ml-auto d-block float-left">Cancel</button>
-        <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Book/KeeperView">Go back</a>
+        
       </div>
+
+      <?php } ?>
+      <a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Book/KeeperView">Go back</a>
     </div>
   </section>
 

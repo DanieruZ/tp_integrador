@@ -1,5 +1,6 @@
 <div>
   <nav class="navbar justify-content-center navbar-expand-sm bg-dark">
+  <h5 class="text-white float-left">Owner</h5>
   <ul class="navbar-nav">
     <li class="nav-item"> <a class="nav-link" href="<?php echo FRONT_ROOT ?>Owner/WelcomeView">Home</a> </li>
     <li class="nav-item"> <a class="nav-link" href="<?php echo FRONT_ROOT ?>Pet/OwnerAddView">Add Pet</a> </li>
