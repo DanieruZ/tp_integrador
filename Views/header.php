@@ -8,14 +8,8 @@
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="<?php echo CSS_PATH ?>bootstrap.min.css">
      <link rel="stylesheet" href="<?php echo CSS_PATH ?>estilos.css">
-     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-     <script src="js/jquery.rating.pack.js"></script>
-     <script>
-       $(document).ready(function(){
-         $('input.star').rating();
-       });
-     </script>
-
+     <link rel="stylesheet" href="<?php echo CSS_PATH ?>starStyle.css">
+     <link rel="stylesheet" href="<?php echo CSS_PATH ?>billStyle.css">
      <title>Pet Hero App</title>
 </head>
 <body>
