@@ -1,6 +1,7 @@
 <main class="d-flex align-items-center justify-content-center height-100" >
 <div class="content">
   <header class="text-center">
+  <img src="Views/img/pethero.jpg"  width="300" height="150" alt="imagen del logo pet hero" />
     <h2>Pet Hero</h2>
   </header>
   <form action="Login/login" method="post" class="login-form bg-dark-alpha p-5 bg-light">

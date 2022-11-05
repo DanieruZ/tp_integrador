@@ -9,6 +9,7 @@ class Book {
   private $endDateBook;
   private $stateBook;
   private $statePayment;
+  private $stateReview;
  
 
   public function __construct() {}
@@ -112,6 +113,26 @@ class Book {
   public function setStatePayment($statePayment)
   {
     $this->statePayment = $statePayment;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of stateReview
+   */ 
+  public function getStateReview()
+  {
+    return $this->stateReview;
+  }
+
+  /**
+   * Set the value of stateReview
+   *
+   * @return  self
+   */ 
+  public function setStateReview($stateReview)
+  {
+    $this->stateReview = $stateReview;
 
     return $this;
   }

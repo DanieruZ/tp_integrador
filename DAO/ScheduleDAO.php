@@ -141,9 +141,7 @@ class ScheduleDAO implements IScheduleDAO
   public function scheduleReserve($scheduleId,$endDateBook) {
     
     try {
-      print_r($scheduleId);
-      print_r($endDateBook);
-
+      
       $scheduleList = array();
 
       $query = "UPDATE agenda 

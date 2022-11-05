@@ -5,10 +5,10 @@ namespace Views;
 require_once "Config\Autoload.php";
 
 use DAO\KeeperDAO as KeeperDAO;
+use DAO\BookDAO	 as BookDAO;
 
-$keeperDAO = new KeeperDAO;
-$keeperInfo = $keeperDAO->getKeeperById($personId);
-[$person] = $keeperInfo;
+
+
 
 ?>
 
@@ -25,7 +25,7 @@ $(document).ready(function(){
 			<h2 class="mb-4 p-1 bg-dark text-white">Add Review</h2>
       <div class="col-lg-4">
 				<div class="form-group">
-          <input type="hidden" id="personId" name="personId" value="<?php echo $person->getPersonId(); ?>">
+          <input type="hidden" id="personId" name="personId" value="<?php echo $personId ?>">
         </div>
 			</div>
           <div class="col-lg-4">
@@ -55,8 +55,12 @@ $(document).ready(function(){
 				--><label for="radio5">★</label>
 				</div>
 			</div>
+			
 			<button type="submit" class="btn btn-sm btn-outline-dark ml-auto d-block float-left">Add</button>
 			<a class="float-right m-2" href="<?php echo FRONT_ROOT ?>Keeper/OwnerListView">Go back</a>
+		
+		  <input type="hidden" id="bookId" name="bookId" value="<?php echo $bookId ?>">
+        </div>
 		</form>
 	</div>
 </section>

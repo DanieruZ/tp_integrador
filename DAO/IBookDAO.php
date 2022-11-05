@@ -18,6 +18,7 @@ interface IBookDAO
 	function getBookInfoKeeper($personId);
 	function bookReserve($bookId, $stateValue);
 	function bookReservePayment($bookId);
+	function bookReview($bookId);
 }
 
 ?>

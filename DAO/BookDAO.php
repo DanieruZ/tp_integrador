@@ -19,13 +19,16 @@ class BookDAO implements IBookDAO
   {
     try {
 
-      $query = "INSERT INTO book (startDateBook, endDateBook, stateBook, statePayment) 
-                VALUES (:startDateBook, :endDateBook, :stateBook, :statePayment)";
+      $query = "INSERT INTO book (startDateBook, endDateBook, stateBook, statePayment, stateReview) 
+                VALUES (:startDateBook, :endDateBook, :stateBook, :statePayment, :stateReview)";
 
       $parameters['startDateBook'] = $book->getStartDateBook();
       $parameters['endDateBook'] = $book->getEndDateBook();
       $parameters['stateBook'] = $book->getStateBook();
       $parameters['statePayment'] = $book->getStatePayment();
+      $parameters['stateReview'] = $book->getStateReview();
+ 
+     
 
 
       $this->connection = Connection::GetInstance();
@@ -87,6 +90,32 @@ class BookDAO implements IBookDAO
       }
   }
 
+  public function bookReview($bookId) {
+    try {
+    
+      $bookList = array();
+
+      $query = "UPDATE book 
+                SET stateReview = 1               
+                WHERE bookId = '$bookId';";
+
+      $this->connection = Connection::GetInstance();    
+      $allBook = $this->connection->Execute($query);    
+
+      foreach ($allBook as $value) {
+        $book = new Book();
+        $book->setStateReview($value['stateReview']);
+
+        array_push($bookList, $book);
+      }
+
+      return $bookList;
+    
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
 
   
 
@@ -109,6 +138,7 @@ class BookDAO implements IBookDAO
         $book->setEndDateBook($value['endDateBook']);
         $book->setStateBook($value['stateBook']);
         $book->setStatePayment($value['statePayment']);
+        $book->setStateReview($value['stateReview']);
 
 
         array_push($bookList, $book);
@@ -140,6 +170,7 @@ class BookDAO implements IBookDAO
         $book->setEndDateBook($value['endDateBook']);
         $book->setStateBook($value['stateBook']);
         $book->setStatePayment($value['statePayment']);
+        $book->setStateReview($value['stateReview']);
 
         array_push($bookList, $book);
       }
@@ -213,6 +244,7 @@ class BookDAO implements IBookDAO
         $book->setEndDateBook($value['endDateBook']);
         $book->setStateBook($value['stateBook']);
         $book->setStatePayment($value['statePayment']);
+        $book->setStateReview($value['stateReview']);
 
         array_push($bookList, $book);
       }
@@ -244,6 +276,7 @@ class BookDAO implements IBookDAO
         $book->setEndDateBook($value['endDateBook']);
         $book->setStateBook($value['stateBook']);
         $book->setStatePayment($value['statePayment']);
+        $book->setStateReview($value['stateReview']);
 
         array_push($bookList, $book);
       }
@@ -277,6 +310,7 @@ class BookDAO implements IBookDAO
         $book->setEndDateBook($value['endDateBook']);
         $book->setStateBook($value['stateBook']);
         $book->setStatePayment($value['statePayment']);
+        $book->setStateReview($value['stateReview']);
 
         $schedule = new Schedule();
         $schedule->setCost($value['cost']);
@@ -338,6 +372,7 @@ class BookDAO implements IBookDAO
         $book->setEndDateBook($value['endDateBook']);
         $book->setStateBook($value['stateBook']);
         $book->setStatePayment($value['statePayment']);
+        $book->setStateReview($value['stateReview']);
 
         $schedule = new Schedule();
         $schedule->setScheduleId($value['scheduleId']);
