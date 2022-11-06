@@ -36,10 +36,10 @@ CREATE TABLE IF NOT EXISTS agenda (
   startDate DATE NOT NULL,
   endDate DATE NOT NULL,
   state BOOLEAN DEFAULT '0',
-  personId INT,
+  personId INT NOT NULL,
   size VARCHAR(50),
   pet_type VARCHAR(50),
-  cost FLOAT,  
+  cost FLOAT,
   PRIMARY KEY (scheduleId),
   FOREIGN KEY (personId) REFERENCES person (personId)
 )Engine=InnoDB;
@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS book (
   endDateBook DATE NOT NULL,
   stateBook BOOLEAN DEFAULT '0',
   statePayment BOOLEAN DEFAULT '0',
+  stateReview BOOLEAN DEFAULT '0',
   PRIMARY KEY (bookId)
 )Engine=InnoDB;
 
@@ -101,7 +102,7 @@ VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 1, 2),
        (7, 'marcela', 'dominguez', '48538996', 'marcela@gmail.com', 'female', 0, 2),
        (8, 'martin', 'menendez', '19968896', 'martin@gmail.com', 'male', 0, 2),
        (9, 'cristian', 'huerta', '39634484', 'cristian@gmail.com', 'male', 1, 2),
-       (10, 'daniel', 'zeta', '77777777', 'daniel@gmail.com', 'male', 0, 1);
+       (10, 'admin', 'admin', '12345', 'admin@gmail.com', 'male', 0, 1);
               
 INSERT INTO pet
 VALUES (1, 'sasha', 'large', 'dog', 'golden retriever'),
