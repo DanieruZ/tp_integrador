@@ -6,25 +6,25 @@
 				<div class="col-lg-4">
 					<div class="form-group">
 						<label for="firstname">Firstname</label>
-						<input type="text" name="firstname" class="form-control">
+						<input type="text" name="firstname" class="form-control" required>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="form-group">
 						<label for="lastname">Lastname</label>
-						<input type="text" name="lastname" class="form-control">
+						<input type="text" name="lastname" class="form-control" required>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="form-group">
 						<label for="dni">DNI</label>
-						<input type="number" name="dni" class="form-control">
+						<input type="number" name="dni" class="form-control" required>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="form-group">
 						<label for="email">Email</label>
-						<input type="email" name="email" class="form-control">
+						<input type="email" name="email" class="form-control" required>
 					</div>
 				</div>
 				<div class="col-lg-4">
@@ -32,9 +32,9 @@
 					<div class="form-group">
 						<input type="radio" name="gender" id="Female" value="Female" required>
 						<label for="female">female</label><br>
-						<input type="radio" name="gender" id="Male" value="Male">
+						<input type="radio" name="gender" id="Male" value="Male" required>
 						<label for="male">male</label><br>
-						<input type="radio" name="gender" id="Other" value="Other">
+						<input type="radio" name="gender" id="Other" value="Other" required>
 						<label for="other">other</label><br>
 					</div>
 				</div>
@@ -43,11 +43,11 @@
 					<div class="form-group">
 						<input type="radio" name="rolId" id="2" value="2" required>
 						<label for="Owner">Owner</label><br>
-						<input type="radio" name="rolId" id="3" value="3">
+						<input type="radio" name="rolId" id="3" value="3" required>
 						<label for="Keeper">Keeper</label><br>						
 					</div>
 				</div>
-				<button type="submit" class="btn btn-outline-primary ml-auto d-block float-left">Add</button>
+				<button type="submit" class="btn btn-sm btn-outline-dark ml-auto d-block float-left">Add</button>
 				<a class="float-right" href="<?php echo FRONT_ROOT ?>User/logout">Back to main</a>
 			</form>
 		</div>

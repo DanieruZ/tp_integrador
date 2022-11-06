@@ -59,9 +59,10 @@ class ReviewDAO implements IReviewDAO {
       }
   }
 
-  public function getRate($personId) {
+  public function getRateById($personId) {
     try {
-      $query = "SELECT AVG(rate) rate FROM review;"; 
+      $query = "SELECT AVG(rate) FROM review
+                WHERE personId = '$personId';"; 
 
       $this->connection = Connection::GetInstance();
       $rate = $this->connection->Execute($query);

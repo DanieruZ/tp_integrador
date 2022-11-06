@@ -25,7 +25,7 @@ class ReviewController {
   public function OwnerView() {
     //Utils::checkOwnerSession();
     require_once(VIEWS_PATH . "owner-nav.php");
-    require_once(VIEWS_PATH . "keeper-list.php");
+    require_once(VIEWS_PATH . "owner-book.php");
   }
 
   public function OwnerAddView($personId,$bookId) {
@@ -34,17 +34,18 @@ class ReviewController {
     require_once(VIEWS_PATH . "owner-add-review.php");
   }
 
-  public function AddReview($title, $message, $rate, $personId,$bookId) {
+  public function AddReview($title, $message, $rate, $personId, $bookId) {
     //Utils::checkOwnerSession(); 
     
-
     $review = new Review(); 
+    
     if ($review) {            
       $review = new Review();
       $review->setTitle($title);
       $review->setMessage($message);
       $review->setRate($rate);
       $review->setPersonId($personId);
+      
       $this->reviewDAO->addReview($review);   
       $this->bookDAO->bookReview($bookId);   
       $this->OwnerView();       

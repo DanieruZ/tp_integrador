@@ -12,7 +12,7 @@ $keeperList = $_SESSION['keeper'];
 $reviewDAO = new ReviewDAO();
 $reviewList = $reviewDAO->getReviewById($keeper->getPersonId());
 
-$keeperRate = $reviewDAO->getRate($keeper->getPersonId());
+$keeperRate = $reviewDAO->getRateById($keeper->getPersonId());
 [$rate] = $keeperRate;
 
 ?>
@@ -38,7 +38,7 @@ $keeperRate = $reviewDAO->getRate($keeper->getPersonId());
 				  <tr>
 					 	<td><?php echo $review->getTitle(); ?></td>
 						<td><?php echo $review->getMessage(); ?></td>
-						<td><?php echo $review->getRate(); ?></td>
+						<td><?php echo $review->getRate(); ?>★</td>
 					</tr>
 				</tbody>
 <?php 

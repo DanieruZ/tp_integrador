@@ -8,7 +8,6 @@
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="<?php echo CSS_PATH ?>bootstrap.min.css">
      <link rel="stylesheet" href="<?php echo CSS_PATH ?>estilos.css">
-     <link rel="stylesheet" href="<?php echo CSS_PATH ?>starStyle.css">
      <link rel="stylesheet" href="<?php echo CSS_PATH ?>billStyle.css">
      <title>Pet Hero App</title>
 </head>

@@ -8,7 +8,7 @@ interface IReviewDAO {
 
 	function addReview(Review $review);
 	function getReviewById($personId);
-	function getRate($personId);
+	function getRateById($personId);
   	
 }
 

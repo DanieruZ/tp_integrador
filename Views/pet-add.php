@@ -1,6 +1,6 @@
 <main class="py-5">
 <section class="mb-5">
-	<div class="container">
+<div class="container-sm mx-auto shadow" style="width:600px">
 		<form action="<?php echo FRONT_ROOT ?>Pet/AddPet" method="POST" class="bg-light p-5">
 			<h2 class="mb-4 p-1 bg-dark text-white">Add Pet</h2>
 			<div class="col-lg-4">
