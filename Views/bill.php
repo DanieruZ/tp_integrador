@@ -186,14 +186,14 @@ $totalCost = $schedule->getCost() * $dias + $schedule->getCost() * $dias * 0.31;
 
   <div class="container-sm mx-auto">  
   
-        <?php if($book->getStateBook() == 1) { ?>        
-                           
+        <?php if($book->getStateBook() == 1) {         
+                 if($book->getStatePayment() == 0) {  ?>       
   <button type="submit" name="btnPayment" class="btn btn-sm m-2 btn-outline-success float-left">
 	<a href="<?php if (isset($schedule)) {
 	 	echo FRONT_ROOT . "Book/Payment/" . $book->getBookId();
 	}; ?>">Pay Bill</a>
 											</button>
-            <?php }?>
+            <?php } } ?>
      <a class="float-right m-2" style="font-size: 14px;" href="<?php echo FRONT_ROOT ?>Book/OwnerView">Go back</a>
      <a class="btn btn-sm m-2 btn-outline-dark ml-auto d-block float-left" href='javascript:window.print(); void 0;'>Print</a> 
             </div>
