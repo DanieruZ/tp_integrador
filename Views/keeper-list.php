@@ -71,7 +71,7 @@ $scheduleList = $scheduleDAO->getSchedule();
 										<td><?php echo $person->getLastname(); ?></td>
 										<td><?php echo $schedule->getStartDate(); ?></td>
 										<td><?php echo $schedule->getEndDate(); ?></td>
-										<td><?php echo (int)$rate[0]; ?>★</td>
+										<td><?php echo (int)$rate[0]; ?><b style="color: orange;">★</b></td>
 										<td>
 											<button type="submit" name="btnProfile" class="btn btn-sm btn-outline-info">
 												<a href="<?php if (isset($schedule)) {

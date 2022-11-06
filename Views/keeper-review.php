@@ -38,7 +38,7 @@ $keeperRate = $reviewDAO->getRateById($keeper->getPersonId());
 				  <tr>
 					 	<td><?php echo $review->getTitle(); ?></td>
 						<td><?php echo $review->getMessage(); ?></td>
-						<td><?php echo $review->getRate(); ?>★</td>
+						<td><?php echo $review->getRate(); ?><b style="color: orange;">★</b></td>
 					</tr>
 				</tbody>
 <?php 
