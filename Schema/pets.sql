@@ -60,21 +60,21 @@ CREATE TABLE IF NOT EXISTS book (
   stateBook BOOLEAN DEFAULT '0',
   statePayment BOOLEAN DEFAULT '0',
   stateReview BOOLEAN DEFAULT '0',
-  PRIMARY KEY (bookId)
+  personId INT NOT NULL,
+  PRIMARY KEY (bookId),
+  FOREIGN KEY (personId) REFERENCES person (personId)
 )Engine=InnoDB;
 
 CREATE TABLE IF NOT EXISTS person_book (
   person_bookId INT NOT NULL AUTO_INCREMENT,
   ownerId INT,
   petId INT,
-  keeperId INT,
   bookId INT,
   PRIMARY KEY (person_bookId),
   FOREIGN KEY (ownerId) REFERENCES person (personId) ON DELETE SET NULL,
   FOREIGN KEY (petId) REFERENCES pet (petId) ON DELETE SET NULL,
-  FOREIGN KEY (keeperId) REFERENCES person (personId) ON DELETE SET NULL,
   FOREIGN KEY (bookId) REFERENCES book (bookId) ON DELETE SET NULL,
-  UNIQUE (ownerId, petId, keeperId, bookId)
+  UNIQUE (ownerId, petId, bookId)
 )Engine=InnoDB;
 
 CREATE TABLE IF NOT EXISTS pet_owner (
