@@ -77,7 +77,7 @@ $dias = 1 + $diff->days;
         <div class="container-sm mx-auto shadow" style="width:400px">
 
           <ul class="list-group">
-            <input type="hidden" id="keeperId" name="keeperId" value="<?php echo $keeper->getPersonId(); ?>">            
+            <input type="hidden" id="personId" name="personId" value="<?php echo $keeper->getPersonId(); ?>">            
             <li class="list-group-item">Start Date: <?php echo $startDate; ?> </li>
             <input type="hidden" id="startDate" name="startDate" value="<?php echo $startDate ?>">
             <li class="list-group-item">End Date: <?php echo $endDate; ?> </li>

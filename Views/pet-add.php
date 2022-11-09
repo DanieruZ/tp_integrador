@@ -41,4 +41,3 @@
 		</form>
 	</div>
 </section>
-</main>

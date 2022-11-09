@@ -19,25 +19,25 @@ class BookDAO implements IBookDAO
   {
     try {
 
-      $query = "INSERT INTO book (startDateBook, endDateBook, stateBook, statePayment, stateReview) 
-                VALUES (:startDateBook, :endDateBook, :stateBook, :statePayment, :stateReview)";
+      $query = "INSERT INTO book (startDateBook, endDateBook, stateBook, statePayment, stateReview, personId) 
+                VALUES (:startDateBook, :endDateBook, :stateBook, :statePayment, :stateReview, :personId);";
 
       $parameters['startDateBook'] = $book->getStartDateBook();
       $parameters['endDateBook'] = $book->getEndDateBook();
       $parameters['stateBook'] = $book->getStateBook();
       $parameters['statePayment'] = $book->getStatePayment();
       $parameters['stateReview'] = $book->getStateReview();
+      $parameters['personId'] = $book->getPersonId();
  
-     
-
-
       $this->connection = Connection::GetInstance();
       return $this->connection->executeNonQuery($query, $parameters);
+      
     } catch (\PDOException $ex) {
       throw $ex;
     }
   }
 
+  //* Setea un estado a la reserva.
   public function bookReserve($bookId, $stateValue) {
     try {
     
@@ -64,9 +64,9 @@ class BookDAO implements IBookDAO
       }
   }
 
+  //* Activa el estado del pago de la reserva.
   public function bookReservePayment($bookId) {
     try {
-    
       $bookList = array();
 
       $query = "UPDATE book 
@@ -90,6 +90,7 @@ class BookDAO implements IBookDAO
       }
   }
 
+  //* Activa el estado de la review.
   public function bookReview($bookId) {
     try {
     
@@ -116,9 +117,6 @@ class BookDAO implements IBookDAO
       }
   }
 
-
-  
-
   //* Lista todas las reservas.
   public function getAllBook()
   {
@@ -139,22 +137,22 @@ class BookDAO implements IBookDAO
         $book->setStateBook($value['stateBook']);
         $book->setStatePayment($value['statePayment']);
         $book->setStateReview($value['stateReview']);
-
+        $book->setPersonId($value['personId']);
 
         array_push($bookList, $book);
       }
 
       return $bookList;
+
     } catch (\PDOException $ex) {
-      throw $ex;
-    }
+        throw $ex;
+      }
   }
 
   //* Lista todas las reservas activas.
   public function getActiveBook()
   {
     try {
-
       $bookList = array();
 
       $query = "SELECT * FROM book
@@ -171,11 +169,13 @@ class BookDAO implements IBookDAO
         $book->setStateBook($value['stateBook']);
         $book->setStatePayment($value['statePayment']);
         $book->setStateReview($value['stateReview']);
+        $book->setPersonId($value['personId']);
 
         array_push($bookList, $book);
       }
 
       return $bookList;
+
     } catch (\PDOException $ex) {
       throw $ex;
     }
@@ -191,13 +191,14 @@ class BookDAO implements IBookDAO
       $bookId = $this->connection->Execute($query);
 
       return $bookId;
+
     } catch (\PDOException $ex) {
       throw $ex;
     }
   }
 
   //* Agrega los ids en la tabla de muchos a muchos.
-  public function addPersonBook($keeperId, $petId)
+  public function addPersonBook($petId)
   {
     try {
       $user = $_SESSION['owner'];
@@ -208,26 +209,25 @@ class BookDAO implements IBookDAO
       [$book] = $lastId;
       $bookId = $book[0];
 
-      $query = "INSERT INTO person_book (ownerId,petId, keeperId, bookId)
-                VALUES (:ownerId, :petId, :keeperId, :bookId);";
+      $query = "INSERT INTO person_book (ownerId, petId, bookId)
+                VALUES (:ownerId, :petId, :bookId);";
 
       $parameters['ownerId'] = $ownerId;
       $parameters['petId'] = $petId;
-      $parameters['keeperId'] = $keeperId;
       $parameters['bookId'] = $bookId;
 
       $this->connection = Connection::GetInstance();
       return $this->connection->executeNonQuery($query, $parameters);
+
     } catch (\PDOException $ex) {
       throw $ex;
     }
   }
 
+  //* Lista todas las reservas de un owner.
   public function getOwnerBook($personId)
   {
     try {
-
-
       $bookList = array();
 
       $query = "SELECT * FROM book b
@@ -245,26 +245,27 @@ class BookDAO implements IBookDAO
         $book->setStateBook($value['stateBook']);
         $book->setStatePayment($value['statePayment']);
         $book->setStateReview($value['stateReview']);
+        $book->setPersonId($value['personId']);
 
         array_push($bookList, $book);
       }
 
       return $bookList;
+
     } catch (\PDOException $ex) {
       throw $ex;
     }
   }
 
+  //* Lista todas las reservas de un keeper.
   public function getKeeperBook($personId)
   {
     try {
-
-
       $bookList = array();
 
       $query = "SELECT * FROM book b
                 INNER JOIN person_book bk ON bk.bookId = b.bookId
-                WHERE bk.keeperId = '$personId';";
+                WHERE b.personId = '$personId';";
 
       $this->connection = Connection::GetInstance();
       $allBook = $this->connection->Execute($query);
@@ -277,27 +278,29 @@ class BookDAO implements IBookDAO
         $book->setStateBook($value['stateBook']);
         $book->setStatePayment($value['statePayment']);
         $book->setStateReview($value['stateReview']);
+        $book->setPersonId($value['personId']);
 
         array_push($bookList, $book);
       }
 
       return $bookList;
+
     } catch (\PDOException $ex) {
       throw $ex;
     }
   }
 
+  //* Lista toda la info de un owner.
   public function getBookInfoOwner($bookId)
   {
     try {
-
       $bookList = array();
 
       $query = "SELECT * FROM book b
                 INNER JOIN person_book pbk ON pbk.bookId = b.bookId
-                INNER JOIN person pk ON pk.personId = pbk.keeperId
+                INNER JOIN person p ON p.personId = b.personId
                 INNER JOIN pet pt ON pt.petId = pbk.petId
-                INNER JOIN agenda a ON a.personId = pbk.keeperId
+                INNER JOIN agenda a ON a.personId = b.personId
                 WHERE pbk.bookId = '$bookId';";
 
       $this->connection = Connection::GetInstance();
@@ -311,6 +314,7 @@ class BookDAO implements IBookDAO
         $book->setStateBook($value['stateBook']);
         $book->setStatePayment($value['statePayment']);
         $book->setStateReview($value['stateReview']);
+        $book->setPersonId($value['personId']);
 
         $schedule = new Schedule();
         $schedule->setCost($value['cost']);
@@ -321,7 +325,6 @@ class BookDAO implements IBookDAO
         $schedule->setPersonId($value['personId']);
         $schedule->setSize($value['size']);
         $schedule->setPet_type($value['pet_type']);
-
 
         $person = new Person();
         $person->setPersonId($value['personId']);
@@ -344,21 +347,22 @@ class BookDAO implements IBookDAO
       }
 
       return $bookList;
+
     } catch (\PDOException $ex) {
       throw $ex;
     }
   }
 
+  //* Lista toda la info de un keeper.
   public function getBookInfoKeeper($bookId)
   {
     try {
-
       $bookList = array();
 
       $query = "SELECT * FROM book b
                 INNER JOIN person_book pbk ON pbk.bookId = b.bookId
-                INNER JOIN person po ON po.personId = pbk.ownerId
-                INNER JOIN agenda a ON a.personId = pbk.keeperId
+                INNER JOIN person p ON p.personId = pbk.ownerId
+                INNER JOIN agenda a ON a.personId = b.personId
                 INNER JOIN pet pt ON pt.petId = pbk.petId
                 WHERE pbk.bookId = '$bookId';";
 
@@ -373,6 +377,7 @@ class BookDAO implements IBookDAO
         $book->setStateBook($value['stateBook']);
         $book->setStatePayment($value['statePayment']);
         $book->setStateReview($value['stateReview']);
+        $book->setPersonId($value['personId']);
 
         $schedule = new Schedule();
         $schedule->setScheduleId($value['scheduleId']);
@@ -405,8 +410,11 @@ class BookDAO implements IBookDAO
       }
 
       return $bookList;
+
     } catch (\PDOException $ex) {
       throw $ex;
     }
   }
 }
+
+?>

@@ -17,7 +17,7 @@ require_once "Config\Autoload.php";
 			<h2 class="mb-4 p-1 bg-dark text-white">Add Review</h2>
       <div class="col-lg-4">
 				<div class="form-group">
-          <input type="hidden" id="personId" name="personId" value="<?php echo $personId ?>"><?php print_r($personId); ?>
+          <input type="hidden" id="personId" name="personId" value="<?php echo $personId ?>">
         </div>
 			</div>
           <div class="col-lg-4">

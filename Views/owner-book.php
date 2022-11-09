@@ -5,7 +5,6 @@ namespace Views;
 require_once "Config\Autoload.php";
 
 use DAO\BookDAO as BookDAO;
-use DAO\ReviewDAO as ReviewDAO;
 
 $review = [];
 $user = $_SESSION['owner'];
@@ -14,38 +13,10 @@ $user = $_SESSION['owner'];
 $bookDAO = new BookDAO();
 $bookList = $bookDAO->getOwnerBook($owner->getPersonId());
 
-//* esto trae las reservas pero siempre trae la ultima
-//* tenemos que traer de alguna forma el kepperId para que add review funcione
-//* correctamente. porque al crear un keeper nuevo su review 
-//* siempre se la agraga al ultimo con review
-if($bookList){
+if(!empty($bookList)) {
 	[$book] = $bookList;
 	$bookInfo = $bookDAO->getBookInfoOwner($book->getBookId());
 	[$book, $schedule, $person, $pet] = $bookInfo;
-}
-
-/*
-echo "<pre>";
-print_r($bookList);
-echo "</pre>";
-*/
-
-
-$reviewDAO = new ReviewDAO();
-$keeperRate = $reviewDAO->getRateById($owner->getPersonId()); //* este tendria que ser el keeperId
-[$rate] = $keeperRate;
-
-print_r($owner->getPersonId()); echo " ownerId";
-echo "<br>";
-print_r($person->getPersonId());  echo " personId - el ultimo keeper con review";
-
-//* si le pasamos $person->getPersonId() siempre pasa el ultimo con review
-$reviewList = $reviewDAO->getReviewById($owner->getPersonId()); //* este tendria que ser el keeperId, 
-if (!empty($reviewList))																				//* los dejo porque si no se rompe
-[$review] = $reviewList;
-
-
-
 
 ?>
 
@@ -63,7 +34,6 @@ if (!empty($reviewList))																				//* los dejo porque si no se rompe
 					<th>State Payment</th>
 					<th>Reserve Info</th>
 					<th>Review</th>
-
 
 				</thead>
 				<?php
@@ -102,9 +72,8 @@ if (!empty($reviewList))																				//* los dejo porque si no se rompe
 								<div>
 								<td>
 								
-									<?php if ($book->getStatePayment() == 1 && $book->getStateReview() != 1 ) {             ?>									
-								<input type="hidden" id="personId" name="personId" value="<?php echo $person->getPersonId()?>">
-								<?php print_r($person->getPersonId());?>
+								<?php if ($book->getStatePayment() == 1 && $book->getStateReview() != 1 ) {   ?>									
+								<input type="hidden" id="personId" name="personId" value="<?php echo $book->getPersonId()?>">
 								<input type="hidden" id="bookId" name="bookId" value="<?php echo $book->getBookId() ?>">
 								<button type="submit" class="btn btn-sm btn-outline-dark ml-auto d-block float-left">Add Review</button>
 									<?php  }             ?>
@@ -121,5 +90,46 @@ if (!empty($reviewList))																				//* los dejo porque si no se rompe
 	</section>
 	</form>
 </main>
+
+<?php include('footer.php') ?>
+
+<?php } else {  ?>
+
+
+
+<main class="py-5">
+<form action="<?php echo FRONT_ROOT ?>Review/OwnerAddView" method="POST" class="bg-light p-5">
+	<section class="mb-5">
+		<div class="container-fluid">
+			<h2 class="mb-4">My Bookings</h2>
+
+			<table class="table bg-light">
+				<thead class="bg-dark text-white">
+					<th>Start Date</th>
+					<th>End Date</th>
+					<th>State</th>
+					<th>State Payment</th>
+					<th>Reserve Info</th>
+					<th>Review</th>
+
+
+				</thead>
+						<tbody>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							
+			</table>
+		</div>
+	</section>
+	</form>
+</main>
+
+<?php } ?>
 
 <?php include('footer.php') ?>
