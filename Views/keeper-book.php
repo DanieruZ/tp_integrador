@@ -4,18 +4,7 @@ namespace Views;
 
 require_once "Config\Autoload.php";
 
-use DAO\BookDAO as BookDAO;
-
-$user = $_SESSION['keeper'];
-[$person] = $user;
-
-$bookDAO = new BookDAO();
-$bookList = $bookDAO->getKeeperBook($person->getPersonId());
-
 ?>
-
-
-
 <main class="py-5">
 	<section class="mb-5">
 		<div class="container-fluid">
@@ -50,20 +39,20 @@ $bookList = $bookDAO->getKeeperBook($person->getPersonId());
 																	} ?>
 
 								<?php if ($book->getStatePayment() == 0) { ?>
-								<td><?php echo "Unpaid"; ?></td> <?php
+									<td><?php echo "Unpaid"; ?></td> <?php
+																	} ?>
+								<?php if ($book->getStatePayment() == 1) { ?>
+									<td><?php echo "Paid"; ?></td> <?php
 																} ?>
-							<?php if ($book->getStatePayment() == 1 ){ ?>
-								<td><?php echo "Paid"; ?></td> <?php
-																} ?>
-							<?php if ($book->getStatePayment() == 2) { ?>
-								<td><?php echo "Payment Declined"; ?></td> <?php
-																		} ?>
+								<?php if ($book->getStatePayment() == 2) { ?>
+									<td><?php echo "Payment Declined"; ?></td> <?php
+																			} ?>
 
-							<td><button type="submit" name="btnViewInfo" class="btn btn-sm btn-outline-info">
-									<a href="<?php if (isset($bookList)) {
-													echo FRONT_ROOT . "Book/GetBookInfoKeeper/" . $book->getBookId();
-												}; ?>">View Info</a>
-								</button></td>
+								<td><button type="submit" name="btnViewInfo" class="btn btn-sm btn-outline-info">
+										<a href="<?php if (isset($bookList)) {
+														echo FRONT_ROOT . "Book/GetBookInfoKeeper/" . $book->getBookId();
+													}; ?>">View Info</a>
+									</button></td>
 
 							</tr>
 						</tbody>

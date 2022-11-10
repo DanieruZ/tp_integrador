@@ -4,6 +4,7 @@ namespace Controllers;
 
 use DAO\ScheduleDAO as ScheduleDAO;
 use DAO\KeeperDAO as KeeperDAO;
+use DAO\PetDAO as PetDAO;
 use Models\Schedule as Schedule;
 use Models\Person as Person;
 use Utils\Utils as Utils;
@@ -15,11 +16,19 @@ class ScheduleController {
   public function __construct() {
     $this->scheduleDAO = new ScheduleDAO();
     $this->keeperDAO = new KeeperDAO();
+    $this->petDAO = new PetDAO();
   }
 
   public function ScheduleView() {
     //Utils::checkKeeperSession();+
-    
+    $this->keeperDAO = new KeeperDAO();
+    $this->scheduleDAO = new ScheduleDAO();   
+    $this->petDAO = new PetDAO();
+
+    $user = $_SESSION['keeper'];
+    [$person] = $user;
+    $personId = $person->getPersonId();
+    $scheduleList = $this->scheduleDAO->getScheduleById($personId);
     require_once(VIEWS_PATH . "keeper-nav.php");
     require_once(VIEWS_PATH . "keeper-schedule.php");
   }
@@ -27,7 +36,7 @@ class ScheduleController {
   public function AddSchedule($startDate, $endDate,$size, $pet_type,$cost) {    
     $schedule = new Schedule();
     $person = new Person();    
-  
+   
 
     if ($schedule && $person) {
       $schedule = new Schedule();
@@ -68,5 +77,3 @@ class ScheduleController {
   }
 
 }
-
-?>

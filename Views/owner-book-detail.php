@@ -4,39 +4,15 @@ namespace Views;
 
 require_once "Config\Autoload.php";
 
-use DAO\KeeperDAO as KeeperDAO;
-use DAO\ScheduleDAO as ScheduleDAO;
-use DAO\petDAO as PetDAO;
-use DateTime;
-
-$petDAO = new PetDAO;
-$petInfo = $petDAO->getPetById($petId);
-[$pet] = $petInfo;
-
-$startDate = $_POST['startDate'];
-$endDate = $_POST['endDate'];
-
-$keeperDAO = new KeeperDAO;
-$keeperInfo = $keeperDAO->getKeeperById($personId);
-[$keeper] = $keeperInfo;
-
-$scheduleDAO = new ScheduleDAO;
-$scheduleInfo = $scheduleDAO->getScheduleById($personId);
-[$schedule] = $scheduleInfo;
-
-$fecha1 = new DateTime($startDate);
-$fecha2 = new DateTime($endDate);
-$diff = $fecha1->diff($fecha2);
-$dias = 1 + $diff->days;
 
 ?>
 
-  <main class="py-5">
-  <form action="<?php echo FRONT_ROOT ?>Book/AddBook" method="POST" >
+<main class="py-5">
+  <form action="<?php echo FRONT_ROOT ?>Book/AddBook" method="POST">
     <section class="mb-5">
       <div class="container-fluid">
         <div class="container-sm mx-auto" style="width:400px">
-          <h3>Keeper Profile</h3>
+          <h3>Keeper Profilerrrrrrrrrrr</h3>
         </div>
         <div class="container-sm mx-auto shadow" style="width:400px">
           <ul class="list-group">
@@ -77,7 +53,7 @@ $dias = 1 + $diff->days;
         <div class="container-sm mx-auto shadow" style="width:400px">
 
           <ul class="list-group">
-            <input type="hidden" id="personId" name="personId" value="<?php echo $keeper->getPersonId(); ?>">            
+            <input type="hidden" id="personId" name="personId" value="<?php echo $keeper->getPersonId(); ?>">
             <li class="list-group-item">Start Date: <?php echo $startDate; ?> </li>
             <input type="hidden" id="startDate" name="startDate" value="<?php echo $startDate ?>">
             <li class="list-group-item">End Date: <?php echo $endDate; ?> </li>
@@ -94,9 +70,9 @@ $dias = 1 + $diff->days;
           <a class="btn btn-sm btn-outline-danger m-2" href="<?php echo FRONT_ROOT ?>Keeper/OwnerListView">Cancel</a>
         </div>
     </section>
-    
 
-</form>
+
+  </form>
 
 </main>
 

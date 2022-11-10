@@ -28,7 +28,6 @@ class AdminDAO implements IAdminDAO {
         $person->setLastname($value['lastname']);
         $person->setDni($value['dni']);
         $person->setEmail($value['email']);
-        $person->setPass($value['pass']);
         $person->setGender($value['gender']);
         $person->setIsActive($value['isActive']);
         $person->setRolId($value['rolId']);

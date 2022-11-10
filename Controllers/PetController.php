@@ -6,49 +6,66 @@ use DAO\PetDAO as PetDAO;
 use Models\Pet as Pet;
 use Utils\Utils as Utils;
 
-class PetController {
+class PetController
+{
 
   private $petDAO;
-  
-  public function __construct() {
-    $this->petDAO = new PetDAO();
-  } 
 
-  public function OwnerAddView() {
+  public function __construct()
+  {
+    $this->petDAO = new PetDAO();
+  }
+
+  public function OwnerAddView()
+  {
     //Utils::checkOwnerSession();
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "pet-add.php");
   }
 
-  public function OwnerProfileView($petId) {
+  public function OwnerProfileView($petId)
+  {
     //Utils::checkOwnerSession();
+
+    $petInfo = $this->petDAO->getPetById($petId);
+    [$pet] = $petInfo;
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "pet-profile.php");
   }
 
-  public function OwnerListView() {
+  public function OwnerListView()
+  {
     //Utils::checkOwnerSession();
+    $user = $_SESSION['owner'];
+    [$person] = $user;
+    $personId = $person->getPersonId();
+    $petList = $this->petDAO->getMyPet($personId);
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "pet-owner-list.php");
   }
 
-  public function KeeperListView() {
-    //Utils::checkOwnerSession();
+  public function KeeperListView()
+  {
+    //Utils::checkOwnerSession();    
+    $petDAO = new PetDAO;
+    $petList = $petDAO->getAllPet();
     require_once(VIEWS_PATH . "keeper-nav.php");
     require_once(VIEWS_PATH . "pet-list.php");
   }
 
-  public function AdminListView() {
+  public function AdminListView()
+  {
     //Utils::checkAdminSession();
     require_once(VIEWS_PATH . "admin-nav.php");
     require_once(VIEWS_PATH . "pet-list.php");
   }
 
-  public function AddPet($petname, $size, $pet_type, $breed) {
+  public function AddPet($petname, $size, $pet_type, $breed)
+  {
     //Utils::checkOwnerSession();    
-    $pet = new Pet();   
+    $pet = new Pet();
 
-    if ($pet) {            
+    if ($pet) {
       $pet = new Pet();
       $pet->setPetname($petname);
       $pet->setSize($size);
@@ -57,21 +74,22 @@ class PetController {
 
       $this->petDAO->addPet($pet);
       $this->petDAO->addPetOwner();
-      $this->OwnerListView();       
+      $this->OwnerListView();
     }
   }
 
-  public function DeletePet($petId) {
+  public function DeletePet($petId)
+  {
     //Utils::checkOwnerSession();
     $this->petDAO->deletePetById($petId);
     $this->OwnerListView();
   }
 
-  public function UpdatePet($petId, $petname, $size, $pet_type, $breed) {
+  public function UpdatePet($petId, $petname, $size, $pet_type, $breed)
+  {
     //Utils::checkOwnerSession(); 
-    $pet = new Pet(); 
-
-    if ($pet) {            
+    $pet = new Pet();
+    if ($pet) {
       $pet = new Pet();
 
       $pet->setPetId($petId);
@@ -85,7 +103,4 @@ class PetController {
       $this->OwnerListView();
     }
   }
-
 }
-
-?>

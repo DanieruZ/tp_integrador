@@ -38,13 +38,13 @@
 						<label for="other">other</label><br>
 					</div>
 				</div>
-                <div class="col-lg-4">
+				<div class="col-lg-4">
 					<p>Register Option</p>
 					<div class="form-group">
 						<input type="radio" name="rolId" id="2" value="2" required>
 						<label for="Owner">Owner</label><br>
 						<input type="radio" name="rolId" id="3" value="3" required>
-						<label for="Keeper">Keeper</label><br>						
+						<label for="Keeper">Keeper</label><br>
 					</div>
 				</div>
 				<button type="submit" class="btn btn-sm btn-outline-dark ml-auto d-block float-left">Add</button>

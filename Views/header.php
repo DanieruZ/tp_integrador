@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
      <!-- Required meta tags -->
      <meta charset="utf-8">
@@ -11,4 +12,5 @@
      <link rel="stylesheet" href="<?php echo CSS_PATH ?>billStyle.css">
      <title>Pet Hero App</title>
 </head>
+
 <body>

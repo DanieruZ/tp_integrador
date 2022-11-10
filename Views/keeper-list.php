@@ -4,19 +4,6 @@ namespace Views;
 
 require_once "Config\Autoload.php";
 
-use DAO\KeeperDAO as KeeperDAO;
-use DAO\ScheduleDAO as ScheduleDAO;
-use DAO\BookDAO as BookDAO;
-use DAO\ReviewDAO as ReviewDAO;
-
-$bookDAO = new BookDAO();
-
-$keeperDAO = new KeeperDAO;
-$personList = $keeperDAO->getAllKeeper();
-
-$scheduleDAO = new ScheduleDAO();
-$scheduleList = $scheduleDAO->getSchedule();
-
 ?>
 
 <main class="py-5">
@@ -52,18 +39,9 @@ $scheduleList = $scheduleDAO->getSchedule();
 						foreach ($scheduleList as $schedule) {
 							if ($schedule->getPersonId() == $person->getPersonId()) {
 			?>
-								<?php						
-
-								$reviewDAO = new ReviewDAO();
-								$reviewList = $reviewDAO->getReviewById($person->getPersonId());
-
+								<?php
 								if (!empty($reviewList))
 									[$review] = $reviewList;
-									
-								$keeperRate = $reviewDAO->getRateById($person->getPersonId());
-								[$rate] = $keeperRate;
-
-
 								?>
 								<tbody>
 									<tr>

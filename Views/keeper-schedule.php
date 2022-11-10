@@ -2,26 +2,8 @@
 
 namespace Views;
 
-use DAO\KeeperDAO as KeeperDAO;
-use DAO\ScheduleDAO as ScheduleDAO;
-use DAO\PetDAO as PetDAO;
-
 require_once "Config\Autoload.php";
 require_once "keeper-nav.php";
-
-$user = $_SESSION['keeper'];
-[$person] = $user;
-$personId = $person->getPersonId();
-
-$scheduleDAO = new ScheduleDAO();
-$scheduleList = $scheduleDAO->getScheduleById($personId);
-
-
-$petDAO = new PetDAO;
-$petList = $petDAO->getPetType();
-[$pet] = $petList;
-
-
 
 if ($scheduleList) {
   [$schedule] = $scheduleList;
@@ -86,16 +68,15 @@ if (!$scheduleList || $schedule->getState() == 0) {
 
               if (isset($petList)) {
                 foreach ($petList as $pet) {
-              ?> <option name="pet_type"  value="<?php echo $pet->getPet_type() ?>" </option> <?php echo $pet->getPet_type() ?> <?php
-                                                                                                                  }
-                
-                                                                                                                }
-                                                                                                                    ?>                  
-              
+              ?> <option name="pet_type" value="<?php echo $pet->getPet_type() ?>" </option> <?php echo $pet->getPet_type() ?> <?php
+                                                                                                                              }
+                                                                                                                            }
+                                                                                                                                ?>
+
             </select>
           </div>
-        
-     
+
+
           <div class="form-group" style="width:400px">
             <label for="size">Size of Dog:</label>
             <select name="size">

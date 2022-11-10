@@ -4,18 +4,6 @@ namespace Views;
 
 require_once "Config\Autoload.php";
 
-use DAO\KeeperDAO as KeeperDAO;
-use DAO\ScheduleDAO as ScheduleDAO;
-use Models\Schedule;
-
-$startDate = $_POST['startDate'];
-$endDate = $_POST['endDate'];
-
-$keeperDAO = new KeeperDAO;
-$personList = $keeperDAO->getKeeperByAvailableDate($startDate, $endDate);
-
-$scheduleDAO = new ScheduleDAO();
-$scheduleList = $scheduleDAO->getSchedule();
 
 ?>
 

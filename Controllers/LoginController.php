@@ -26,14 +26,19 @@ class LoginController {
 
       if($rolId == 2) {
         $_SESSION['owner'] = $user;
+        $ownerList = $_SESSION['owner'];
+        [$owner] = $ownerList;
         require_once(VIEWS_PATH . "owner-welcome.php");
       }
 
       if($rolId == 3) {
         $_SESSION['keeper'] = $user;
+        $keeperList = $_SESSION['keeper'];
+        [$keeper] = $keeperList;
         require_once(VIEWS_PATH . "keeper-welcome.php");
       }
     }
+    
   }
 
   public function logout() {
@@ -42,5 +47,3 @@ class LoginController {
   }
 
 }
-
-?>
