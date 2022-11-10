@@ -14,13 +14,15 @@ class PetDAO implements IPetDAO {
 
   public function addPet(Pet $pet) {
     try {
-      $query = "INSERT INTO pet (petname, size, pet_type, breed)
-                VALUES (:petname, :size, :pet_type, :breed)";
+      $query = "INSERT INTO pet (petname, size, pet_type, breed, thumbnail, vaccination)
+                VALUES (:petname, :size, :pet_type, :breed, :thumbnail, :vaccination)";
                 
       $parameters['petname'] = $pet->getPetname();
       $parameters['size'] = $pet->getSize();
       $parameters['pet_type'] = $pet->getPet_type();
-      $parameters['breed'] = $pet->getBreed();   
+      $parameters['breed'] = $pet->getBreed();
+      $parameters['thumbnail'] = $pet->getThumbnail();
+      $parameters['vaccination'] = $pet->getVaccination();
 
       $this->connection = Connection::GetInstance();
       return $this->connection->executeNonQuery($query, $parameters);
@@ -84,6 +86,8 @@ class PetDAO implements IPetDAO {
         $pet->setSize($value['size']);
         $pet->setPet_type($value['pet_type']);
         $pet->setBreed($value['breed']);
+        $pet->setThumbnail($value['thumbnail']);
+        $pet->setVaccination($value['vaccination']);
         
         array_push($petList, $pet);
 
@@ -115,6 +119,8 @@ class PetDAO implements IPetDAO {
         $pet->setSize($value['size']);
         $pet->setPet_type($value['pet_type']);
         $pet->setBreed($value['breed']);
+        $pet->setThumbnail($value['thumbnail']);
+        $pet->setVaccination($value['vaccination']);
         
         array_push($petList, $pet);
       }
@@ -157,6 +163,8 @@ class PetDAO implements IPetDAO {
         $pet->setSize($value['size']);
         $pet->setPet_type($value['pet_type']);
         $pet->setBreed($value['breed']);
+        $pet->setThumbnail($value['thumbnail']);
+        $pet->setVaccination($value['vaccination']);
         
         array_push($petList, $pet);
       }
@@ -231,13 +239,41 @@ class PetDAO implements IPetDAO {
         $pet->setPetname($value['petname']);
         $pet->setSize($value['size']);
         $pet->setPet_type($value['pet_type']);
-        $pet->setBreed($value['breed']);   
+        $pet->setBreed($value['breed']); 
+        $pet->setThumbnail($value['thumbnail']);  
+        $pet->setVaccination($value['vaccination']);
   
         array_push($petList, $pet);
       }
 
       return $petList;
 
+    } catch (\PDOException $ex) {
+        throw $ex;
+      }
+  }
+
+  public function addThumbnail($petId, $file) {
+    try {
+    
+      $petList = array();
+
+      $query = "UPDATE pet 
+                SET thumbnail = '$file'            
+                WHERE petId = '$petId';";
+
+      $this->connection = Connection::GetInstance();    
+      $allPet = $this->connection->Execute($query);    
+
+      foreach ($allPet as $value) {
+        $pet = new Pet();
+        $pet->setThumbnail($value['thumbnail']);
+
+        array_push($petList, $pet);
+      }
+
+      return $petList;
+    
     } catch (\PDOException $ex) {
         throw $ex;
       }

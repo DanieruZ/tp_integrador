@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS rol (
   rolId INT NOT NULL AUTO_INCREMENT,
   rol VARCHAR(50) NOT NULL,
   PRIMARY KEY (rolId)
-)Engine=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS person (
   personId INT NOT NULL AUTO_INCREMENT,
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS person (
   PRIMARY KEY (personId),  
   FOREIGN KEY (rolId) REFERENCES rol (rolId),  
   UNIQUE (dni, email) 
-)Engine=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS review (
   reviewId INT NOT NULL AUTO_INCREMENT,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS review (
   personId INT NOT NULL,
   PRIMARY KEY (reviewId),
   FOREIGN KEY (personId) REFERENCES person (personId)
-)Engine=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS agenda (
   scheduleId INT NOT NULL AUTO_INCREMENT,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS agenda (
   cost FLOAT,
   PRIMARY KEY (scheduleId),
   FOREIGN KEY (personId) REFERENCES person (personId)
-)Engine=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS pet (
   petId INT NOT NULL AUTO_INCREMENT,
@@ -50,8 +50,19 @@ CREATE TABLE IF NOT EXISTS pet (
   size ENUM('small', 'medium', 'large' , 'x-large') NOT NULL,
   pet_type ENUM('dog', 'cat', 'bird') NOT NULL,
   breed VARCHAR(50) NOT NULL,
+  thumbnail LONGBLOB NOT NULL,
+  vaccination LONGBLOB NOT NULL,
   PRIMARY KEY (petId)
-)Engine=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE gallery (
+ imageId INT NOT NULL AUTO_INCREMENT,
+ image LONGBLOB NOT NULL,
+ created DATETIME NOT NULL,
+ petId INT,
+ PRIMARY KEY (imageId),
+ FOREIGN KEY (petId) REFERENCES pet (petId)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS book (
   bookId INT NOT NULL AUTO_INCREMENT,
@@ -63,7 +74,7 @@ CREATE TABLE IF NOT EXISTS book (
   personId INT NOT NULL,
   PRIMARY KEY (bookId),
   FOREIGN KEY (personId) REFERENCES person (personId)
-)Engine=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS person_book (
   person_bookId INT NOT NULL AUTO_INCREMENT,
@@ -75,7 +86,7 @@ CREATE TABLE IF NOT EXISTS person_book (
   FOREIGN KEY (petId) REFERENCES pet (petId) ON DELETE SET NULL,
   FOREIGN KEY (bookId) REFERENCES book (bookId) ON DELETE SET NULL,
   UNIQUE (ownerId, petId, bookId)
-)Engine=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS pet_owner (
   pet_ownerId INT NOT NULL AUTO_INCREMENT,
@@ -85,7 +96,7 @@ CREATE TABLE IF NOT EXISTS pet_owner (
   FOREIGN KEY (personId) REFERENCES person (personId) ON DELETE SET NULL,
   FOREIGN KEY (petId) REFERENCES pet (petId) ON DELETE SET NULL,
   UNIQUE (personId, petId)
-)Engine=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO rol
 VALUES (1, 'admin'),
@@ -105,23 +116,23 @@ VALUES (1, 'luis', 'gonzales', '64235875', 'luis@gmail.com', 'male', 1, 2),
        (10, 'admin', 'admin', '12345', 'admin@gmail.com', 'male', 0, 1);
               
 INSERT INTO pet
-VALUES (1, 'sasha', 'large', 'dog', 'golden retriever'),
-       (2, 'bronco', 'medium', 'dog', 'bulldog'),
-       (3, 'misa', 'small', 'cat', 'persian'),
-       (4, 'olly', 'small', 'dog', 'poodle'),
-       (5, 'wanted', 'small', 'cat', 'somali'),
-	   (6, 'chuli', 'large', 'dog', 'doberman'),
-       (7, 'musa', 'small', 'cat', 'siamese'),
-       (8, 'snow', 'small', 'cat', 'somali'),
-       (9, 'hueso', 'large', 'dog', 'rotewailer'),
-       (10, 'lucky', 'medium', 'dog', 'siberian');      
+VALUES (1, 'sasha', 'large', 'dog', 'collie', '', ''),
+       (2, 'bronco', 'medium', 'dog', 'bulldog', '', ''),
+       (3, 'misa', 'small', 'cat', 'red cat', '', ''),
+       (4, 'olly', 'small', 'dog', 'poodle', '', ''),
+       (5, 'wanted', 'small', 'cat', 'somali', '', ''),
+	   (6, 'chuli', 'large', 'dog', 'doberman', '', ''),
+       (7, 'musa', 'small', 'cat', 'siamese', '', ''),
+       (8, 'snow', 'small', 'cat', 'somali', '', ''),
+       (9, 'hueso', 'large', 'dog', 'rotewailer', '', ''),
+       (10, 'lucky', 'medium', 'dog', 'siberian', '', '');      
 
 INSERT INTO pet_owner
 VALUES (1, 5, 2),
        (2, 5, 6),     
-       (3, 1, 3),     
+       (3, 1, 4),     
        (4, 7, 7),     
-       (5, 2, 4),     
+       (5, 2, 3),     
        (6, 1, 10),
 	   (7, 8, 8),     
        (8, 2, 1),     

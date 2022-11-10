@@ -73,7 +73,6 @@ class PetController {
 
     if ($pet) {            
       $pet = new Pet();
-
       $pet->setPetId($petId);
       $pet->setPetname($petname);
       $pet->setSize($size);
@@ -82,6 +81,19 @@ class PetController {
 
       $this->petDAO->updatePet($pet);
       //$this->petDAO->updatePet($petId, $petname, $size, $pet_type, $breed);
+      $this->OwnerListView();
+    }
+  }
+
+  public function AddThumbnail($petId, $file) {
+    //Utils::checkOwnerSession(); 
+    $pet = new Pet(); 
+
+    if ($pet) {            
+      $pet = new Pet();
+      $pet->setThumbnail($file);
+
+      $this->petDAO->addThumbnail($petId, $file);
       $this->OwnerListView();
     }
   }

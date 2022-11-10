@@ -9,6 +9,8 @@ class Pet {
   private $size;
   private $pet_type;
   private $breed;
+  private $thumbnail;
+  private $vaccination;
 
   public function __construct() {}
 
@@ -111,6 +113,46 @@ class Pet {
   public function setBreed($breed)
   {
     $this->breed = $breed;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of thumbnail
+   */ 
+  public function getThumbnail()
+  {
+    return $this->thumbnail;
+  }
+
+  /**
+   * Set the value of thumbnail
+   *
+   * @return  self
+   */ 
+  public function setThumbnail($thumbnail)
+  {
+    $this->thumbnail = $thumbnail;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of vaccination
+   */ 
+  public function getVaccination()
+  {
+    return $this->vaccination;
+  }
+
+  /**
+   * Set the value of vaccination
+   *
+   * @return  self
+   */ 
+  public function setVaccination($vaccination)
+  {
+    $this->vaccination = $vaccination;
 
     return $this;
   }
