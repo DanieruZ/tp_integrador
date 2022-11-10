@@ -33,6 +33,13 @@ class ReviewController
   public function OwnerView()
   {
     //Utils::checkOwnerSession();
+    $review = [];
+    $user = $_SESSION['owner'];
+    [$owner] = $user;
+    $bookList = $this->bookDAO->getOwnerBook($owner->getPersonId());
+    [$book] = $bookList;
+    $bookInfo = $this->bookDAO->getBookInfoOwner($book->getBookId());
+    [$book, $schedule, $person, $pet] = $bookInfo;
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "owner-book.php");
   }
