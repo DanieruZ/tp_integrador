@@ -68,14 +68,34 @@ class KeeperController
   {
     //Utils::checkOwnerSession();
 
-
-    $bookDAO = new BookDAO();
     $personList =  $this->keeperDAO->getAllKeeper();
     $scheduleList =  $this->scheduleDAO->getSchedule();
-    [$person] = $scheduleList;
-    $reviewList = $this->reviewDAO->getReviewById($person->getPersonId());
-    $keeperRate =  $this->reviewDAO->getRateById($person->getPersonId());
-    [$rate] = $keeperRate;
+
+    if (isset($personList)) {
+      foreach ($personList as $person) {
+        if (isset($scheduleList)) {
+          foreach ($scheduleList as $schedule) {
+            if ($schedule->getPersonId() == $person->getPersonId()) {
+
+              
+              echo "<pre>";
+              print_r($person);
+              echo "</pre>";
+              $reviewDAO = new ReviewDAO();
+              $reviewList = $reviewDAO->getReviewById($person->getPersonId());
+
+              if (!empty($reviewList))
+                [$review] = $reviewList;
+                
+              $keeperRate = $reviewDAO->getRateById($person->getPersonId());
+              [$rate] = $keeperRate;
+            }
+          }
+        }
+      }
+    }
+
+ 
     require_once(VIEWS_PATH . "owner-nav.php");
     require_once(VIEWS_PATH . "keeper-list.php");
   }
